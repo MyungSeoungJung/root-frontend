@@ -1,0 +1,28 @@
+{
+  "scripts": {
+    "start": "webpack serve --mode development --port 5000",
+    "build": "webpack --mode production",
+    "preview": "serve dist"
+  },
+  "devDependencies": {
+    "@styled/typescript-styled-plugin": "^1.0.0",
+    "@types/react": "^18.2.25",
+    "@types/react-dom": "^18.2.11",
+    "esbuild-loader": "^4.0.2",
+    "html-webpack-plugin": "^5.5.3",
+    "typescript": "^5.2.2",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@types/react-router-dom": "^5.3.3",
+    "axios": "^1.5.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.16.0",
+    "swr": "^2.2.4"
+  }
+}
