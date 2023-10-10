@@ -9,7 +9,7 @@ export const LayoutContainer = styled.div`
   background-color: gray;
 
   main {
-    background-color: blue;
+    background-color: white;
   }
 
   nav {
