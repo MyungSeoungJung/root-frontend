@@ -1,68 +1,109 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ProductRegistrationContainer } from "./style";
+import * as React from "react";
+import http from "@/utils/http";
+
+interface ProductItem {
+  productBrand: String;
+  productName: String;
+  productPrice: number;
+  category: String;
+  isActive: Boolean;
+  prodcutDescription: String;
+}
+interface ProductFile {
+  contentType: String;
+  originalFileName: String;
+  uuidFileName: String;
+}
 
 const ProductRegistration = () => {
-  // 상품 카테고리 변경 이벤트
-  const handleMajorCatagoryChange = (event) => {
-    const selectedValue = event.target.value;
-    const subCategories = {
-      텐트: ["돔텐트", "사각텐트", "육각텐트", "등산용텐트", "차박텐트"],
-      테이블: ["BBQ테이블", "미니 테이블", "화로 테이블", "사이드 테이블"],
-      식기류: ["포크", "스푼", "접시", "컵류"],
-      악세서리: ["코펠", "조리 도구", "아이스박스", "물통"],
-      기타: ["기타1", "기타2"],
-    };
+  const productBrandRef = useRef<HTMLDivElement>();
+  const productNameRef = useRef<HTMLInputElement>();
+  const productPriceRef = useRef<HTMLInputElement>();
+  const categoryRef = useRef<HTMLSelectElement>();
+  const isActiveRef = useRef<HTMLSelectElement>();
+  const prodcutDescriptionRef = useRef<HTMLTextAreaElement>();
+  const fileRef = useRef<HTMLInputElement>();
+  const formRef = useRef<HTMLFormElement>();
 
-    const subCategorySelect = document.getElementById("subCatagory");
-    subCategorySelect.innerHTML = ""; // 기존 옵션 초기화
-    // subCategories[텐트]
-    if (selectedValue && subCategories[selectedValue]) {
-      subCategories[selectedValue].forEach((option) => {
-        const optionElement = document.createElement("option");
-        optionElement.value = option;
-        optionElement.innerText = option;
-        subCategorySelect.appendChild(optionElement);
-      });
-    }
+  const handleProductRegister = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    Array.from(fileRef.current.files).forEach((file) => {
+      formData.append("files", file);
+    });
+
+    formData.append("productBrand", productBrandRef.current.innerText);
+    formData.append("productName", productNameRef.current.value);
+    formData.append("productPrice", productPriceRef.current.value);
+    formData.append("category", categoryRef.current.value);
+    formData.append("isActive", isActiveRef.current.value);
+    formData.append("productDescription", prodcutDescriptionRef.current.value);
+    console.log("category:", categoryRef.current.value);
+    (async () => {
+      const response = await http.post<ProductItem>(
+        "/product/registerProduct",
+        formData
+      );
+      console.log(response);
+      if (response.status === 201) {
+        formRef.current.reset();
+        alert("상품 등록을 완료했습니다");
+      }
+    })();
   };
   return (
     <ProductRegistrationContainer>
       <h1>상품 등록</h1>
       <section>
-        <form action="">
+        <form onSubmit={handleProductRegister} ref={formRef}>
           <div>
-            <p>브랜드: </p> <p> 토큰 받아서 고정으로 띄울 곳</p>
+            <p>브랜드: </p> <div ref={productBrandRef}> Nike</div>
           </div>
           <div>
-            <p> 상품명: </p> <input placeholder="상품명" />
+            <p> 상품명: </p> <input placeholder="상품명" ref={productNameRef} />
           </div>
           <div>
-            <p> 판매가: </p> <input placeholder="판매가" />
+            <p> 판매가: </p>
+            <input placeholder="판매가" ref={productPriceRef} />
           </div>
           <div>
-            <p> 상품코드: </p> <input placeholder="상품코드" />
-          </div>
-          <div>
-            <p> 상품 대분류: </p>
-            <select onChange={handleMajorCatagoryChange}>
-              <option>옵션을 선택해주세요</option>
-              <option value="텐트">텐트</option>
-              <option value="테이블">테이블</option>
-              <option value="식기류">식기류</option>
-              <option value="악세서리">악세서리</option>
-              <option value="기타">기타</option>
+            <p> 상품 상태: </p>
+            <select ref={isActiveRef}>
+              <option>상품의 상태를 선택해주세요</option>
+              <option value="1">판매</option>
+              <option value="0">숨김</option>
             </select>
           </div>
           <div>
-            <p> 상품 소분류: </p>
-            <select id="subCatagory">{/*동적으로 카테고리 생성 */}</select>
+            <p> 상품 대분류: </p>
+            <select ref={categoryRef}>
+              <option>옵션을 선택해주세요</option>
+              <option value="tent">텐트</option>
+              <option value="table">테이블</option>
+              <option value="accessory">악세서리</option>
+              <option value="tableware">식기류</option>
+              <option value="other">기타</option>
+            </select>
+          </div>
+
+          <div>
+            <p> 상품 설명: </p>
+            <textarea
+              placeholder="상품 상세설명을 적어주세요"
+              ref={prodcutDescriptionRef}
+            ></textarea>
           </div>
           <div>
-            <p> 상품 설명: </p>{" "}
-            <textarea placeholder="상품 상세설명을 적어주세요"></textarea>
-          </div>
-          <div>
-            <p>상품 이미지: </p> <input type="file" multiple accept="image/*" />
+            <p>상품 이미지: </p>{" "}
+            <input
+              type="file"
+              multiple
+              accept="image/*, video/*"
+              ref={fileRef}
+            />
           </div>
           <button> 상품 등록 </button>
         </form>

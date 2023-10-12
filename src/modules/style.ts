@@ -2,10 +2,11 @@ import styled from "@emotion/styled";
 
 export const LayoutContainer = styled.div`
   label: LayoutContainer;
-  width: 80%;
+  width: 90%;
   height: 100vh;
   display: flex;
   flex-direction: row;
+  background-color: gray;
 
   nav {
     background-color: wheat;
