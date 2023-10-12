@@ -28,17 +28,14 @@ function LoginComponent() {
           username,
           password,
         });
-        const token = response.data.token; // 서버에서 반환하는 필드 이름에 따라 수정
-        const protectedResponse = await axios.get(
-          "http://localhost:5500/auth/login",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
 
-        setMessage(protectedResponse.data.message);
+        if (response.data.status === "success") {
+          localStorage.setItem("token", response.data.token);
+          const token = response.data;
+          window.location.href = "/home";
+        } else {
+          setMessage(response.data.message || "Login failed");
+        }
       } catch (error) {
         setMessage("Error during authentication.");
       }
@@ -49,18 +46,31 @@ function LoginComponent() {
 
   return (
     <div>
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+      <h1>Login</h1>
+      <div>
+        <label>
+          {" "}
+          Username:
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </label>
+      </div>
+      <div>
+        <label>
+          {" "}
+          Password:
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </label>
+      </div>
       <button onClick={handleLogin}>Login</button>
       <p>{message}</p>
     </div>
