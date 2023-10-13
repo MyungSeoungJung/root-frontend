@@ -4,7 +4,7 @@ import { LayoutContainer } from "./style";
 const Layout = () => {
   return (
     <LayoutContainer>
-      <nav>
+      <nav id="nav">
         <div>
           <h1>CampAndTent Service</h1>
         </div>

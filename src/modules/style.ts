@@ -6,10 +6,9 @@ export const LayoutContainer = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: row;
-  background-color: gray;
-
-  nav {
-    background-color: wheat;
+  background-color: #e0e0e0;
+  #nav {
+    background-color: #202123;
     padding-left: 20px;
     padding-right: 20px;
   }
