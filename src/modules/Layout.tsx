@@ -34,6 +34,15 @@ const Layout = () => {
             <li>
               <Link to="">고객 관리</Link>
             </li>
+            <li>
+              <Link to="ProfileRegister">프로필 등록</Link>
+            </li>
+            <li>
+              <Link to="ReviewManagement">리뷰관리</Link>
+            </li>
+            <li>
+              <Link to="ScheduleManagement">캘린더</Link>
+            </li>
           </ul>
         </div>
       </nav>
