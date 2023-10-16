@@ -51,6 +51,12 @@ function ProfileRegister() {
       );
 
       console.log(response.data);
+      setBrandName("");
+      setBusinessNumber("");
+      setRepresentativeName("");
+      setBrandIntro("");
+      setProfileImage(null);
+      setImagePreview(null);
     } catch (error) {
       console.error("프로필 등록 실패", error);
     }
