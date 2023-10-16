@@ -2,17 +2,21 @@ import styled from "@emotion/styled";
 
 export const LayoutContainer = styled.div`
   label: LayoutContainer;
-  width: 100%;
+  width: 90%;
   height: 100vh;
   display: flex;
   flex-direction: row;
-  background-color: gray;
-
-  main {
-    background-color: white;
+  background-color: #e0e0e0;
+  #nav {
+    background-color: #202123;
+    padding-left: 20px;
+    padding-right: 20px;
   }
-
-  nav {
-    background-color: wheat;
+  li {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  div {
+    margin-top: 30px;
   }
 `;

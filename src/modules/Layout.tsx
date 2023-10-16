@@ -4,7 +4,10 @@ import { LayoutContainer } from "./style";
 const Layout = () => {
   return (
     <LayoutContainer>
-      <nav>
+      <nav id="nav">
+        <div>
+          <h1>CampAndTent Service</h1>
+        </div>
         <div>
           <p>가게 관리</p>
           <ul>
@@ -15,13 +18,13 @@ const Layout = () => {
               <Link to="InventoryManagement">재고관리</Link>
             </li>
             <li>
-              <Link to="storeManagement">주문처리</Link>
+              <Link to="">주문처리</Link>
             </li>
             <li>
-              <Link to="storeManagement">구매 이력관리</Link>
+              <Link to="">구매 이력관리</Link>
             </li>
             <li>
-              <Link to="storeManagement">매출관리</Link>
+              <Link to="">매출관리</Link>
             </li>
           </ul>
         </div>
@@ -29,7 +32,7 @@ const Layout = () => {
           <p>고객 관리</p>
           <ul>
             <li>
-              <Link to="storeManagement">고객 관리</Link>
+              <Link to="">고객 관리</Link>
             </li>
             <li>
               <Link to="ProfileRegister">프로필 등록</Link>
@@ -43,7 +46,7 @@ const Layout = () => {
           </ul>
         </div>
       </nav>
-      <main>
+      <main style={{ width: "100%" }}>
         <Outlet />
       </main>
     </LayoutContainer>

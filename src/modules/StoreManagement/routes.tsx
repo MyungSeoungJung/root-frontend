@@ -1,6 +1,6 @@
 import { Route } from "react-router-dom";
-import ProductRegistration from "./ProductRegistration";
-import InventoryManagement from "./InventoryManagement";
+import ProductRegistration from "./registration";
+import InventoryManagement from "./inventory";
 
 export const StoreManagementRoutes = [
   <Route
