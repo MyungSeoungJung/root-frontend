@@ -38,7 +38,7 @@ const Layout = () => {
               <Link to="ReviewManagement">리뷰관리</Link>
             </li>
             <li>
-              <Link to="ScheduleManagement">일정관리</Link>
+              <Link to="ScheduleManagement">캘린더</Link>
             </li>
           </ul>
         </div>

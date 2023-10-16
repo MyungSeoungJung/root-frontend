@@ -1,6 +1,7 @@
 import { Route } from "react-router-dom";
 import ProfileRegister from "./ProfileRegister";
 import ReviewManagement from "./ReviewManagement";
+import ScheduleManagement from "./ScheduleManagement";
 
 export const UserManagementRoutes = [
   <Route
@@ -12,5 +13,10 @@ export const UserManagementRoutes = [
     key="ReviewManagement"
     path="ReviewManagement"
     element={<ReviewManagement />}
+  />,
+  <Route
+    key="ScheduleManagement"
+    path="ScheduleManagement"
+    element={<ScheduleManagement />}
   />,
 ];
