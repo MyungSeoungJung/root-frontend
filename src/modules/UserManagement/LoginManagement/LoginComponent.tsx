@@ -24,10 +24,13 @@ function LoginComponent() {
     );
     if (user) {
       try {
-        const response = await axios.post("http://localhost:5500/auth/login", {
-          username,
-          password,
-        });
+        const response = await axios.post(
+          "http://192.168.100.152:5500/auth/login",
+          {
+            username,
+            password,
+          }
+        );
 
         if (response.data.status === "success") {
           localStorage.setItem("token", response.data.token);
