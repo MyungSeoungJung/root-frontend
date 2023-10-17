@@ -18,7 +18,9 @@ function LoginComponent() {
   const [password, setPassword] = useState<string>("");
   const [message, setMessage] = useState<string>("");
 
-  const handleLogin = async () => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     const user = dummyUsers.find(
       (u) => u.username === username && u.password === password
     );
@@ -50,32 +52,34 @@ function LoginComponent() {
   return (
     <div>
       <h1>Login</h1>
-      <div>
-        <label>
-          {" "}
-          Username:
-          <input
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          {" "}
-          Password:
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </label>
-      </div>
-      <button onClick={handleLogin}>Login</button>
-      <p>{message}</p>
+      <form onSubmit={handleLogin}>
+        <div>
+          <label>
+            {" "}
+            Username :
+            <input
+              type="text"
+              placeholder="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            {" "}
+            Password :
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </label>
+        </div>
+        <button type="submit">Login</button>
+        <p>{message}</p>
+      </form>
     </div>
   );
 }
