@@ -1,5 +1,5 @@
 import { Route } from "react-router-dom";
-import ProfileRegister from "./ProfileRegister";
+import ProfileRegister from "./ProfileManagement";
 import ReviewManagement from "./ReviewManagement";
 import ScheduleManagement from "./ScheduleManagement";
 
