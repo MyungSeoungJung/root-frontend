@@ -60,7 +60,7 @@ const ProductRegistration = () => {
       <section>
         <form onSubmit={handleProductRegister} ref={formRef}>
           <div>
-            <p>브랜드: </p> <div ref={productBrandRef}> Nike</div>
+            <p>브랜드: </p> <p ref={productBrandRef}> Nike</p>
           </div>
           <div>
             <p> 상품명: </p> <input placeholder="상품명" ref={productNameRef} />
