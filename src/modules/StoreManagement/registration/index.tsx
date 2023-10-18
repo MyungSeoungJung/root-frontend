@@ -4,17 +4,17 @@ import * as React from "react";
 import http from "@/utils/http";
 
 interface ProductItem {
-  productBrand: String;
-  productName: String;
+  productBrand: string;
+  productName: string;
   productPrice: number;
-  category: String;
-  isActive: Boolean;
-  prodcutDescription: String;
+  category: string;
+  isActive: boolean;
+  prodcutDescription: string;
 }
 interface ProductFile {
-  contentType: String;
-  originalFileName: String;
-  uuidFileName: String;
+  contentType: string;
+  originalFileName: string;
+  uuidFileName: string;
 }
 
 const ProductRegistration = () => {

@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-export const InventoryContainer = styled.div`
+export const TableContainer = styled.div`
   section {
     display: flex;
     flex-direction: column;

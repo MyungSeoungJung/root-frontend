@@ -1,22 +1,21 @@
 import { useEffect, useRef, useState } from "react";
-import { InventoryContainer } from "./style";
+import { TableContainer } from "./style";
 import http from "@/utils/http";
 
 interface product {
   id: number;
-  productBrand: String;
-  productName: String;
-  productPrice: String;
-  isActive: String;
-  category: String;
-  productDescription: String;
+  productBrand: string;
+  productName: string;
+  productPrice: string;
+  isActive: string;
+  category: string;
+  productDescription: string;
   files: productFile[];
   productInfo: productInfo[];
 }
-
 interface productFile {
   contentType: string;
-  originalFileName: String;
+  originalFileName: string;
   uuidFileName: string;
 }
 interface productInfo {
@@ -46,7 +45,9 @@ const InventoryManagement = () => {
   const [productState, setProductState] = useState<"">();
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
+
   let size = 3; //사이즈 조절
+
   //  첫화면 get
   useEffect(() => {
     const fetchData = async () => {
@@ -115,7 +116,7 @@ const InventoryManagement = () => {
   };
 
   return (
-    <InventoryContainer>
+    <TableContainer>
       <section>
         <div>
           <h1>재고 관리</h1>
@@ -157,6 +158,7 @@ const InventoryManagement = () => {
                   <td>카테고리</td>
                   <td>재고</td>
                   <td>등록일</td>
+                  <td>수정</td>
                 </tr>
               </thead>
               <tbody>
@@ -187,6 +189,9 @@ const InventoryManagement = () => {
                         product.productInfo[0].lastUpdated
                       ).toLocaleDateString()}
                     </td>
+                    <td>
+                      <button>수정</button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -194,7 +199,7 @@ const InventoryManagement = () => {
           </div>
         </div>
       </section>
-    </InventoryContainer>
+    </TableContainer>
   );
 };
 export default InventoryManagement;
