@@ -1,12 +1,14 @@
 import { Link, Outlet } from "react-router-dom";
 import { LayoutContainer } from "./style";
+import UserProfile from "../modules/UserManagement/ProfileManagement/ProfileContext";
 
 const Layout = () => {
   return (
     <LayoutContainer>
-      <nav id="nav">
+      <nav id="LayoutWrapper">
         <div>
           <h1>CampAndTent Service</h1>
+          <UserProfile />
         </div>
         <div>
           <p>가게 관리</p>

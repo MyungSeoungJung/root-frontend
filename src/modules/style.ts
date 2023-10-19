@@ -7,16 +7,16 @@ export const LayoutContainer = styled.div`
   display: flex;
   flex-direction: row;
   background-color: #e0e0e0;
-  #nav {
+  #LayoutWrapper {
     background-color: #202123;
     padding-left: 20px;
     padding-right: 20px;
   }
-  li {
+  #LayoutWrapper li {
     margin-top: 10px;
     margin-bottom: 10px;
   }
-  div {
+  #LayoutWrapper div {
     margin-top: 30px;
   }
 `;

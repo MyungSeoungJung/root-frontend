@@ -4,9 +4,11 @@ import { StoreManagementRoutes } from "./modules/StoreManagement/routes";
 import ResetStyle from "./styles/reset";
 import { UserManagementRoutes } from "./modules/UserManagement/routes";
 import LoginComponent from "./modules/UserManagement/LoginManagement/LoginComponent";
+// import { ProfileProvider } from "./modules/UserManagement/ProfileManagement/ProfileContext";
 
 const App = () => {
   return (
+    // <ProfileProvider>
     <BrowserRouter>
       <ResetStyle />
       <Routes>
@@ -17,6 +19,7 @@ const App = () => {
         </Route>
       </Routes>
     </BrowserRouter>
+    // </ProfileProvider>
   );
 };
 

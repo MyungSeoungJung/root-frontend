@@ -1,13 +1,13 @@
 import { Route } from "react-router-dom";
-import ProfileRegister from "./ProfileManagement";
+import ProfileManagement from "./ProfileManagement/ProfileRegister";
 import ReviewManagement from "./ReviewManagement";
 import ScheduleManagement from "./ScheduleManagement";
 
 export const UserManagementRoutes = [
   <Route
-    key="ProfileRegister"
-    path="ProfileRegister"
-    element={<ProfileRegister />}
+    key="ProfileManagement"
+    path="ProfileManagement"
+    element={<ProfileManagement />}
   />,
   <Route
     key="ReviewManagement"
