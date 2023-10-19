@@ -1,6 +1,6 @@
 import { Link, Outlet } from "react-router-dom";
 import { LayoutContainer } from "./style";
-import UserProfile from "../modules/UserManagement/ProfileManagement/ProfileContext";
+import UserProfile from "../modules/UserManagement/ProfileManagement/UserProfile";
 
 const Layout = () => {
   return (
