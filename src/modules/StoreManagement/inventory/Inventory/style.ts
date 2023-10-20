@@ -7,7 +7,7 @@ export const TableContainer = styled.div`
     padding-left: 50px;
     margin-top: 25px;
   }
-  section > div:nth-child(1) {
+  section > div:nth-of-type(1) {
     background-color: white;
     width: 90%;
     padding-top: 20px;
@@ -16,7 +16,7 @@ export const TableContainer = styled.div`
     border-radius: 10px;
     padding-left: 10px;
   }
-  section > div:nth-child(2) {
+  section > div:nth-of-type(2) {
     width: 90%;
     background-color: e0e0e0;
     height: 300px;

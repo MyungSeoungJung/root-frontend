@@ -20,7 +20,30 @@ function MediaElement({
     );
   }
 }
+interface order {
+  orderId: string;
+  productId: string;
+  productImg: string;
+  productName: string;
+  orderStrate: string;
+  orderDate: string;
+}
+
 const OrderManagement = () => {
+  const [order, setOder] = useState<order[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await http.get(`/order/orderDetail`);
+        // setOder[response.data];
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <TableContainer>
       <section>
@@ -30,9 +53,8 @@ const OrderManagement = () => {
         <div>
           <nav>
             <div onClick={() => "전체"}>전체</div>
-            <div onClick={() => "판매중"}>수락</div>
-            <div onClick={() => "숨김"}>거절</div>
-            <div onClick={() => "숨김"}>대기</div>
+            <div onClick={() => "판매중"}>완료</div>
+            <div onClick={() => "숨김"}>실패</div>
           </nav>
           <div>
             <div id="inputContainer">
@@ -55,7 +77,6 @@ const OrderManagement = () => {
                 <tr>
                   <td>주문 ID</td>
                   <td>제품넘버</td>
-                  <td>이미지</td>
                   <td>제품 이름</td>
                   <td>처리 상태</td>
                   <td>주문 요청시간</td>
