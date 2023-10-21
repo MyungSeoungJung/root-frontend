@@ -29,7 +29,7 @@ const ProfileProvider = ({ children }: ProfileProviderProps) => {
     async function fetchProfileDetails() {
       try {
         const userInfoResponse = await axios.get<UserInfoResponseData>(
-          "http://192.168.100.152:5500/user/getUserInfo",
+          "http://localhost:5500/user/getUserInfo",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -41,7 +41,7 @@ const ProfileProvider = ({ children }: ProfileProviderProps) => {
         const uuid = userInfoResponse.data.uuid;
 
         const imageResponse = await axios.get<string>(
-          `http://192.168.100.152:5500/user/profileImage/${userId}/${uuid}`,
+          `http://localhost:5500/user/profileImage/${userId}/${uuid}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -56,7 +56,7 @@ const ProfileProvider = ({ children }: ProfileProviderProps) => {
 
       try {
         const response = await axios.get<string>(
-          "http://192.168.100.152:5500/user/brandName",
+          "http://localhost:5500/user/brandName",
           {
             headers: {
               Authorization: `Bearer ${token}`,

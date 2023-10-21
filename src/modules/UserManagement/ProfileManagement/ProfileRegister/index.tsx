@@ -40,7 +40,7 @@ function ProfileRegister() {
 
     try {
       const response = await axios.post(
-        "http://192.168.100.152:5500/user/register",
+        "http://localhost:5500/user/register",
         formData,
         {
           headers: {

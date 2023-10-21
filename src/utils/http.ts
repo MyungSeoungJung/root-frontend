@@ -4,7 +4,8 @@ import { getCookie } from "./cookie";
 // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwidXNlcm5hbWU
 // iOiJ1c2VyMiIsImlhdCI6MTY5NzE4MzA4NywiZXhwIjoxNjk3Nzg3ODg3fQ.kj29hEiExxRU0BZ93jZaEKUoPbfzZICYSuOcYNNSBH8
 const http = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: "http://localhost:5500",
+  withCredentials: true,
 });
 
 // 요청값에 대해서 사전처리
