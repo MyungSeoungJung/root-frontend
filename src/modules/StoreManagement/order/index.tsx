@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import http from "@/utils/http";
 import { TableContainer } from "../inventory/Inventory/style"; //전체 틀 css
-
 //file 따로 get 요청
 function MediaElement({
   contentType,
@@ -11,6 +10,8 @@ function MediaElement({
   uuidFileName: string;
 }) {
   if (contentType.includes("image")) {
+    console.log(`check ---------${uuidFileName}`);
+
     return (
       <img
         width={60}
@@ -21,22 +22,38 @@ function MediaElement({
   }
 }
 interface order {
-  orderId: string;
-  productId: string;
-  productImg: string;
-  productName: string;
-  orderStrate: string;
+  orderInfo: orderInfo[];
+  orderState: orderState[];
+  productFile: productFile[];
+  productInfo: productInfo[];
+}
+interface orderInfo {
+  orderId: number;
+  quantity: number;
   orderDate: string;
+}
+interface orderState {
+  orderState: string;
+}
+interface productInfo {
+  productId: number;
+  productName: string;
+}
+interface productFile {
+  contentType: string;
+  originalFileName: string;
+  uuidFileName: string;
 }
 
 const OrderManagement = () => {
-  const [order, setOder] = useState<order[]>([]);
+  const [order, setOrder] = useState<order[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await http.get(`/order/orderDetail`);
-        // setOder[response.data];
+        setOrder(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -78,13 +95,30 @@ const OrderManagement = () => {
                   <td>주문 ID</td>
                   <td>제품넘버</td>
                   <td>제품 이름</td>
+                  <td>제품 사진</td>
                   <td>처리 상태</td>
                   <td>주문 요청시간</td>
-                  <td>수락</td>
-                  <td>거절</td>
                 </tr>
               </thead>
-              <tbody></tbody>
+              <tbody>
+                {order.map((order, index) => (
+                  <tr key={`order-key${order.orderInfo[0].orderId},${index}`}>
+                    <td>{order.orderInfo[0].orderId}</td>
+                    <td>{order.productInfo[0].productId}</td>
+                    <td>{order.productInfo[0].productName}</td>
+                    <td>
+                      {order.productFile && order.productFile.length > 0 && (
+                        <MediaElement
+                          uuidFileName={order.productFile[0].uuidFileName}
+                          contentType={order.productFile[0].contentType}
+                        />
+                      )}
+                    </td>
+                    <td>{order.orderState[0].orderState}</td>
+                    <td>{order.orderInfo[0].orderDate}</td>
+                  </tr>
+                ))}
+              </tbody>
             </table>
           </div>
         </div>

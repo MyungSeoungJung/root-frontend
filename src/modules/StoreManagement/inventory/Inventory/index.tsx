@@ -31,6 +31,8 @@ function MediaElement({
   uuidFileName: string;
 }) {
   if (contentType.includes("image")) {
+    console.log(`check ---------${uuidFileName}`);
+
     return (
       <img
         width={60}
@@ -40,6 +42,7 @@ function MediaElement({
     );
   }
 }
+
 const InventoryManagement = () => {
   const [product, setProduct] = useState<product[]>([]);
   const [productState, setProductState] = useState<"">();
