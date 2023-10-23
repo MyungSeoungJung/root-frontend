@@ -1,5 +1,6 @@
 import { useState, useEffect, createContext, ReactNode } from "react";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
+import { getCookie } from "@/utils/cookie";
 
 interface ProfileContextProps {
   profileImage: string | null;
@@ -20,7 +21,11 @@ interface ProfileProviderProps {
 }
 
 const ProfileProvider = ({ children }: ProfileProviderProps) => {
-  const token = localStorage.getItem("token");
+  const token = getCookie("token");
+  if (!token) {
+    console.error("토큰이 존재하지 않습니다.");
+    return <>{children}</>;
+  }
 
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [brandName, setBrandName] = useState<string | null>(null);
@@ -40,18 +45,29 @@ const ProfileProvider = ({ children }: ProfileProviderProps) => {
         const userId = userInfoResponse.data.userId;
         const uuid = userInfoResponse.data.uuid;
 
-        const imageResponse = await axios.get<string>(
+        const imageResponse: AxiosResponse<ArrayBuffer> = await axios.get(
           `http://localhost:5500/user/profileImage/${userId}/${uuid}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
+            responseType: "arraybuffer",
           }
         );
 
-        setProfileImage(imageResponse.data);
+        const base64Image = btoa(
+          new Uint8Array(imageResponse.data).reduce(
+            (data, byte) => data + String.fromCharCode(byte),
+            ""
+          )
+        );
+
+        setProfileImage(`data:image/png;base64,${base64Image}`);
       } catch (error) {
-        console.error("이미지를 받아오는 중 에러발생 : ", error);
+        console.error(
+          "이미지를 받아오는 중 에러발생 : ",
+          error.response || error.message
+        );
       }
 
       try {
