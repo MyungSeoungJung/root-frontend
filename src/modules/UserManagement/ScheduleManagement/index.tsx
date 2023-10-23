@@ -150,15 +150,7 @@ class ScheduleManagement extends Component<{}, ScheduleManagementState> {
         },
       })
       .then((response) => {
-        const updatedEvent = response.data;
-        this.setState((prevState) => ({
-          events: prevState.events.map((e) =>
-            e.id === updatedEvent.id ? updatedEvent : e
-          ),
-          showModal: false,
-          titleInput: "",
-          colorInput: "#FFFFFF",
-        }));
+        this.fetchEvents(); // Solution #3: Fetch events again after editing an event.
       })
       .catch((error) => {
         console.error("이벤트를 편집하는 중 에러 발생:", error);
@@ -175,10 +167,7 @@ class ScheduleManagement extends Component<{}, ScheduleManagementState> {
         },
       })
       .then(() => {
-        this.setState((prevState) => ({
-          events: prevState.events.filter((e) => e.id !== eventId),
-          showModal: false,
-        }));
+        this.fetchEvents(); // Solution #3: Fetch events again after deleting an event.
       })
       .catch((error) => {
         console.error("이벤트를 삭제하는 중 에러 발생:", error);
