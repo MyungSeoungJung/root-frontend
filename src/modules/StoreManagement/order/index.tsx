@@ -23,23 +23,18 @@ function MediaElement({
 }
 interface order {
   orderInfo: orderInfo[];
-  orderState: orderState[];
-  productFile: productFile[];
   productInfo: productInfo[];
 }
 interface orderInfo {
   orderId: number;
   quantity: number;
   orderDate: string;
+  orderStatus: string;
 }
-interface orderState {
-  orderState: string;
-}
+
 interface productInfo {
   productId: number;
   productName: string;
-}
-interface productFile {
   contentType: string;
   originalFileName: string;
   uuidFileName: string;
@@ -47,11 +42,18 @@ interface productFile {
 
 const OrderManagement = () => {
   const [order, setOrder] = useState<order[]>([]);
+  const [orderState, setOrderState] = useState("");
+  const [page, setPage] = useState(0);
+  const [totalPages, setTotalPage] = useState(1);
+
+  const size = 3;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await http.get(`/order/orderDetail`);
+        const response = await http.get(
+          `/order/orderDetail?state=${orderState}&size=${size}&page=${page}`
+        );
         setOrder(response.data);
         console.log(response.data);
       } catch (error) {
@@ -61,6 +63,57 @@ const OrderManagement = () => {
     fetchData();
   }, []);
 
+  const handleGetOrderState = async (state) => {
+    setPage(0);
+    let queryParams;
+
+    if (state === "전체") {
+      queryParams = "";
+    } else if (state === "완료") {
+      queryParams = "true";
+    } else if (state === "실패") {
+      queryParams = "false";
+    }
+
+    const response = await http.get(
+      `/order/orderDetail?state=${queryParams}&size=${size}&page=0`
+    );
+    setOrder(response.data);
+    setOrderState(queryParams);
+  };
+
+  const handleNextPage = async () => {
+    if (page < totalPages) {
+      const nextPage = page + 1;
+      const response = await http.get(
+        `/order/orderDetail?state=${orderState}&size=${size}&page=${page + 1}`
+      );
+      setOrder(response.data);
+      setPage(nextPage);
+    }
+  };
+  const handlePrevPage = async () => {
+    if (page == 1) {
+      const PrevPage = page - 1;
+      const response = await http.get(
+        `/order/orderDetail?state=${orderState}&size=${size}&page=${page - 1}`
+      );
+      setOrder(response.data);
+      setPage(PrevPage);
+    }
+  };
+
+  const inputRef = useRef<HTMLInputElement>();
+
+  const handleSearchOrder = async () => {
+    const response = await http.get(
+      `order/orderDetail?state=${orderState}&size=${size}&page=${page}&keyword=${inputRef.current.value}`
+    );
+    setOrder(response.data);
+    console.log(inputRef.current.value);
+    inputRef.current.value = "";
+  };
+
   return (
     <TableContainer>
       <section>
@@ -69,23 +122,27 @@ const OrderManagement = () => {
         </div>
         <div>
           <nav>
-            <div onClick={() => "전체"}>전체</div>
-            <div onClick={() => "판매중"}>완료</div>
-            <div onClick={() => "숨김"}>실패</div>
+            <div onClick={() => handleGetOrderState("전체")}>전체</div>
+            <div onClick={() => handleGetOrderState("완료")}>처리 완료</div>
+            <div onClick={() => handleGetOrderState("실패")}>처리 실패</div>
           </nav>
           <div>
             <div id="inputContainer">
               <div>
-                <input placeholder="주문 검색" />
+                <input placeholder="주문Id로 검색해주세요" ref={inputRef} />
               </div>
               <div>
-                <button>검색</button>
+                <button onClick={handleSearchOrder}>검색</button>
               </div>
               <div>
-                <button>이전</button>
+                <button onClick={handlePrevPage} disabled={page === 0}>
+                  이전
+                </button>
               </div>
               <div>
-                <button>다음</button>
+                <button onClick={handleNextPage} disabled={page === totalPages}>
+                  다음
+                </button>
               </div>
               <div></div>
             </div>
@@ -94,8 +151,8 @@ const OrderManagement = () => {
                 <tr>
                   <td>주문 ID</td>
                   <td>제품넘버</td>
-                  <td>제품 이름</td>
                   <td>제품 사진</td>
+                  <td>제품 이름</td>
                   <td>처리 상태</td>
                   <td>주문 요청시간</td>
                 </tr>
@@ -105,17 +162,27 @@ const OrderManagement = () => {
                   <tr key={`order-key${order.orderInfo[0].orderId},${index}`}>
                     <td>{order.orderInfo[0].orderId}</td>
                     <td>{order.productInfo[0].productId}</td>
-                    <td>{order.productInfo[0].productName}</td>
                     <td>
-                      {order.productFile && order.productFile.length > 0 && (
+                      {order.productInfo && order.productInfo.length > 0 && (
                         <MediaElement
-                          uuidFileName={order.productFile[0].uuidFileName}
-                          contentType={order.productFile[0].contentType}
+                          uuidFileName={order.productInfo[0].uuidFileName}
+                          contentType={order.productInfo[0].contentType}
                         />
                       )}
                     </td>
-                    <td>{order.orderState[0].orderState}</td>
-                    <td>{order.orderInfo[0].orderDate}</td>
+                    <td>{order.productInfo[0].productName}</td>
+                    <td>
+                      {order.orderInfo[0].orderStatus ? (
+                        <span>처리 완료</span>
+                      ) : (
+                        <span>처리 실패</span>
+                      )}
+                    </td>
+                    <td>
+                      {new Date(
+                        order.orderInfo[0].orderDate
+                      ).toLocaleDateString()}
+                    </td>
                   </tr>
                 ))}
               </tbody>

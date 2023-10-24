@@ -49,7 +49,7 @@ const InventoryManagement = () => {
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
 
-  let size = 3; //사이즈 조절
+  const size = 3; //사이즈 조절
 
   //  첫화면 get
   useEffect(() => {
@@ -109,6 +109,7 @@ const InventoryManagement = () => {
     }
   };
   const inputRef = useRef<HTMLInputElement>();
+
   const handleSearchProduct = async () => {
     const response = await http.get(
       `product/inventory?state=${productState}&size=${size}&page=${page}&keyword=${inputRef.current.value}`
