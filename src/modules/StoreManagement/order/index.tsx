@@ -22,14 +22,11 @@ function MediaElement({
   }
 }
 interface order {
-  orderInfo: orderInfo[];
-  productInfo: productInfo[];
-}
-interface orderInfo {
   orderId: number;
   quantity: number;
   orderDate: string;
-  orderStatus: string;
+  orderState: string;
+  productInfo: productInfo[];
 }
 
 interface productInfo {
@@ -54,7 +51,7 @@ const OrderManagement = () => {
         const response = await http.get(
           `/order/orderDetail?state=${orderState}&size=${size}&page=${page}`
         );
-        setOrder(response.data);
+        setOrder(response.data.content);
         console.log(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -78,7 +75,7 @@ const OrderManagement = () => {
     const response = await http.get(
       `/order/orderDetail?state=${queryParams}&size=${size}&page=0`
     );
-    setOrder(response.data);
+    setOrder(response.data.content);
     setOrderState(queryParams);
   };
 
@@ -88,7 +85,7 @@ const OrderManagement = () => {
       const response = await http.get(
         `/order/orderDetail?state=${orderState}&size=${size}&page=${page + 1}`
       );
-      setOrder(response.data);
+      setOrder(response.data.content);
       setPage(nextPage);
     }
   };
@@ -98,7 +95,7 @@ const OrderManagement = () => {
       const response = await http.get(
         `/order/orderDetail?state=${orderState}&size=${size}&page=${page - 1}`
       );
-      setOrder(response.data);
+      setOrder(response.data.content);
       setPage(PrevPage);
     }
   };
@@ -109,7 +106,7 @@ const OrderManagement = () => {
     const response = await http.get(
       `order/orderDetail?state=${orderState}&size=${size}&page=${page}&keyword=${inputRef.current.value}`
     );
-    setOrder(response.data);
+    setOrder(response.data.content);
     console.log(inputRef.current.value);
     inputRef.current.value = "";
   };
@@ -159,8 +156,8 @@ const OrderManagement = () => {
               </thead>
               <tbody>
                 {order.map((order, index) => (
-                  <tr key={`order-key${order.orderInfo[0].orderId},${index}`}>
-                    <td>{order.orderInfo[0].orderId}</td>
+                  <tr key={`order-key${order.orderId},${index}`}>
+                    <td>{order.orderId}</td>
                     <td>{order.productInfo[0].productId}</td>
                     <td>
                       {order.productInfo && order.productInfo.length > 0 && (
@@ -172,17 +169,13 @@ const OrderManagement = () => {
                     </td>
                     <td>{order.productInfo[0].productName}</td>
                     <td>
-                      {order.orderInfo[0].orderStatus ? (
+                      {order.orderState ? (
                         <span>처리 완료</span>
                       ) : (
                         <span>처리 실패</span>
                       )}
                     </td>
-                    <td>
-                      {new Date(
-                        order.orderInfo[0].orderDate
-                      ).toLocaleDateString()}
-                    </td>
+                    <td>{new Date(order.orderDate).toLocaleDateString()}</td>
                   </tr>
                 ))}
               </tbody>
