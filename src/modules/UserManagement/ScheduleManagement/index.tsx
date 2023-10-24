@@ -6,7 +6,7 @@ import axios from "axios";
 import { getCookie } from "@/utils/cookie";
 
 interface CalendarOptions {
-  defaultView: string;
+  initialView: string;
   plugins: any[];
   events?: any[];
   dateClick?: (info: any) => void;
@@ -29,6 +29,9 @@ interface ScheduleManagementState {
   selectedDate: Date | null;
   titleInput: string;
   colorInput: string;
+  currentTime: string;
+  startDate: string;
+  endDate: string;
 }
 
 class ScheduleManagement extends Component<{}, ScheduleManagementState> {
@@ -42,24 +45,48 @@ class ScheduleManagement extends Component<{}, ScheduleManagementState> {
       selectedDate: null,
       titleInput: "",
       colorInput: "#FFFFFF",
+      currentTime: this.formatCurrentTime(new Date()),
+      startDate: null,
+      endDate: null,
     };
+  }
+
+  formatCurrentTime(date: Date): string {
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+      2,
+      "0"
+    )}-${String(date.getDate()).padStart(2, "0")} ${String(
+      date.getHours()
+    ).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}:${String(
+      date.getSeconds()
+    ).padStart(2, "0")}`;
   }
 
   componentDidMount(): void {
     this.fetchEvents();
+
+    setInterval(() => {
+      this.setState({
+        currentTime: this.formatCurrentTime(new Date()),
+      });
+    }, 1000);
   }
 
-  fetchEvents = () => {
+  getApiHeaders = () => {
     const token = getCookie("token");
+    return {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+  };
+
+  fetchEvents = () => {
     axios
-      .get("http://localhost:5500/events", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .get("http://localhost:5500/events", this.getApiHeaders())
       .then((response) => {
+        console.log("API response:", response.data);
         const fetchedEvents = response.data.map((event) => ({
-          // Solution #2: Map through the events and format the dates properly.
           ...event,
           start: event.startDate,
           end: event.endDate,
@@ -72,35 +99,70 @@ class ScheduleManagement extends Component<{}, ScheduleManagementState> {
   };
 
   handleDateClick = (info: any) => {
+    console.log("Date clicked:", info);
     this.setState({
       showModal: true,
       modalType: "ADD",
       selectedDate: info.date,
+      startDate: this.formatDate(info.date),
+      endDate: this.formatDate(info.date),
     });
   };
 
   handleEventClick = (info: any) => {
+    console.log("Event clicked:", info);
+    const startDate = info.event.start
+      ? info.event.start.toISOString().split("T")[0]
+      : null;
+    const endDate = info.event.end
+      ? info.event.end.toISOString().split("T")[0]
+      : null;
     this.setState({
       showModal: true,
       modalType: "EDIT",
-      selectedEvent: info.event,
+      selectedEvent: {
+        title: info.event.title,
+        start: startDate,
+        end: endDate,
+        color: info.event.backgroundColor,
+        id: info.event.id,
+      },
       titleInput: info.event.title,
-      colorInput: info.event.color,
+      colorInput: info.event.backgroundColor,
     });
+    console.log("selectedEvent : ", JSON.stringify(info.event));
   };
 
   handleAddEventClick = () => {
+    const currentDate = new Date();
     this.setState({
       showModal: true,
       modalType: "ADD",
-      selectedDate: new Date(),
+      selectedDate: currentDate,
+      startDate: this.formatDate(currentDate),
+      endDate: this.formatDate(currentDate),
     });
   };
 
+  formatDate(date: Date): string {
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+      2,
+      "0"
+    )}-${String(date.getDate()).padStart(2, "0")}`;
+  }
+
   handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({
-      [event.target.name]: event.target.value,
-    } as any);
+    const { name, value } = event.target;
+
+    if (name === "titleInput") {
+      this.setState({ titleInput: value });
+    } else if (name === "colorInput") {
+      this.setState({ colorInput: value });
+    } else if (name === "startDate") {
+      this.setState({ startDate: value });
+    } else if (name === "endDate") {
+      this.setState({ endDate: value });
+    }
   };
 
   closeModal = () => {
@@ -112,71 +174,67 @@ class ScheduleManagement extends Component<{}, ScheduleManagementState> {
   };
 
   addEvent = () => {
+    console.log("Adding event...");
     const newEvent: Event = {
       title: this.state.titleInput,
-      startDate: this.state.selectedDate!.toISOString(),
-      endDate: this.state.selectedDate!.toISOString(),
+      startDate: this.state.startDate,
+      endDate: this.state.endDate,
       color: this.state.colorInput,
     };
-    const token = getCookie("token");
-    console.log(token);
     axios
-      .post("http://localhost:5500/events", newEvent, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .post("http://localhost:5500/events", newEvent, this.getApiHeaders())
       .then((response) => {
-        this.fetchEvents(); // Solution #3: Fetch events again after adding a new event.
+        this.fetchEvents();
       })
       .catch((error) => {
         console.error("이벤트를 추가하는 중 에러 발생:", error);
       });
+
+    this.closeModal();
   };
 
   editEvent = () => {
     const updatedEvent: Event = {
       id: this.state.selectedEvent!.id,
       title: this.state.titleInput,
-      startDate: this.state.selectedEvent!.start,
-      endDate: this.state.selectedEvent!.end,
+      startDate: this.state.startDate,
+      endDate: this.state.endDate,
       color: this.state.colorInput,
     };
-    const token = getCookie("token");
     axios
-      .put(`http://localhost:5500/events/${updatedEvent.id}`, updatedEvent, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .put(
+        `http://localhost:5500/events/${updatedEvent.id}`,
+        updatedEvent,
+        this.getApiHeaders()
+      )
       .then((response) => {
-        this.fetchEvents(); // Solution #3: Fetch events again after editing an event.
+        this.fetchEvents();
       })
       .catch((error) => {
         console.error("이벤트를 편집하는 중 에러 발생:", error);
       });
+
+    this.closeModal();
   };
 
   deleteEvent = () => {
     const eventId = this.state.selectedEvent!.id;
     const token = getCookie("token");
     axios
-      .delete(`http://localhost:5500/events/${eventId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .delete(`http://localhost:5500/events/${eventId}`, this.getApiHeaders())
       .then(() => {
-        this.fetchEvents(); // Solution #3: Fetch events again after deleting an event.
+        this.fetchEvents();
       })
       .catch((error) => {
         console.error("이벤트를 삭제하는 중 에러 발생:", error);
       });
+
+    this.closeModal();
   };
 
   render() {
     const calendarOptions: CalendarOptions = {
-      defaultView: "dayGridMonth",
+      initialView: "dayGridMonth",
       plugins: [dayGridPlugin],
       events: this.state.events,
       dateClick: this.handleDateClick,
@@ -185,6 +243,7 @@ class ScheduleManagement extends Component<{}, ScheduleManagementState> {
 
     return (
       <div className="App">
+        <div className="current-time">{this.state.currentTime}</div>
         <button onClick={this.handleAddEventClick}>일정추가</button>
         <FullCalendar {...calendarOptions} />
         {this.state.showModal && (
@@ -210,13 +269,48 @@ class ScheduleManagement extends Component<{}, ScheduleManagementState> {
             {this.state.modalType === "ADD" && (
               <>
                 <h3>Add Event</h3>
-                <p>Select date: {this.state.selectedDate?.toString()}</p>
+                <div>
+                  <label>Start Date: </label>
+                  <input
+                    type="date"
+                    name="startDate"
+                    value={this.state.startDate}
+                    onChange={this.handleInputChange}
+                  />
+                </div>
+                <div>
+                  <label>End Date: </label>
+                  <input
+                    type="date"
+                    name="endDate"
+                    value={this.state.endDate}
+                    onChange={this.handleInputChange}
+                  />
+                </div>
                 <button onClick={this.addEvent}>Add</button>
               </>
             )}
             {this.state.modalType === "EDIT" && this.state.selectedEvent && (
               <>
                 <h3>Edit/Delete Event</h3>
+                <div>
+                  <label>Start Date: </label>
+                  <input
+                    type="date"
+                    name="startDate"
+                    value={this.state.startDate}
+                    onChange={this.handleInputChange}
+                  />
+                </div>
+                <div>
+                  <label>End Date: </label>
+                  <input
+                    type="date"
+                    name="endDate"
+                    value={this.state.endDate}
+                    onChange={this.handleInputChange}
+                  />
+                </div>
                 <p>Event: {this.state.selectedEvent.title}</p>
                 <p>Date: {this.state.selectedEvent.start}</p>
                 <button onClick={this.editEvent}>Edit</button>
