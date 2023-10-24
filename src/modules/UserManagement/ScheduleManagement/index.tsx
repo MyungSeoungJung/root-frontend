@@ -4,6 +4,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import "./ScheduleManagement.css";
 import axios from "axios";
 import { getCookie } from "@/utils/cookie";
+import interactionPlugin from "@fullcalendar/interaction";
 
 interface CalendarOptions {
   initialView: string;
@@ -98,15 +99,9 @@ class ScheduleManagement extends Component<{}, ScheduleManagementState> {
       });
   };
 
-  handleDateClick = (info: any) => {
-    console.log("Date clicked:", info);
-    this.setState({
-      showModal: true,
-      modalType: "ADD",
-      selectedDate: info.date,
-      startDate: this.formatDate(info.date),
-      endDate: this.formatDate(info.date),
-    });
+  handleDateClick = (info) => {
+    console.log("Date clicked:", info.dateStr);
+    this.handleAddEventClick();
   };
 
   handleEventClick = (info: any) => {
@@ -135,13 +130,18 @@ class ScheduleManagement extends Component<{}, ScheduleManagementState> {
 
   handleAddEventClick = () => {
     const currentDate = new Date();
-    this.setState({
-      showModal: true,
-      modalType: "ADD",
-      selectedDate: currentDate,
-      startDate: this.formatDate(currentDate),
-      endDate: this.formatDate(currentDate),
-    });
+    this.setState(
+      {
+        showModal: true,
+        modalType: "ADD",
+        selectedDate: new Date(),
+        startDate: this.formatDate(currentDate),
+        endDate: this.formatDate(currentDate),
+      },
+      () => {
+        console.log("~~~ :", this.state);
+      }
+    );
   };
 
   formatDate(date: Date): string {
@@ -175,10 +175,12 @@ class ScheduleManagement extends Component<{}, ScheduleManagementState> {
 
   addEvent = () => {
     console.log("Adding event...");
+    let endDate = new Date(this.state.endDate);
+    endDate.setDate(endDate.getDate() + 1);
     const newEvent: Event = {
       title: this.state.titleInput,
       startDate: this.state.startDate,
-      endDate: this.state.endDate,
+      endDate: endDate.toISOString().split("T")[0],
       color: this.state.colorInput,
     };
     axios
@@ -194,11 +196,13 @@ class ScheduleManagement extends Component<{}, ScheduleManagementState> {
   };
 
   editEvent = () => {
+    let endDate = new Date(this.state.endDate);
+    endDate.setDate(endDate.getDate() + 1);
     const updatedEvent: Event = {
       id: this.state.selectedEvent!.id,
       title: this.state.titleInput,
       startDate: this.state.startDate,
-      endDate: this.state.endDate,
+      endDate: endDate.toISOString().split("T")[0],
       color: this.state.colorInput,
     };
     axios
@@ -235,7 +239,7 @@ class ScheduleManagement extends Component<{}, ScheduleManagementState> {
   render() {
     const calendarOptions: CalendarOptions = {
       initialView: "dayGridMonth",
-      plugins: [dayGridPlugin],
+      plugins: [dayGridPlugin, interactionPlugin],
       events: this.state.events,
       dateClick: this.handleDateClick,
       eventClick: this.handleEventClick,
