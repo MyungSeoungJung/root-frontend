@@ -37,6 +37,9 @@ const Layout = () => {
               <Link to="">고객 관리</Link>
             </li>
             <li>
+              <Link to="ChartManagement">고객 주문 통계</Link>
+            </li>
+            <li>
               <Link to="ProfileManagement">프로필 등록</Link>
             </li>
             <li>
