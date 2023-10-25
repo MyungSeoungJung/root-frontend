@@ -1,13 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { TableContainer } from "./style";
 import http from "@/utils/http";
+import InventoryModifyModal from "../InventoryModifyModal";
+import axios from "axios";
 
 interface product {
   id: number;
   productBrand: string;
   productName: string;
   productPrice: string;
-  isActive: string;
+  isActive: boolean;
   category: string;
   productDescription: string;
   files: productFile[];
@@ -48,6 +50,14 @@ const InventoryManagement = () => {
   const [productState, setProductState] = useState<"">();
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
+  const [modifyItem, setModifyItem] = useState({
+    index: 0,
+    isActive: false,
+    productName: "",
+    quantity: "",
+    productPrice: "",
+  });
+  const [showModifyModal, SetShowModifyModal] = useState(false);
 
   const size = 3; //사이즈 조절
 
@@ -118,7 +128,69 @@ const InventoryManagement = () => {
     console.log(inputRef.current.value);
     inputRef.current.value = "";
   };
-
+  // -------------------------------------모달 ------------------------------
+  // 모달 열기
+  const handleOpenModifyModal = (index: number) => {
+    SetShowModifyModal(true);
+    setModifyItem({
+      index,
+      productName: product[index].productName,
+      quantity: product[index].productInfo[0].quantity,
+      isActive: product[index].isActive,
+      productPrice: product[index].productPrice,
+    });
+  };
+  //  모달 수정 확인 서버 보내기
+  const handleModifyConfirm = ({
+    index,
+    isActive,
+    productName,
+    quantity,
+    productPrice,
+  }: {
+    index: number;
+    isActive: boolean;
+    productName: string;
+    quantity: string;
+    productPrice: string;
+  }) => {
+    (async () => {
+      const response = await http.put(
+        `/product/modifyProduct?id=${product[index].id}`,
+        {
+          isActive,
+          productName,
+          quantity,
+          productPrice,
+        }
+      );
+      console.log(response + "response");
+      setProduct(
+        product.map((item, idx) => {
+          if (index === idx) {
+            return {
+              ...item,
+              isActive,
+              productName,
+              productInfo: [
+                {
+                  quantity,
+                  lastUpdated: item.productInfo[0].lastUpdated,
+                },
+              ],
+              productPrice,
+            };
+          }
+          return item;
+        })
+      );
+      SetShowModifyModal(false);
+    })();
+  };
+  // 모달 취소 버튼
+  const handleModifyCancle = () => {
+    SetShowModifyModal(false);
+  };
   return (
     <TableContainer>
       <section>
@@ -166,8 +238,8 @@ const InventoryManagement = () => {
                 </tr>
               </thead>
               <tbody>
-                {product.map((product) => (
-                  <tr key={`product-id-${product.id}`}>
+                {product.map((product, idx) => (
+                  <tr key={`product-id-${product.id},${idx}`}>
                     <td>{product.id}</td>
                     <td>
                       {product.files.length > 0 && (
@@ -194,13 +266,30 @@ const InventoryManagement = () => {
                       ).toLocaleDateString()}
                     </td>
                     <td>
-                      <button>수정</button>
+                      <button
+                        onClick={() => {
+                          handleOpenModifyModal(idx);
+                        }}
+                      >
+                        수정
+                      </button>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
+          {showModifyModal && (
+            <InventoryModifyModal
+              index={modifyItem.index}
+              isActive={modifyItem.isActive}
+              productName={modifyItem.productName}
+              quantity={modifyItem.quantity}
+              productPrice={modifyItem.productPrice}
+              onConfirm={handleModifyConfirm}
+              onCancel={handleModifyCancle}
+            ></InventoryModifyModal>
+          )}
         </div>
       </section>
     </TableContainer>
