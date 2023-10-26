@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { ProductRegistrationContainer } from "./style";
 import * as React from "react";
-import http from "@/utils/http";
+import http from "@/modules/StoreManagement/utils/http";
 
 interface ProductItem {
   productBrand: string;

@@ -1,4 +1,4 @@
-import { getCookie } from "@/utils/cookie";
+import { getCookie } from "@/modules/StoreManagement/utils/cookie";
 import axios from "axios";
 import { useState } from "react";
 

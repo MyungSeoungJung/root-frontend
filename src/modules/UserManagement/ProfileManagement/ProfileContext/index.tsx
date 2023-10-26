@@ -1,6 +1,6 @@
 import { useState, useEffect, createContext, ReactNode } from "react";
 import axios, { AxiosResponse } from "axios";
-import { getCookie } from "@/utils/cookie";
+import { getCookie } from "@/modules/StoreManagement/utils/cookie";
 
 interface ProfileContextProps {
   profileImage: string | null;

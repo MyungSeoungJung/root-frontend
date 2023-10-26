@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import http from "@/utils/http";
+import http from "@/modules/StoreManagement/utils/http";
 import { TableContainer } from "../inventory/Inventory/style"; //전체 틀 css
 //file 따로 get 요청
 function MediaElement({

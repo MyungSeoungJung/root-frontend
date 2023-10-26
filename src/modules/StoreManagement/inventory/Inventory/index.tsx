@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { TableContainer } from "./style";
-import http from "@/utils/http";
+import http from "@/modules/StoreManagement/utils/http";
 import InventoryModifyModal from "../InventoryModifyModal";
 import axios from "axios";
 
@@ -41,7 +41,7 @@ function MediaElement({
       <img
         width={60}
         height={60}
-        src={`http://localhost:8080/product/files/${uuidFileName}`}
+        src={`http://192.168.100.151:8080/product/files/${uuidFileName}`}
       />
     );
   }

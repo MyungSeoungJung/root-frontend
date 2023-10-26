@@ -3,7 +3,7 @@
     "start": "webpack serve --mode development --port 5000",
     "build": "webpack --mode production",
     "preview": "serve dist",
-    "lint" : "eslint src"
+    "lint": "eslint src"
   },
   "devDependencies": {
     "@styled/typescript-styled-plugin": "^1.0.0",
