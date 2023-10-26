@@ -16,7 +16,7 @@ function LoginComponent() {
   return (
     <div>
       <h1>Login</h1>
-      <form action="http://localhost:5500/auth/login" method="POST">
+      <form action="http://192.168.100.152:5500/auth/login" method="POST">
         <div>
           <label>
             {" "}
