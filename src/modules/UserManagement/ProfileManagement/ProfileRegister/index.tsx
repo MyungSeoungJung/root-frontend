@@ -1,3 +1,4 @@
+import { getCookie } from "@/utils/cookie";
 import axios from "axios";
 import { useState } from "react";
 
@@ -32,7 +33,7 @@ function ProfileRegister() {
     formData.append("brandIntro", brandIntro);
     formData.append("profileImage", profileImage);
 
-    const token = localStorage.getItem("token");
+    const token = getCookie("token");
     if (!token) {
       console.error("토큰이 존재하지 않습니다.");
       return;
@@ -40,7 +41,7 @@ function ProfileRegister() {
 
     try {
       const response = await axios.post(
-        "http://192.168.100.152:5500/user/register",
+        "http://localhost:5500/user/register",
         formData,
         {
           headers: {

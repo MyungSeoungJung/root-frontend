@@ -1,5 +1,6 @@
 import { Link, Outlet } from "react-router-dom";
 import { LayoutContainer } from "./style";
+import UserProfile from "../modules/UserManagement/ProfileManagement/UserProfile";
 
 const Layout = () => {
   return (
@@ -7,6 +8,7 @@ const Layout = () => {
       <nav id="LayoutWrapper">
         <div>
           <h1>CampAndTent Service</h1>
+          <UserProfile />
         </div>
         <div>
           <p>가게 관리</p>
@@ -35,7 +37,10 @@ const Layout = () => {
               <Link to="">고객 관리</Link>
             </li>
             <li>
-              <Link to="ProfileRegister">프로필 등록</Link>
+              <Link to="ChartManagement">고객 주문 통계</Link>
+            </li>
+            <li>
+              <Link to="ProfileManagement">프로필 등록</Link>
             </li>
             <li>
               <Link to="ReviewManagement">리뷰관리</Link>

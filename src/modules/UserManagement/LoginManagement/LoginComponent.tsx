@@ -1,17 +1,12 @@
 import { useState } from "react";
 import axios from "axios";
+import http from "../../../utils/http";
 
 interface User {
   id: number;
   username: string;
   password: string;
 }
-
-const dummyUsers: User[] = [
-  { id: 1, username: "user1", password: "pass1" },
-  { id: 2, username: "user2", password: "pass2" },
-  { id: 3, username: "user3", password: "pass3" },
-];
 
 function LoginComponent() {
   const [username, setUsername] = useState<string>("");
@@ -36,7 +31,6 @@ function LoginComponent() {
           localStorage.setItem("token", response.data.token);
           const token = response.data;
           window.location.href = "/home";
-          //window.location.href로 보낼시 브라우저 내에 있는 쿠기값들이나 저장된 값을 초기화시키면서 /home으로 보내지게 된다.
         } else {
           setMessage(response.data.message || "Login failed");
         }
@@ -51,32 +45,36 @@ function LoginComponent() {
   return (
     <div>
       <h1>Login</h1>
-      <div>
-        <label>
-          {" "}
-          Username:
-          <input
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          {" "}
-          Password:
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </label>
-      </div>
-      <button onClick={handleLogin}>Login</button>
-      <p>{message}</p>
+      <form action="http://localhost:5500/auth/login" method="POST">
+        <div>
+          <label>
+            {" "}
+            Username :
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            {" "}
+            Password :
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </label>
+        </div>
+        <button type="submit">Login</button>
+        <p>{message}</p>
+      </form>
     </div>
   );
 }
