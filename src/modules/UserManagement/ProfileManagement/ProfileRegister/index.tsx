@@ -41,7 +41,7 @@ function ProfileRegister() {
 
     try {
       const response = await axios.post(
-        "http://192.168.100.152:5500/user/register",
+        "http://localhost:5500/user/register",
         formData,
         {
           headers: {
@@ -58,6 +58,9 @@ function ProfileRegister() {
       setBrandIntro("");
       setProfileImage(null);
       setImagePreview(null);
+      if (response.status === 200) {
+        window.location.reload();
+      }
     } catch (error) {
       console.error("프로필 등록 실패", error);
     }
