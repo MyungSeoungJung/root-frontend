@@ -4,17 +4,19 @@ import * as React from "react";
 import http from "@/utils/http";
 
 interface ProductItem {
-  productBrand: String;
-  productName: String;
+  productBrand: string;
+  productName: string;
   productPrice: number;
-  category: String;
-  isActive: Boolean;
-  prodcutDescription: String;
+  category: string;
+  isActive: boolean;
+  maximumPurchaseQuantity: number;
+  prodcutDescription: string;
+  discountRate: number;
 }
 interface ProductFile {
-  contentType: String;
-  originalFileName: String;
-  uuidFileName: String;
+  contentType: string;
+  originalFileName: string;
+  uuidFileName: string;
 }
 
 const ProductRegistration = () => {
@@ -23,6 +25,8 @@ const ProductRegistration = () => {
   const productPriceRef = useRef<HTMLInputElement>();
   const categoryRef = useRef<HTMLSelectElement>();
   const isActiveRef = useRef<HTMLSelectElement>();
+  const maximumQuantityRef = useRef<HTMLInputElement>();
+  const discountRateRef = useRef<HTMLInputElement>();
   const prodcutDescriptionRef = useRef<HTMLTextAreaElement>();
   const fileRef = useRef<HTMLInputElement>();
   const formRef = useRef<HTMLFormElement>();
@@ -40,6 +44,11 @@ const ProductRegistration = () => {
     formData.append("productPrice", productPriceRef.current.value);
     formData.append("category", categoryRef.current.value);
     formData.append("isActive", isActiveRef.current.value);
+    formData.append(
+      "maximumPurchaseQuantity",
+      maximumQuantityRef.current.value
+    );
+    formData.append("discountRate", discountRateRef.current.value);
     formData.append("productDescription", prodcutDescriptionRef.current.value);
     console.log("category:", categoryRef.current.value);
     (async () => {
@@ -60,7 +69,7 @@ const ProductRegistration = () => {
       <section>
         <form onSubmit={handleProductRegister} ref={formRef}>
           <div>
-            <p>브랜드: </p> <div ref={productBrandRef}> Nike</div>
+            <p>브랜드: </p> <p ref={productBrandRef}> Nike</p>
           </div>
           <div>
             <p> 상품명: </p> <input placeholder="상품명" ref={productNameRef} />
@@ -76,6 +85,14 @@ const ProductRegistration = () => {
               <option value="1">판매</option>
               <option value="0">숨김</option>
             </select>
+          </div>
+          <div>
+            <p>주문 최대 수량: </p>
+            <input placeholder="주문 수량" ref={maximumQuantityRef} />
+          </div>
+          <div>
+            <p>할인: </p>
+            <input placeholder="할인율" ref={discountRateRef} />
           </div>
           <div>
             <p> 상품 대분류: </p>

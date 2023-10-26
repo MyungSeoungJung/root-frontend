@@ -4,7 +4,7 @@ import { LayoutContainer } from "./style";
 const Layout = () => {
   return (
     <LayoutContainer>
-      <nav id="nav">
+      <nav id="LayoutWrapper">
         <div>
           <h1>CampAndTent Service</h1>
         </div>
@@ -18,7 +18,7 @@ const Layout = () => {
               <Link to="InventoryManagement">재고관리</Link>
             </li>
             <li>
-              <Link to="">주문처리</Link>
+              <Link to="OrderManagement">주문처리</Link>
             </li>
             <li>
               <Link to="">구매 이력관리</Link>

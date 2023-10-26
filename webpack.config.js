@@ -30,6 +30,7 @@ module.exports = {
     ],
   },
   output: {
+    publicPath: "/",
     filename: "js/[name]-[chunkhash].js",
     assetModuleFilename: "asset/[hash][ext][query]",
     path: __dirname + "/dist",

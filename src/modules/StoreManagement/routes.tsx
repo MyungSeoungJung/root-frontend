@@ -1,6 +1,7 @@
 import { Route } from "react-router-dom";
 import ProductRegistration from "./registration";
-import InventoryManagement from "./inventory";
+import InventoryManagement from "./inventory/Inventory";
+import OrderManagement from "./order";
 
 export const StoreManagementRoutes = [
   <Route
@@ -12,5 +13,10 @@ export const StoreManagementRoutes = [
     key="InventoryManagement"
     path="InventoryManagement"
     element={<InventoryManagement />}
+  />,
+  <Route
+    key="OrderManagement"
+    path="OrderManagement"
+    element={<OrderManagement />}
   />,
 ];

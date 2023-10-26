@@ -36,6 +36,7 @@ function LoginComponent() {
           localStorage.setItem("token", response.data.token);
           const token = response.data;
           window.location.href = "/home";
+          //window.location.href로 보낼시 브라우저 내에 있는 쿠기값들이나 저장된 값을 초기화시키면서 /home으로 보내지게 된다.
         } else {
           setMessage(response.data.message || "Login failed");
         }
