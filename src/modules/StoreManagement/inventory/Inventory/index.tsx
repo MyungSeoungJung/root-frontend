@@ -12,6 +12,8 @@ interface product {
   isActive: boolean;
   category: string;
   productDescription: string;
+  maximumPurchaseQuantity: string;
+  discountRate: string;
   files: productFile[];
   productInfo: productInfo[];
 }
@@ -56,6 +58,8 @@ const InventoryManagement = () => {
     productName: "",
     quantity: "",
     productPrice: "",
+    maximumPurchaseQuantity: "",
+    discountRate: "",
   });
   const [showModifyModal, SetShowModifyModal] = useState(false);
 
@@ -138,6 +142,8 @@ const InventoryManagement = () => {
       quantity: product[index].productInfo[0].quantity,
       isActive: product[index].isActive,
       productPrice: product[index].productPrice,
+      maximumPurchaseQuantity: product[index].maximumPurchaseQuantity,
+      discountRate: product[index].discountRate,
     });
   };
   //  모달 수정 확인 서버 보내기
@@ -147,12 +153,16 @@ const InventoryManagement = () => {
     productName,
     quantity,
     productPrice,
+    maximumPurchaseQuantity,
+    discountRate,
   }: {
     index: number;
     isActive: boolean;
     productName: string;
     quantity: string;
     productPrice: string;
+    maximumPurchaseQuantity: string;
+    discountRate: string;
   }) => {
     (async () => {
       const response = await http.put(
@@ -162,6 +172,8 @@ const InventoryManagement = () => {
           productName,
           quantity,
           productPrice,
+          maximumPurchaseQuantity,
+          discountRate,
         }
       );
       console.log(response + "response");
@@ -179,6 +191,8 @@ const InventoryManagement = () => {
                 },
               ],
               productPrice,
+              maximumPurchaseQuantity,
+              discountRate,
             };
           }
           return item;
@@ -233,6 +247,8 @@ const InventoryManagement = () => {
                   <td>상태</td>
                   <td>카테고리</td>
                   <td>재고</td>
+                  <td>최대 주문 수량</td>
+                  <td>할인</td>
                   <td>등록일</td>
                   <td>수정</td>
                 </tr>
@@ -260,6 +276,8 @@ const InventoryManagement = () => {
                     </td>
                     <td>{product.category}</td>
                     <td>{product.productInfo[0].quantity}</td>
+                    <td>{product.maximumPurchaseQuantity}</td>
+                    <td>{product.discountRate}</td>
                     <td>
                       {new Date(
                         product.productInfo[0].lastUpdated
@@ -286,6 +304,8 @@ const InventoryManagement = () => {
               productName={modifyItem.productName}
               quantity={modifyItem.quantity}
               productPrice={modifyItem.productPrice}
+              maximumPurchaseQuantity={modifyItem.maximumPurchaseQuantity}
+              discountRate={modifyItem.discountRate}
               onConfirm={handleModifyConfirm}
               onCancel={handleModifyCancle}
             ></InventoryModifyModal>

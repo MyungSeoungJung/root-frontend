@@ -6,6 +6,8 @@ export const TableContainer = styled.div`
     flex-direction: column;
     padding-left: 50px;
     margin-top: 25px;
+    height: 100%;
+    position: relative;
   }
   section > div:nth-of-type(1) {
     background-color: white;
