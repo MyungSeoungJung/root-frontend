@@ -3,7 +3,7 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import "./ScheduleManagement.css";
 import axios from "axios";
-import { getCookie } from "@/utils/cookie";
+import { getCookie } from "@/modules/StoreManagement/utils/cookie";
 import interactionPlugin from "@fullcalendar/interaction";
 
 interface CalendarOptions {

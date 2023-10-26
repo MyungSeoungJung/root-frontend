@@ -1,10 +1,8 @@
 import axios from "axios";
 import { getCookie } from "./cookie";
-// 개발자 도구 애플리케이션 임시 유저 2토큰
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwidXNlcm5hbWU
-// iOiJ1c2VyMiIsImlhdCI6MTY5NzE4MzA4NywiZXhwIjoxNjk3Nzg3ODg3fQ.kj29hEiExxRU0BZ93jZaEKUoPbfzZICYSuOcYNNSBH8
+
 const http = axios.create({
-  baseURL: "http://localhost:5500",
+  baseURL: "http://192.168.100.151:8080",
   withCredentials: true,
 });
 
@@ -15,6 +13,8 @@ http.interceptors.request.use((config) => {
   console.log(token);
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
+  } else {
+    console.log("잘못된 요청입니다.");
   }
   return config;
 });
