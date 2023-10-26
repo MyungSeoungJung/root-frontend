@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import http from "../../StoreManagement/utils/http";
+import http from "../utils/http";
 
 interface User {
   id: number;
