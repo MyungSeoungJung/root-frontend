@@ -6,18 +6,17 @@ export const LayoutContainer = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: row;
-<<<<<<<<< Temporary merge branch 1
   background-color: #e0e0e0;
+
   #LayoutWrapper {
     background-color: #202123;
     padding-left: 20px;
     padding-right: 20px;
-=========
-  background-color: gray;
+    background-color: gray;
+  }
 
   main {
     background-color: white;
->>>>>>>>> Temporary merge branch 2
   }
   #LayoutWrapper li {
     margin-top: 10px;
