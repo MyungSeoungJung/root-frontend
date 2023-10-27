@@ -3,16 +3,19 @@ import ReactApexChart from "react-apexcharts";
 import http from "../../utils/http";
 
 class SalesChart extends Component<any, any> {
+  //클래스형 컴포넌트라 hook사용 불가
   constructor(props) {
     super(props);
 
     this.state = {
+      selectedYear: new Date().getFullYear(), //기본 값
       options: {
         series: [],
         chart: {
           type: "bar",
           height: 430,
         },
+
         plotOptions: {
           bar: {
             horizontal: false,
@@ -58,8 +61,9 @@ class SalesChart extends Component<any, any> {
   }
 
   async fetchData() {
+    const { selectedYear } = this.state;
     try {
-      const response = await http.get("/chart/salesChart");
+      const response = await http.get(`/chart/salesChart?year=${selectedYear}`);
       const salesData = response.data;
 
       // Map name to color
@@ -87,6 +91,13 @@ class SalesChart extends Component<any, any> {
     }
   }
 
+  handleYearChange = (event) => {
+    const selectedYear = event.target.value;
+    this.setState({ selectedYear }, () => {
+      this.fetchData();
+    });
+  };
+
   render() {
     return (
       <div
@@ -102,15 +113,34 @@ class SalesChart extends Component<any, any> {
             backgroundColor: "white",
             marginTop: "20px",
             marginBottom: "20px",
+            width: "80%",
+            padding: "20px",
+            borderRadius: "10px",
           }}
         >
           <h1>판매 현황</h1>
         </div>
-        <div style={{ display: "flex", flexDirection: "row" }}>
-          <button>이전</button>
-          <p>2021</p>
-          {/* 다음 or 이전 버튼 클릭하면 p숫자의 + 1 -1 해서 페이징 */}
-          <button>다음</button>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            width: "30%",
+            backgroundColor: "white",
+            marginBottom: "10px",
+            padding: "10px",
+            borderRadius: "10px",
+          }}
+        >
+          {/* 연도 선택 */}
+          <div>
+            <select onChange={this.handleYearChange}>
+              <option value="2023">2023</option>
+              <option value="2022">2022</option>
+              <option value="2021">2021</option>
+            </select>
+            <p></p>
+          </div>
+          {/* 차트 */}
         </div>
         <div
           style={{ background: "white", width: "85%", borderRadius: "15px" }}

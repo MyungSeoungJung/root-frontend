@@ -165,7 +165,7 @@ const ProductRegistration = () => {
             <div
               style={{
                 height: "180px",
-                backgroundColor: "#ebebeb",
+                backgroundColor: "rgba(188, 239, 255, 0.5)",
                 display: "flex",
                 flexDirection: "row",
                 paddingBottom: "3px",
