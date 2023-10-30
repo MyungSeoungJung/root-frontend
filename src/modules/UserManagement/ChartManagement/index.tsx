@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import ReactApexChart from "react-apexcharts";
-import { createRoot } from "react-dom/client";
 
 interface SeriesType {
   name: string;
@@ -176,8 +175,5 @@ class ApexChart extends Component<{}, State> {
     );
   }
 }
-
-const root = createRoot(document.getElementById("root"));
-root.render(<ApexChart />);
 
 export default ApexChart;
