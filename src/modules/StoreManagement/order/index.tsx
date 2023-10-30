@@ -52,6 +52,7 @@ const OrderManagement = () => {
           `/order/orderDetail?state=${orderState}&size=${size}&page=${page}`
         );
         setOrder(response.data.content);
+        setTotalPage(response.data.totalPages);
         console.log(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -80,7 +81,7 @@ const OrderManagement = () => {
   };
 
   const handleNextPage = async () => {
-    if (page < totalPages) {
+    if (page < totalPages - 1) {
       const nextPage = page + 1;
       const response = await http.get(
         `/order/orderDetail?state=${orderState}&size=${size}&page=${page + 1}`
@@ -90,7 +91,7 @@ const OrderManagement = () => {
     }
   };
   const handlePrevPage = async () => {
-    if (page == 1) {
+    if (page > 0) {
       const PrevPage = page - 1;
       const response = await http.get(
         `/order/orderDetail?state=${orderState}&size=${size}&page=${page - 1}`
@@ -132,14 +133,10 @@ const OrderManagement = () => {
                 <button onClick={handleSearchOrder}>검색</button>
               </div>
               <div>
-                <button onClick={handlePrevPage} disabled={page === 0}>
-                  이전
-                </button>
+                <button onClick={handlePrevPage}>이전</button>
               </div>
               <div>
-                <button onClick={handleNextPage} disabled={page === totalPages}>
-                  다음
-                </button>
+                <button onClick={handleNextPage}>다음</button>
               </div>
               <div></div>
             </div>

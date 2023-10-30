@@ -73,6 +73,7 @@ const InventoryManagement = () => {
           `/product/inventory?state=${productState}&size=${size}&page=${page}`
         );
         setProduct(response.data.content);
+        setTotalPages(response.data.totalPages);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -91,6 +92,8 @@ const InventoryManagement = () => {
       queryParams = "true";
     } else if (state === "숨김") {
       queryParams = "false";
+    } else if (state == "할인") {
+      queryParams = "할인";
     }
 
     const response = await http.get(
@@ -102,7 +105,7 @@ const InventoryManagement = () => {
   };
 
   const handleNextPage = async () => {
-    if (page < totalPages) {
+    if (page < totalPages - 1) {
       const nextPage = page + 1;
       const response = await http.get(
         `/product/inventory?state=${productState}&size=${size}&page=${page + 1}`
@@ -113,7 +116,7 @@ const InventoryManagement = () => {
   };
 
   const handlePrevPage = async () => {
-    if (page == 1) {
+    if (page > 0) {
       const prevPage = page - 1;
       const response = await http.get(
         `/product/inventory?state=${productState}&size=${size}&page=${page - 1}`
@@ -216,6 +219,7 @@ const InventoryManagement = () => {
             <div onClick={() => handleGetProductState("전체")}>전체</div>
             <div onClick={() => handleGetProductState("판매중")}>판매중</div>
             <div onClick={() => handleGetProductState("숨김")}>숨김</div>
+            <div onClick={() => handleGetProductState("할인")}>할인중</div>
           </nav>
           <div>
             <div id="inputContainer">
