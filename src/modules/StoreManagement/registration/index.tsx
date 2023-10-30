@@ -1,7 +1,8 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ProductRegistrationContainer } from "./style";
 import * as React from "react";
 import http from "@/modules/StoreManagement/utils/http";
+// import axios from "axios";
 
 interface ProductItem {
   productBrand: string;
@@ -31,6 +32,24 @@ const ProductRegistration = () => {
   const fileRef = useRef<HTMLInputElement>();
   const formRef = useRef<HTMLFormElement>();
   const [imgPreview, setImgPrewview] = useState([]);
+  const [userBrand, setUserBrand] = useState();
+
+  //로그인한 유저의 브랜드정보 get요청
+  useEffect(() => {
+    const fetchData = async () => {
+      // async 함수 정의
+      try {
+        const response = await http.get(
+          `http://192.168.100.152:5500/user/brandName`
+        );
+        // 여기서 response를 사용할 수 있습니다.
+        setUserBrand(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData(); // async 함수를 호출하여 실행
+  }, []);
 
   const handleProductRegister = (e: React.FormEvent) => {
     e.preventDefault();
@@ -93,7 +112,7 @@ const ProductRegistration = () => {
           <h1>상품 등록</h1>
           <form onSubmit={handleProductRegister} ref={formRef}>
             <div>
-              <p>브랜드 </p> <p ref={productBrandRef}> Nike</p>
+              <p>브랜드 </p> <p ref={productBrandRef}> {userBrand}</p>
             </div>
             <div>
               <p> 상품명 </p>{" "}
