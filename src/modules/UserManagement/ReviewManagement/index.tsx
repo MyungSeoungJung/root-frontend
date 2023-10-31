@@ -40,7 +40,7 @@ const ReviewsTable = () => {
           <th onClick={() => handleSort("id")}>ID</th>
           <th onClick={() => handleSort("brandName")}>Brand Name</th>
           <th onClick={() => handleSort("productNumber")}>Product Number</th>
-          <th onClick={() => handleSort("birthDate")}>Birth Date</th>
+          <th onClick={() => handleSort("age")}>Age</th>
           <th onClick={() => handleSort("gender")}>Gender</th>
           <th onClick={() => handleSort("content")}>Content</th>
         </tr>
@@ -51,7 +51,7 @@ const ReviewsTable = () => {
             <td>{review.id}</td>
             <td>{review.brandName}</td>
             <td>{review.productNumber}</td>
-            <td>{review.birthDate}</td>
+            <td>{review.age}</td>
             <td>{review.gender}</td>
             <td>{review.content}</td>
           </tr>
