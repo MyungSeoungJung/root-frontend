@@ -17,7 +17,7 @@ export const LayoutContainer = styled.div`
 
   main {
     flex: 0.85;
-    background-color: #e0e0e0;
+    background-color: #f0f0f0;
     border-top-right-radius: 30px;
     border-bottom-right-radius: 30px;
   }
@@ -52,7 +52,7 @@ export const LayoutContainer = styled.div`
     color: white;
     padding: 5px;
     border-radius: 10px;
-    background-color: rgba(110, 194, 226, 0.8);
+    background-color: rgba(78, 115, 223, 1);
     padding-left: 10px;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -60,11 +60,43 @@ export const LayoutContainer = styled.div`
     font-size: 0.9rem;
   }
   #LayoutWrapper h2:hover {
-    background-color: rgba(44, 77, 90, 0.7);
+    background-color: #83bcff;
     transition: background-color 0.2s, transform 0.1s;
     transform: scale(1.1);
   }
   #LayoutWrapper h1 {
     color: white;
+  }
+  input {
+    background-color: white;
+    outline: none;
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 3px;
+  }
+  input:focus {
+    box-shadow: rgba(5, 102, 214, 0.4) 0px 0px 10px 1px;
+    border: 1px solid gray;
+  }
+  textarea {
+    background-color: white;
+    outline: none;
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 3px;
+  }
+  textarea:focus {
+    box-shadow: rgba(5, 102, 214, 0.4) 0px 0px 10px 1px;
+  }
+  button {
+    border: 0px;
+    background-color: rgba(78, 115, 223, 1);
+    color: white;
+    transform: scale(1);
+  }
+  button:hover {
+    background-color: #83bcff;
+    transition: background-color 0.2s, transform 0.1s;
+    transform: scale(1.05);
   }
 `;

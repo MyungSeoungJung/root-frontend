@@ -42,8 +42,7 @@ const OrderManagement = () => {
   const [orderState, setOrderState] = useState("");
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPage] = useState(1);
-
-  const size = 3;
+  const size = 5;
 
   useEffect(() => {
     const fetchData = async () => {

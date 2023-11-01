@@ -73,6 +73,14 @@ const Layout = () => {
                   <p> 매출관리</p>
                 </Link>
               </li>
+              <li>
+                <Link
+                  to="PopularProduct"
+                  style={{ textDecoration: "none", color: "white" }}
+                >
+                  <p> 인기 상품</p>
+                </Link>
+              </li>
             </ul>
           )}
         </div>

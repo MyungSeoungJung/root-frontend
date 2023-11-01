@@ -66,7 +66,7 @@ export const ProductRegistrationContainer = styled.div`
   }
   textarea {
     width: 300px;
-    height: 170px;
+    height: 150px;
   }
   button {
     width: 100px;

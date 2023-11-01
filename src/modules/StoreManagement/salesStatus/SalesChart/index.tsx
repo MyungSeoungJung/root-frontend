@@ -9,6 +9,7 @@ class SalesChart extends Component<any, any> {
 
     this.state = {
       selectedYear: new Date().getFullYear(), //기본 값
+      highestSalesProduct: null,
       options: {
         series: [],
         chart: {
@@ -81,10 +82,21 @@ class SalesChart extends Component<any, any> {
         color: colorMap[item.name] || "#ccc",
       }));
 
+      // 가장 높은 판매량
+      let highestSales = 0;
+      let highestSalesProduct = null;
+      salesData.forEach((item) => {
+        const totalSales = item.data.reduce((acc, val) => acc + val, 0);
+        if (totalSales > highestSales) {
+          highestSales = totalSales;
+          highestSalesProduct = item.name;
+        }
+      });
       this.setState({
         options: {
           series: seriesData,
         },
+        highestSalesProduct,
       });
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -113,7 +125,7 @@ class SalesChart extends Component<any, any> {
             backgroundColor: "white",
             marginTop: "20px",
             marginBottom: "20px",
-            width: "80%",
+            width: "81%",
             padding: "20px",
             borderRadius: "10px",
           }}
@@ -123,24 +135,60 @@ class SalesChart extends Component<any, any> {
         <div
           style={{
             display: "flex",
-            flexDirection: "row",
-            width: "30%",
-            backgroundColor: "white",
-            marginBottom: "10px",
-            padding: "10px",
-            borderRadius: "10px",
+            width: "85%",
+            marginBottom: "20px",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          {/* 연도 선택 */}
-          <div>
-            <select onChange={this.handleYearChange}>
-              <option value="2023">2023</option>
-              <option value="2022">2022</option>
-              <option value="2021">2021</option>
-            </select>
-            <p></p>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              width: "50%",
+              backgroundColor: "white",
+              marginRight: "10px",
+
+              padding: "20px",
+              borderRadius: "10px",
+              justifyContent: "center",
+            }}
+          >
+            {/* 연도 선택 */}
+            <div style={{ display: "flex" }}>
+              <select onChange={this.handleYearChange}>
+                <option value="2023">2023</option>
+                <option value="2022">2022</option>
+                <option value="2021">2021</option>
+              </select>
+              <div>
+                <div style={{ marginLeft: "15px" }}>
+                  <p>{this.state.selectedYear}년의 판매현황입니다</p>
+                </div>
+              </div>
+            </div>
+            {/* 차트 ---------------------*/}
           </div>
-          {/* 차트 */}
+          <div
+            style={{
+              display: "flex",
+              marginTop: "15px",
+              marginBottom: "15px",
+              alignItems: "center",
+              backgroundColor: "white",
+              width: "50%",
+              height: "20px",
+              borderRadius: "15px",
+              marginLeft: "10px",
+              padding: "20px",
+              justifyContent: "center",
+            }}
+          >
+            <p>
+              {this.state.selectedYear}년 가장 많은 판매량은 &nbsp;
+              {this.state.highestSalesProduct} &nbsp;입니다.
+            </p>
+          </div>
         </div>
         <div
           style={{ background: "white", width: "85%", borderRadius: "15px" }}
@@ -149,7 +197,7 @@ class SalesChart extends Component<any, any> {
             options={this.state.options}
             series={this.state.options.series}
             type="bar"
-            height={300}
+            height={450}
           />
         </div>
       </div>

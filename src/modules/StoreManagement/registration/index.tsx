@@ -54,6 +54,20 @@ const ProductRegistration = () => {
   const handleProductRegister = (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (
+      !productNameRef.current.value ||
+      !productPriceRef.current.value ||
+      !maximumQuantityRef.current.value ||
+      categoryRef.current.value === "null"
+    ) {
+      alert("필수 정보를 모두 입력해주세요.");
+      return; // 폼 전송을 중단
+    }
+    if (!fileRef.current.files.length) {
+      alert("이미지 파일을 선택해주세요.");
+      return; // 폼 전송을 중단
+    }
+
     const formData = new FormData();
     Array.from(fileRef.current.files).forEach((file) => {
       formData.append("files", file);
@@ -125,7 +139,9 @@ const ProductRegistration = () => {
             <div>
               <p> 상품 상태: </p>
               <select ref={isActiveRef}>
-                <option>상품의 상태를 선택해주세요</option>
+                <option selected disabled hidden>
+                  상품의 상태를 선택해주세요
+                </option>
                 <option value="1">판매</option>
                 <option value="0">숨김</option>
               </select>
@@ -154,7 +170,9 @@ const ProductRegistration = () => {
             <div>
               <p> 상품 대분류 </p>
               <select ref={categoryRef}>
-                <option>옵션을 선택해주세요</option>
+                <option value="null" selected disabled hidden>
+                  옵션을 선택해주세요
+                </option>
                 <option value="tent">텐트</option>
                 <option value="table">테이블</option>
                 <option value="accessory">악세서리</option>
