@@ -85,8 +85,9 @@ const ProfileProvider = ({ children }: ProfileProviderProps) => {
       }
     }
 
+    console.log("Current brandName:", brandName);
     fetchProfileDetails();
-  }, []);
+  }, [brandName]);
 
   return (
     <ProfileContext.Provider value={{ profileImage, brandName }}>
