@@ -69,7 +69,10 @@ const Layout = () => {
                 </Link>
               </li>
               <li>
-                <Link to="" style={{ textDecoration: "none", color: "white" }}>
+                <Link
+                  to="SalesGraph"
+                  style={{ textDecoration: "none", color: "white" }}
+                >
                   <p> 매출관리</p>
                 </Link>
               </li>

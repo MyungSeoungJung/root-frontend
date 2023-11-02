@@ -152,6 +152,7 @@ export const TableContainer = styled.div`
   }
   aside > div > div:nth-of-type(2) {
     padding: 10px;
+    height: 100%;
   }
   #x-box-icon {
     font-size: 12px;
