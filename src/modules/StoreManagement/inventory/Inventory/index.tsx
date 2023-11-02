@@ -3,6 +3,8 @@ import { TableContainer } from "./style";
 import http from "@/modules/StoreManagement/utils/http";
 import InventoryModifyModal from "../InventoryModifyModal";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faX, faBell } from "@fortawesome/free-solid-svg-icons";
 
 interface product {
   id: number;
@@ -62,8 +64,10 @@ const InventoryManagement = () => {
     discountRate: "",
   });
   const [showModifyModal, SetShowModifyModal] = useState(false);
+  const [productToOrder, setproductToOrder] = useState<product[]>([]);
+  const [showProductToOrder, setShowProductToOrder] = useState(false);
 
-  const size = 3; //사이즈 조절
+  const size = 5; //사이즈 조절
 
   //  첫화면 get
   useEffect(() => {
@@ -73,6 +77,14 @@ const InventoryManagement = () => {
           `/product/inventory?state=${productState}&size=${size}&page=${page}`
         );
         setProduct(response.data.content);
+        setTotalPages(response.data.totalPages);
+        // 서버에서 받을때 제품 수량이 5개 이하인 제품 alert뜨게
+        const productsLowQuantity = response.data.content.filter(
+          (product) => parseInt(product.productInfo[0].quantity) <= 10
+        );
+        productsLowQuantity.forEach((product) => {
+          setproductToOrder(productsLowQuantity);
+        }); // productsLowQuantity
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -91,6 +103,8 @@ const InventoryManagement = () => {
       queryParams = "true";
     } else if (state === "숨김") {
       queryParams = "false";
+    } else if (state == "할인") {
+      queryParams = "할인";
     }
 
     const response = await http.get(
@@ -102,7 +116,7 @@ const InventoryManagement = () => {
   };
 
   const handleNextPage = async () => {
-    if (page < totalPages) {
+    if (page < totalPages - 1) {
       const nextPage = page + 1;
       const response = await http.get(
         `/product/inventory?state=${productState}&size=${size}&page=${page + 1}`
@@ -113,7 +127,7 @@ const InventoryManagement = () => {
   };
 
   const handlePrevPage = async () => {
-    if (page == 1) {
+    if (page > 0) {
       const prevPage = page - 1;
       const response = await http.get(
         `/product/inventory?state=${productState}&size=${size}&page=${page - 1}`
@@ -205,22 +219,88 @@ const InventoryManagement = () => {
   const handleModifyCancle = () => {
     SetShowModifyModal(false);
   };
+  // 발주 목록 알림창
+  const handleProductAlertCancle = () => {
+    setShowProductToOrder(false);
+  };
+  // 발주 목록 알림창
+  const handleProductAlertConfirm = () => {
+    setShowProductToOrder(true);
+  };
   return (
     <TableContainer>
       <section>
         <div>
-          <h1>재고 관리</h1>
+          <div>
+            <h1>재고 관리</h1>
+          </div>
+          <div style={{ marginRight: "20px" }}>
+            <FontAwesomeIcon
+              icon={faBell}
+              id="fabell-icon"
+              onClick={handleProductAlertConfirm}
+            />
+          </div>
         </div>
+        {showProductToOrder && (
+          <aside>
+            <div></div>
+            <div>
+              <div>
+                <div style={{ display: "flex", flex: "1" }}></div>
+                <div style={{ display: "flex", flex: "1", fontSize: "0.9rem" }}>
+                  <p>발주 목록</p>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    flex: "1",
+                    justifyContent: "end",
+                    marginRight: "10px",
+                  }}
+                >
+                  <FontAwesomeIcon
+                    icon={faX}
+                    id="x-box-icon"
+                    onClick={handleProductAlertCancle}
+                  />
+                </div>
+              </div>
+
+              <div>
+                {productToOrder.length > 0 && (
+                  <table>
+                    <tbody>
+                      {productToOrder.map((orderedProduct, index) => (
+                        <tr key={index}>
+                          <td>이름: {orderedProduct.productName}</td>
+                          <td>
+                            재고: {orderedProduct.productInfo[0].quantity}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
+              </div>
+            </div>
+            <div></div>
+          </aside>
+        )}
         <div>
           <nav>
             <div onClick={() => handleGetProductState("전체")}>전체</div>
             <div onClick={() => handleGetProductState("판매중")}>판매중</div>
             <div onClick={() => handleGetProductState("숨김")}>숨김</div>
+            <div onClick={() => handleGetProductState("할인")}>할인중</div>
           </nav>
           <div>
             <div id="inputContainer">
               <div>
-                <input placeholder="재고검색" ref={inputRef} />
+                <input
+                  placeholder="재품 이름으로 검색해주세요"
+                  ref={inputRef}
+                />
               </div>
               <div>
                 <button onClick={handleSearchProduct}>검색</button>
@@ -237,6 +317,7 @@ const InventoryManagement = () => {
               </div>
               <div></div>
             </div>
+
             <table>
               <thead>
                 <tr>
@@ -297,20 +378,63 @@ const InventoryManagement = () => {
               </tbody>
             </table>
           </div>
-          {showModifyModal && (
-            <InventoryModifyModal
-              index={modifyItem.index}
-              isActive={modifyItem.isActive}
-              productName={modifyItem.productName}
-              quantity={modifyItem.quantity}
-              productPrice={modifyItem.productPrice}
-              maximumPurchaseQuantity={modifyItem.maximumPurchaseQuantity}
-              discountRate={modifyItem.discountRate}
-              onConfirm={handleModifyConfirm}
-              onCancel={handleModifyCancle}
-            ></InventoryModifyModal>
-          )}
         </div>
+        {showModifyModal && (
+          <InventoryModifyModal
+            index={modifyItem.index}
+            isActive={modifyItem.isActive}
+            productName={modifyItem.productName}
+            quantity={modifyItem.quantity}
+            productPrice={modifyItem.productPrice}
+            maximumPurchaseQuantity={modifyItem.maximumPurchaseQuantity}
+            discountRate={modifyItem.discountRate}
+            onConfirm={handleModifyConfirm}
+            onCancel={handleModifyCancle}
+          ></InventoryModifyModal>
+        )}
+        {/* {showProductToOrder && (
+          <aside>
+            <div>
+              <div>
+                <div style={{ display: "flex", flex: "1" }}></div>
+                <div style={{ display: "flex", flex: "1", fontSize: "0.9rem" }}>
+                  <p>발주 목록</p>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    flex: "1",
+                    justifyContent: "end",
+                    marginRight: "10px",
+                  }}
+                >
+                  <FontAwesomeIcon
+                    icon={faX}
+                    id="x-box-icon"
+                    onClick={handleProductAlertCancle}
+                  />
+                </div>
+              </div>
+
+              <div>
+                {productToOrder.length > 0 && (
+                  <table>
+                    <tbody>
+                      {productToOrder.map((orderedProduct, index) => (
+                        <tr key={index}>
+                          <td>이름: {orderedProduct.productName}</td>
+                          <td>
+                            재고: {orderedProduct.productInfo[0].quantity}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
+              </div>
+            </div>
+          </aside>
+        )} */}
       </section>
     </TableContainer>
   );

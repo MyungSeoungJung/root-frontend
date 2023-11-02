@@ -1,5 +1,7 @@
 import { useRef } from "react";
 import { ModifyModal } from "./style";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faX } from "@fortawesome/free-solid-svg-icons";
 
 interface ModifyModalProps {
   index: number;
@@ -54,22 +56,97 @@ const InventoryModifyModal = ({
       <div>
         <div>
           <div>
-            <h1>재고 수정</h1>
-            <select ref={activeRef}>
-              <option>수정 할 상품의 상태를 선택해주세요</option>
-              <option value="true">판매</option>
-              <option value="false">숨김</option>
-            </select>
-            <input defaultValue={productName} ref={productNameRef} />
-            <input defaultValue={quantity} ref={quantityRef} />
-            <input defaultValue={productPrice} ref={productPriceRef} />
-            <input
-              defaultValue={maximumPurchaseQuantity}
-              ref={maximumPurchaseQuantityRef}
-            />
-            <input defaultValue={discountRate} ref={discountRateRef} />
-            <button onClick={handleConfirm}>수정</button>
-            <button onClick={onCancel}>취소</button>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                height: "30px",
+                flex: "1",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  height: "30px",
+                  flex: "1",
+                }}
+              ></div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  height: "30px",
+                  flex: "1",
+                }}
+              ></div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  height: "30px",
+                  flex: "1",
+                  justifyContent: "end",
+                  marginRight: "10px",
+                  fontSize: "14px",
+                }}
+              >
+                <FontAwesomeIcon
+                  icon={faX}
+                  id="x-box-icon_modify_modal_box"
+                  onClick={onCancel}
+                />
+              </div>
+            </div>
+            <div>
+              <h1>재고 수정</h1>
+            </div>
+
+            <div>
+              <select ref={activeRef}>
+                <option>수정 할 상품의 상태를 선택해주세요</option>
+                <option value="true">판매</option>
+                <option value="false">숨김</option>
+              </select>
+            </div>
+            <table>
+              <tr>
+                <td>제품 이름</td>
+                <td>
+                  <input defaultValue={productName} ref={productNameRef} />{" "}
+                </td>
+              </tr>
+              <tr>
+                <td>제품 수량</td>
+                <td>
+                  <input defaultValue={quantity} ref={quantityRef} />
+                </td>
+              </tr>
+              <tr>
+                <td>제품 가격</td>
+                <td>
+                  <input defaultValue={productPrice} ref={productPriceRef} />
+                </td>
+              </tr>
+              <tr>
+                <td>주문 최대 수량</td>
+                <td>
+                  <input
+                    defaultValue={maximumPurchaseQuantity}
+                    ref={maximumPurchaseQuantityRef}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>할인률</td>
+                <td>
+                  <input defaultValue={discountRate} ref={discountRateRef} />
+                </td>
+              </tr>
+            </table>
+            <div>
+              <button onClick={handleConfirm}>수정</button>{" "}
+            </div>
           </div>
         </div>
       </div>
