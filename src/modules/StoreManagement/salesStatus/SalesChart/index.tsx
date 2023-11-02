@@ -148,7 +148,6 @@ class SalesChart extends Component<any, any> {
               width: "50%",
               backgroundColor: "white",
               marginRight: "10px",
-
               padding: "20px",
               borderRadius: "10px",
               justifyContent: "center",
