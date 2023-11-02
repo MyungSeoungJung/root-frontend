@@ -84,7 +84,7 @@ class ScheduleManagement extends Component<{}, ScheduleManagementState> {
 
   fetchEvents = () => {
     axios
-      .get("http://localhost:5500/events", this.getApiHeaders())
+      .get("http://192.168.100.152:5500/events", this.getApiHeaders())
       .then((response) => {
         console.log("API response:", response.data);
         const fetchedEvents = response.data.map((event) => ({
@@ -184,7 +184,11 @@ class ScheduleManagement extends Component<{}, ScheduleManagementState> {
       color: this.state.colorInput,
     };
     axios
-      .post("http://localhost:5500/events", newEvent, this.getApiHeaders())
+      .post(
+        "http://192.168.100.152:5500/events",
+        newEvent,
+        this.getApiHeaders()
+      )
       .then((response) => {
         this.fetchEvents();
       })
@@ -207,7 +211,7 @@ class ScheduleManagement extends Component<{}, ScheduleManagementState> {
     };
     axios
       .put(
-        `http://localhost:5500/events/${updatedEvent.id}`,
+        `http://192.168.100.152:5500/events/${updatedEvent.id}`,
         updatedEvent,
         this.getApiHeaders()
       )
@@ -225,7 +229,10 @@ class ScheduleManagement extends Component<{}, ScheduleManagementState> {
     const eventId = this.state.selectedEvent!.id;
     const token = getCookie("token");
     axios
-      .delete(`http://localhost:5500/events/${eventId}`, this.getApiHeaders())
+      .delete(
+        `http://192.168.100.152:5500/events/${eventId}`,
+        this.getApiHeaders()
+      )
       .then(() => {
         this.fetchEvents();
       })

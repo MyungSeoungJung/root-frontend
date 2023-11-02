@@ -5,20 +5,23 @@ import ResetStyle from "./styles/reset";
 import { UserManagementRoutes } from "./modules/UserManagement/routes";
 import LoginComponent from "./modules/UserManagement/LoginManagement/LoginComponent";
 import { ProfileProvider } from "./modules/UserManagement/ProfileManagement/ProfileContext";
+import { ReviewProvider } from "./modules/UserManagement/ReviewManagement/reviewContext";
 
 const App = () => {
   return (
     <ProfileProvider>
-      <BrowserRouter>
-        <ResetStyle />
-        <Routes>
-          <Route path="/" element={<LoginComponent />} />
-          <Route path="/home" element={<Layout />}>
-            {UserManagementRoutes}
-            {StoreManagementRoutes}
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <ReviewProvider>
+        <BrowserRouter>
+          <ResetStyle />
+          <Routes>
+            <Route path="/" element={<LoginComponent />} />
+            <Route path="/home" element={<Layout />}>
+              {UserManagementRoutes}
+              {StoreManagementRoutes}
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </ReviewProvider>
     </ProfileProvider>
   );
 };

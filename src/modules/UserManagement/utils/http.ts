@@ -2,7 +2,7 @@ import axios from "axios";
 import { getCookie } from "./cookie";
 
 const http = axios.create({
-  baseURL: "http://192.168.100.152:8080",
+  baseURL: "http://192.168.100.152:5500",
   withCredentials: true,
 });
 
