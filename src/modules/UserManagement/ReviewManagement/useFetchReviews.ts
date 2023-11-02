@@ -2,12 +2,18 @@ import { useState, useEffect } from "react";
 import { Review } from "./types";
 import { getCookie } from "../utils/cookie";
 
-export const useReviews = (brandName: string, token: string) => {
+export const useFetchReviews = (
+  brandName: string,
+  token: string,
+  shouldFetch: boolean
+) => {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    if (!shouldFetch) return;
+
     const fetchReviews = async () => {
       try {
         const token = getCookie("token");
@@ -32,7 +38,7 @@ export const useReviews = (brandName: string, token: string) => {
     };
 
     fetchReviews();
-  }, []);
+  }, [token, shouldFetch]);
 
   return { reviews, loading, error };
 };
