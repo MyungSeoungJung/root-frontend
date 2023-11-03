@@ -1,14 +1,15 @@
 import styled from "@emotion/styled";
 
 export const ProductRegistrationContainer = styled.div`
-  width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-
   h1 {
-    font-size: 2rem;
+    background-color: white;
+    width: 85%;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 20px;
   }
   section {
     width: 100%;
@@ -17,60 +18,70 @@ export const ProductRegistrationContainer = styled.div`
     flex-direction: row;
     align-items: center;
   }
-  section > div:nth-of-type(1) {
-    display: flex;
-    flex: 1;
+  form {
+    width: 85%;
     height: 100%;
-  }
-  section > div:nth-of-type(2) {
     display: flex;
-    flex: 2.5;
-    height: 90%;
     flex-direction: column;
-    background-color: white;
     align-items: center;
     background-color: white;
-    border-radius: 20px;
-    padding: 20px;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    margin-top: 30px;
+    padding: 10px;
+    border-radius: 10px;
   }
-  section > div:nth-of-type(3) {
+  form > div:nth-child(1) {
     display: flex;
-    height: 100%;
-    flex: 1;
-  }
-  section > form {
+    flex-direction: row;
     width: 100%;
-    height: 100%;
+  }
+  form > div:nth-child(1) > div:nth-child(1) {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    padding-right: 10px;
   }
+  form > div:nth-child(1) > div:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
+  }
+
   form div {
     justify-content: start;
     display: flex;
     flex-direction: row;
     width: 100%;
     margin-top: 7px;
-    /* background-color: red; */
   }
-  form div:last-of-type {
+
+  form > div:nth-child(1) > div:nth-child(2) > div:last-of-type {
     display: flex;
     justify-content: center;
+  }
+  form > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) {
+  }
+  form > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) {
+    margin-bottom: 20px;
+  }
+  form > div:nth-child(1) > div:nth-child(1) > div:nth-child(8) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
   }
   form p {
     width: 100px;
   }
   form input {
-    width: 200px;
+    width: 50%;
   }
   textarea {
     width: 300px;
-    height: 150px;
+    height: 180px;
+    margin-top: 10px;
   }
   button {
-    width: 100px;
     height: 40px;
+    width: 100px;
     border-radius: 10px;
   }
 `;

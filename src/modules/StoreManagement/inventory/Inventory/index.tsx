@@ -57,6 +57,7 @@ const InventoryManagement = () => {
   const [modifyItem, setModifyItem] = useState({
     index: 0,
     isActive: false,
+    category: "",
     productName: "",
     quantity: "",
     productPrice: "",
@@ -153,6 +154,7 @@ const InventoryManagement = () => {
     setModifyItem({
       index,
       productName: product[index].productName,
+      category: product[index].category,
       quantity: product[index].productInfo[0].quantity,
       isActive: product[index].isActive,
       productPrice: product[index].productPrice,
@@ -164,6 +166,7 @@ const InventoryManagement = () => {
   const handleModifyConfirm = ({
     index,
     isActive,
+    category,
     productName,
     quantity,
     productPrice,
@@ -172,6 +175,7 @@ const InventoryManagement = () => {
   }: {
     index: number;
     isActive: boolean;
+    category: string;
     productName: string;
     quantity: string;
     productPrice: string;
@@ -183,6 +187,7 @@ const InventoryManagement = () => {
         `/product/modifyProduct?id=${product[index].id}`,
         {
           isActive,
+          category,
           productName,
           quantity,
           productPrice,
@@ -197,6 +202,7 @@ const InventoryManagement = () => {
             return {
               ...item,
               isActive,
+              category,
               productName,
               productInfo: [
                 {
@@ -383,6 +389,7 @@ const InventoryManagement = () => {
           <InventoryModifyModal
             index={modifyItem.index}
             isActive={modifyItem.isActive}
+            category={modifyItem.category}
             productName={modifyItem.productName}
             quantity={modifyItem.quantity}
             productPrice={modifyItem.productPrice}
