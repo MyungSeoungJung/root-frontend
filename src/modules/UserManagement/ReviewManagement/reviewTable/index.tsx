@@ -19,21 +19,28 @@ const StyledTable = styled.table`
 
 const ReviewsTable = () => {
   const [shouldFetch, setShouldFetch] = useState(true);
-  const { reviews, loading, error } = useFetchReviews(
+  const [currentPage, setCurrentPage] = useState(0);
+  const { reviews, loading, error, totalPages } = useFetchReviews(
     "brandName",
     "token",
-    shouldFetch
+    shouldFetch,
+    currentPage
   );
   const [sortKey, setSortKey] = useState("id");
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error loading reviews!</p>;
 
-  const sortedReviews = [...reviews].sort((a, b) => {
-    if (a[sortKey] < b[sortKey]) return -1;
-    if (a[sortKey] > b[sortKey]) return 1;
-    return 0;
-  });
+  const sortedReviews = Array.isArray(reviews)
+    ? [...reviews].sort((a, b) => {
+        if (sortKey === "id") {
+          return b[sortKey] - a[sortKey]; // ID 기준 내림차순 정렬
+        }
+        if (a[sortKey] < b[sortKey]) return -1;
+        if (a[sortKey] > b[sortKey]) return 1;
+        return 0;
+      })
+    : [];
 
   const handleSort = (key) => {
     setSortKey(key);
@@ -66,6 +73,13 @@ const ReviewsTable = () => {
           ))}
         </tbody>
       </StyledTable>
+      <div>
+        {[...Array(totalPages)].map((_, index) => (
+          <button key={index} onClick={() => setCurrentPage(index)}>
+            {index + 1}
+          </button>
+        ))}
+      </div>
     </>
   );
 };

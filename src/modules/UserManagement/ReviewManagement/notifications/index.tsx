@@ -10,7 +10,10 @@ const Notifications = () => {
   const [isModalVisible, setModalVisible] = useState(false);
   const { setReviews } = useReviewContext();
 
-  const closeModal = () => setModalVisible(false);
+  const closeModal = () => {
+    setModalVisible(false);
+    window.location.reload();
+  };
 
   useEffect(() => {
     const socket = new SockJS("http://192.168.100.152:5500/ws");
@@ -25,10 +28,6 @@ const Notifications = () => {
             setReviews((prevReviews) => [...prevReviews, newReview]);
             setMessages((prevMessages) => [...prevMessages, message.body]);
             setModalVisible(true);
-
-            setTimeout(() => {
-              setModalVisible(false);
-            }, 5000);
           }
         });
       },
@@ -46,23 +45,31 @@ const Notifications = () => {
 
   return (
     <div>
-      {messages.map((message, index) => (
-        <div key={index}>{message}</div>
-      ))}
       {isModalVisible && (
         <div
           style={{
             position: "fixed",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            background: "white",
-            padding: "20px",
-            boxShadow: "0px 0px 10px rgba(0,0,0,0.2)",
+            top: 0,
+            width: "100%",
+            height: "100%",
+            background: "rgba(0,0,0,0.5)",
+            zIndex: 9999,
           }}
         >
-          <h4>New Review Added!</h4>
-          <button onClick={closeModal}>Close</button>
+          <div
+            style={{
+              position: "relative",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              background: "white",
+              padding: "20px",
+              boxShadow: "0px 0px 10px rgba(0,0,0,0.2)",
+            }}
+          >
+            <h4>New Review Added!</h4>
+            <button onClick={closeModal}>Close</button>
+          </div>
         </div>
       )}
     </div>

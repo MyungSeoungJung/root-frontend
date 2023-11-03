@@ -1,11 +1,9 @@
 import styled from "@emotion/styled";
-
 export const LayoutContainer = styled.div`
   width: 90%;
   height: 100vh;
   display: flex;
   flex-direction: row;
-
   #LayoutWrapper {
     flex: 0.15;
     background-color: #202123;
@@ -14,14 +12,12 @@ export const LayoutContainer = styled.div`
     border-top-left-radius: 30px;
     border-bottom-left-radius: 30px;
   }
-
   main {
     flex: 0.85;
     background-color: #f0f0f0;
     border-top-right-radius: 30px;
     border-bottom-right-radius: 30px;
   }
-
   #LayoutWrapper ul li {
     // 클릭했을때 나오는 nav
     margin-top: 10px;
