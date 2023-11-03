@@ -22,10 +22,13 @@ const Layout = () => {
     <LayoutContainer>
       <nav id="LayoutWrapper">
         {/* 프로필 정보 */}
-        <div>
-          <h1>CampAndTent</h1>
-          <UserProfile />
-        </div>
+        <h1
+          style={{ marginTop: "20px", marginLeft: "10px", fontSize: "1.4rem" }}
+        >
+          CampAndTent
+        </h1>
+
+        <UserProfile />
         {/*  가게 관리 ul */}
         <div>
           <div>
@@ -76,14 +79,14 @@ const Layout = () => {
                   <p> 매출관리</p>
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link
                   to="PopularProduct"
                   style={{ textDecoration: "none", color: "white" }}
                 >
                   <p> 인기 상품</p>
                 </Link>
-              </li>
+              </li> */}
             </ul>
           )}
         </div>

@@ -23,9 +23,9 @@ export const StoreManagementRoutes = [
   />,
   <Route key="SalesChart" path="SalesChart" element={<SalesChart />} />,
 
-  <Route
-    key="PopularProduct"
-    path="PopularProduct"
-    element={<PopularProduct />}
-  />,
+  // <Route
+  //   key="PopularProduct"
+  //   path="PopularProduct"
+  //   element={<PopularProduct />}
+  // />,
 ];

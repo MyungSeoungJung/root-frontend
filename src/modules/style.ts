@@ -20,6 +20,7 @@ export const LayoutContainer = styled.div`
     background-color: #f0f0f0;
     border-top-right-radius: 30px;
     border-bottom-right-radius: 30px;
+    border: 7px solid #202123;
   }
 
   #LayoutWrapper ul li {
@@ -27,25 +28,26 @@ export const LayoutContainer = styled.div`
     margin-top: 10px;
     margin-bottom: 10px;
     padding: 5px;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     background-color: rgba(67, 67, 67, 0.4);
     padding-left: 15px;
-    padding-top: 10px;
+    padding-top: 7px;
     padding-bottom: 10px;
     border-radius: 10px;
     margin-left: 10px;
+
     transform: scale(1);
   }
   #LayoutWrapper ul li :hover {
     transition: background-color 0.2s, transform 0.1s;
     transform-origin: left;
-    transform: scale(1.09);
+    transform: scale(1.2);
   }
   #LayoutWrapper ul li p {
     color: white;
   }
   #LayoutWrapper div {
-    margin-top: 25px;
+    margin-top: 15px;
   }
   #LayoutWrapper h2 {
     // 가게 관리 / 고객 관리 틀
