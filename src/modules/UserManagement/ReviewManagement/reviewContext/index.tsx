@@ -1,9 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
-
-interface Review {
-  author: string;
-  content: string;
-}
+import { Review } from "../types";
 
 interface ReviewContextProps {
   reviews: Review[];

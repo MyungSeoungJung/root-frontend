@@ -1,8 +1,8 @@
 export interface Review {
-  id: number;
-  brandName: string;
-  productNumber: number;
-  gender: string;
+  id: any;
+  brandName: any;
+  productNumber: any;
+  age: any;
+  gender: any;
   content: string;
-  age: number;
 }

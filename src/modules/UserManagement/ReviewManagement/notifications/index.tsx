@@ -2,11 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Client } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import { useReviewContext } from "../reviewContext";
-
-interface Review {
-  author: string;
-  content: string;
-}
+import { Review } from "../types";
 
 const Notifications = () => {
   const [client, setClient] = useState<Client | null>(null);
