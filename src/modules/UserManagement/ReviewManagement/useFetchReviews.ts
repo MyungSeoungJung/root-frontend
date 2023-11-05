@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Review } from "./types";
 import { getCookie } from "../utils/cookie";
 
 export const useFetchReviews = (

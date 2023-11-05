@@ -5,4 +5,6 @@ export interface Review {
   age: any;
   gender: any;
   content: string;
+  scope: any;
+  userId: any;
 }

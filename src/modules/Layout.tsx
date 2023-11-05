@@ -5,6 +5,8 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStore } from "@fortawesome/free-solid-svg-icons";
 import { faPeopleRoof } from "@fortawesome/free-solid-svg-icons";
+import { logout } from "../modules/UserManagement/utils/logout";
+import { useNavigate } from "react-router-dom";
 
 const Layout = () => {
   const [showStoreManagementNav, setShowStoreManagementNav] = useState(false);
@@ -17,6 +19,12 @@ const Layout = () => {
   const handleshowUserManagementNav = () => {
     // 가게관리 토글
     setshowUserManagementNav(!showUserManagementNav);
+  };
+  const navigate = useNavigate();
+
+  // 로그아웃 버튼의 클릭 이벤트 핸들러
+  const handleLogoutClick = () => {
+    logout(navigate); // navigate 함수를 logout에 전달
   };
   return (
     <LayoutContainer>
@@ -136,6 +144,7 @@ const Layout = () => {
             </ul>
           )}
         </div>
+        <button onClick={handleLogoutClick}>로그아웃</button>
       </nav>
       <main style={{ width: "100%" }}>
         <Outlet />

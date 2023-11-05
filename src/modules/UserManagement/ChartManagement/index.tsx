@@ -31,7 +31,8 @@ class ApexChart extends Component {
         categories: [],
       },
       title: {
-        text: "Bar Chart Placeholder",
+        text: "연령대별 구매 통계",
+        height: 350,
         align: "left" as const,
       },
     },
@@ -43,7 +44,7 @@ class ApexChart extends Component {
       },
       labels: [],
       title: {
-        text: "Pie Chart Placeholder",
+        text: "성별 구매 통계",
         align: "left" as const,
       },
     },
