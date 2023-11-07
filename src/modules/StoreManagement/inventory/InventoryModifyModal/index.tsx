@@ -108,14 +108,17 @@ const InventoryModifyModal = ({
             </div>
 
             <div>
-              <select ref={activeRef}>
+              <select
+                ref={activeRef}
+                defaultValue={isActive ? "true" : "false"}
+              >
                 <option>수정 할 상품의 상태를 선택해주세요</option>
                 <option value="true">판매</option>
                 <option value="false">숨김</option>
               </select>
             </div>
             <div>
-              <select ref={categoryRef}>
+              <select ref={categoryRef} defaultValue={category}>
                 <option value="null" selected disabled hidden>
                   상품의 카테고리를 선택해주세요
                 </option>
@@ -130,7 +133,7 @@ const InventoryModifyModal = ({
               <tr>
                 <td>제품 이름</td>
                 <td>
-                  <input defaultValue={productName} ref={productNameRef} />{" "}
+                  <input defaultValue={productName} ref={productNameRef} />
                 </td>
               </tr>
               <tr>
@@ -162,7 +165,7 @@ const InventoryModifyModal = ({
               </tr>
             </table>
             <div>
-              <button onClick={handleConfirm}>수정</button>{" "}
+              <button onClick={handleConfirm}>수정</button>
             </div>
           </div>
         </div>

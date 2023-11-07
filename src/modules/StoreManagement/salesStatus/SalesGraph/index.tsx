@@ -30,6 +30,17 @@ class SalesGraph extends Component<any, any> {
         stroke: {
           curve: "smooth",
         },
+        yaxis: {
+          labels: {
+            formatter: function (value) {
+              const formattedValue = new Intl.NumberFormat("ko-KR", {
+                style: "currency",
+                currency: "KRW",
+              }).format(value);
+              return formattedValue.replace("₩", "") + " 원";
+            },
+          },
+        },
         xaxis: {
           type: "category",
           categories: [
@@ -50,6 +61,15 @@ class SalesGraph extends Component<any, any> {
         tooltip: {
           x: {
             format: "MM월",
+          },
+          y: {
+            formatter: function (value) {
+              const formattedValue = new Intl.NumberFormat("ko-KR", {
+                style: "currency",
+                currency: "KRW",
+              }).format(value);
+              return formattedValue.replace("₩", "") + " 원";
+            },
           },
         },
       },

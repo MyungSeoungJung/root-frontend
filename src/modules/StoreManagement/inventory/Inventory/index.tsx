@@ -353,7 +353,9 @@ const InventoryManagement = () => {
                       )}
                     </td>
                     <td>{product.productName}</td>
-                    <td>{product.productPrice}원</td>
+                    <td>{`${(parseInt(product.productPrice) / 1000)
+                      .toFixed(3)
+                      .replace(".", ",")}원`}</td>
                     <td>
                       {product.isActive ? (
                         <span>판매중</span>
@@ -364,7 +366,7 @@ const InventoryManagement = () => {
                     <td>{product.category}</td>
                     <td>{product.productInfo[0].quantity}</td>
                     <td>{product.maximumPurchaseQuantity}</td>
-                    <td>{product.discountRate}</td>
+                    <td>{product.discountRate}%</td>
                     <td>
                       {new Date(
                         product.productInfo[0].lastUpdated

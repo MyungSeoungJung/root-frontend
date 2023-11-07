@@ -42,8 +42,7 @@ export const TableContainer = styled.div`
   }
   table thead tr td {
     padding: 20px;
-    background-color: rgba(54, 185, 204, 0.3);
-    color: #048a81;
+    background-color: #4ce0b3;
     font-weight: 700;
     font-size: 14px;
     text-align: center;
@@ -79,12 +78,14 @@ export const TableContainer = styled.div`
     background-color: white;
     border-radius: 10px;
     padding: 10px;
-    background-color: #36b9cc;
-    color: white;
+    background-color: #4ce0b3;
+    color: black;
+    font-weight: 600;
     transform: scale(1);
   }
   nav div:hover {
-    background-color: #36b9cc;
+    background-color: rgba(76, 224, 179, 0.5);
+    color: black;
     transition: background-color 0.2s, transform 0.15s;
     transform: scale(1.1);
   }
