@@ -123,7 +123,7 @@ class SalesChart extends Component<any, any> {
         <div
           style={{
             backgroundColor: "white",
-            marginTop: "20px",
+            marginTop: "50px",
             marginBottom: "20px",
             width: "81%",
             padding: "20px",

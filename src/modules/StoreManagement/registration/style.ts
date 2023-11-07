@@ -6,10 +6,10 @@ export const ProductRegistrationContainer = styled.div`
   align-items: center;
   h1 {
     background-color: white;
-    width: 85%;
-    padding: 10px;
+    width: 83%;
+    padding: 20px;
     border-radius: 10px;
-    margin-top: 20px;
+    margin-top: 50px;
   }
   section {
     width: 100%;
