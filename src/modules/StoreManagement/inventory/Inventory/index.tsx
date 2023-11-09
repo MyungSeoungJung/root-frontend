@@ -28,6 +28,10 @@ interface productInfo {
   quantity: string;
   lastUpdated: string;
 }
+interface lessQuantityProduct {
+  first: string;
+  second: string;
+}
 //file 따로 get 요청
 function MediaElement({
   contentType,
@@ -65,7 +69,10 @@ const InventoryManagement = () => {
     discountRate: "",
   });
   const [showModifyModal, SetShowModifyModal] = useState(false);
-  const [productToOrder, setproductToOrder] = useState<product[]>([]);
+  const [productToOrder, setproductToOrder] = useState<lessQuantityProduct[]>(
+    []
+  );
+
   const [showProductToOrder, setShowProductToOrder] = useState(false);
 
   const size = 5; //사이즈 조절
@@ -80,12 +87,12 @@ const InventoryManagement = () => {
         setProduct(response.data.content);
         setTotalPages(response.data.totalPages);
         // 서버에서 받을때 제품 수량이 5개 이하인 제품 alert뜨게
-        const productsLowQuantity = response.data.content.filter(
-          (product) => parseInt(product.productInfo[0].quantity) <= 10
-        );
-        productsLowQuantity.forEach((product) => {
-          setproductToOrder(productsLowQuantity);
-        }); // productsLowQuantity
+        // const productsLowQuantity = response.data.content.filter(
+        //   (product) => parseInt(product.productInfo[0].quantity) <= 10
+        // );
+        // productsLowQuantity.forEach((product) => {
+        //   setproductToOrder(productsLowQuantity);
+        // });
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -230,7 +237,12 @@ const InventoryManagement = () => {
     setShowProductToOrder(false);
   };
   // 발주 목록 알림창
-  const handleProductAlertConfirm = () => {
+  const handleProductAlertConfirm = async () => {
+    try {
+      const response = await http.get(`/product/lessQuantity`);
+      setproductToOrder(response.data);
+    } catch (error) {}
+
     setShowProductToOrder(true);
   };
   return (
@@ -274,15 +286,13 @@ const InventoryManagement = () => {
               </div>
 
               <div>
-                {productToOrder.length > 0 && (
+                {productToOrder && (
                   <table>
                     <tbody>
-                      {productToOrder.map((orderedProduct, index) => (
+                      {productToOrder.map((productToOrder, index) => (
                         <tr key={index}>
-                          <td>이름: {orderedProduct.productName}</td>
-                          <td>
-                            재고: {orderedProduct.productInfo[0].quantity}
-                          </td>
+                          <td>이름: {productToOrder.first}</td>
+                          <td>재고: {productToOrder.second}</td>
                         </tr>
                       ))}
                     </tbody>

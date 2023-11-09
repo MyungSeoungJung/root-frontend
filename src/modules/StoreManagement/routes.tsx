@@ -3,7 +3,7 @@ import ProductRegistration from "./registration";
 import InventoryManagement from "./inventory/Inventory";
 import OrderManagement from "./order";
 import SalesChart from "./salesStatus/SalesChart";
-import PopularProduct from "./popularProduct";
+// import PopularProduct from "./popularProduct";
 
 export const StoreManagementRoutes = [
   <Route

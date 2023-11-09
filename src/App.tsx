@@ -6,12 +6,14 @@ import { UserManagementRoutes } from "./modules/UserManagement/routes";
 import LoginComponent from "./modules/UserManagement/LoginManagement/LoginComponent";
 import { ProfileProvider } from "./modules/UserManagement/ProfileManagement/ProfileContext";
 import { ReviewProvider } from "./modules/UserManagement/ReviewManagement/reviewContext";
+import OrderNotification from "./modules/StoreManagement/orderNotifications";
 
 const App = () => {
   return (
     <ProfileProvider>
       <ReviewProvider>
         <BrowserRouter>
+          <OrderNotification />
           <ResetStyle />
           <Routes>
             <Route path="/" element={<LoginComponent />} />
