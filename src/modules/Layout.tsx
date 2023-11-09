@@ -5,6 +5,7 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStore } from "@fortawesome/free-solid-svg-icons";
 import { faPeopleRoof } from "@fortawesome/free-solid-svg-icons";
+import OrderNotification from "./StoreManagement/orderNotifications";
 
 const Layout = () => {
   const [showStoreManagementNav, setShowStoreManagementNav] = useState(false);
@@ -139,6 +140,7 @@ const Layout = () => {
             </ul>
           )}
         </div>
+        <OrderNotification />
       </nav>
       <main style={{ width: "100%" }}>
         <Outlet />

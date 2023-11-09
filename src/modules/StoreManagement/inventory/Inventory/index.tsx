@@ -75,7 +75,7 @@ const InventoryManagement = () => {
 
   const [showProductToOrder, setShowProductToOrder] = useState(false);
 
-  const size = 5; //사이즈 조절
+  const size = 7; //사이즈 조절
 
   //  첫화면 get
   useEffect(() => {
@@ -267,7 +267,7 @@ const InventoryManagement = () => {
               <div>
                 <div style={{ display: "flex", flex: "1" }}></div>
                 <div style={{ display: "flex", flex: "1", fontSize: "0.9rem" }}>
-                  <p>발주 목록</p>
+                  <p>재고 부족</p>
                 </div>
                 <div
                   style={{
@@ -291,8 +291,8 @@ const InventoryManagement = () => {
                     <tbody>
                       {productToOrder.map((productToOrder, index) => (
                         <tr key={index}>
-                          <td>이름: {productToOrder.first}</td>
-                          <td>재고: {productToOrder.second}</td>
+                          <td>{productToOrder.first}</td>
+                          <td>{productToOrder.second}개</td>
                         </tr>
                       ))}
                     </tbody>
@@ -314,7 +314,7 @@ const InventoryManagement = () => {
             <div id="inputContainer">
               <div>
                 <input
-                  placeholder="재품 이름으로 검색해주세요"
+                  placeholder="제품 이름 또는 id로 검색해주세요"
                   ref={inputRef}
                 />
               </div>

@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Container, ItemContainer, Wrapper } from "./style";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBell } from "@fortawesome/free-solid-svg-icons";
 
 const OrderNotification = () => {
   const [messages, setMessages] = useState<string[]>([]);
@@ -35,13 +37,16 @@ const OrderNotification = () => {
       eventSource.close();
     };
   }, []);
-
   return (
     <Wrapper>
+      <FontAwesomeIcon icon={faBell} id="notificationBell" />{" "}
+      <p style={{ marginLeft: "25px", color: "white", fontSize: "12px" }}>
+        주문 알리미
+      </p>
       <Container>
-        {messages.map((productId, index) => (
-          <ItemContainer key={index}>
-            제품ID{productId}번이 재고 부족으로 주문 거절되었습니다.
+        {messages.map((message, index) => (
+          <ItemContainer key={index} style={{ backgroundColor: "white" }}>
+            제품 ID{message}번이 재고 부족으로 주문 거절 되었습니다.
           </ItemContainer>
         ))}
       </Container>

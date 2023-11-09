@@ -8,6 +8,7 @@ export const LayoutContainer = styled.div`
 
   #LayoutWrapper {
     flex: 0.15;
+    /* position: relative; */
     background-color: #202123;
     padding-left: 20px;
     padding-right: 20px;
