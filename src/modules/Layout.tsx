@@ -127,10 +127,18 @@ const Layout = () => {
               </li>
               <li>
                 <Link
-                  to="ReviewManagement"
+                  to="answered"
                   style={{ textDecoration: "none", color: "white" }}
                 >
-                  <p> 리뷰관리</p>
+                  <p> 리뷰(답변완료)</p>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="unanswered-reviews"
+                  style={{ textDecoration: "none", color: "white" }}
+                >
+                  <p> 등록된 리뷰</p>
                 </Link>
               </li>
               <li>

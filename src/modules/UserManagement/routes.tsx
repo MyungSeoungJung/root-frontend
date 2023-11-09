@@ -1,9 +1,10 @@
 import { Route } from "react-router-dom";
 import ProfileManagement from "./ProfileManagement/ProfileRegister";
-import ReviewManagement from "./ReviewManagement/reviewTable";
 import ScheduleManagement from "./ScheduleManagement";
 import ChartManagement from "./ChartManagement";
 import SalesGraph from "../StoreManagement/salesStatus/SalesGraph";
+import UnansweredReviewTable from "./ReviewManagement/UnansweredReviewTable";
+import AnsweredReviews from "./ReviewManagement/AnsweredReviewsTable";
 
 export const UserManagementRoutes = [
   <Route
@@ -11,11 +12,18 @@ export const UserManagementRoutes = [
     path="ProfileManagement"
     element={<ProfileManagement />}
   />,
-  <Route
-    key="ReviewManagement"
-    path="ReviewManagement"
-    element={<ReviewManagement />}
-  />,
+  <>
+    <Route
+      key="AnsweredReviews"
+      path="answered"
+      element={<AnsweredReviews />}
+    />
+    <Route
+      key="UnansweredReviews"
+      path="unanswered-reviews"
+      element={<UnansweredReviewTable />}
+    />
+  </>,
   <Route
     key="ScheduleManagement"
     path="ScheduleManagement"

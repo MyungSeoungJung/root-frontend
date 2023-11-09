@@ -1,10 +1,12 @@
 export interface Review {
   id: any;
   brandName: any;
-  productNumber: any;
+  productId: any;
   age: any;
   gender: any;
-  content: string;
+  reviewContent: string;
   scope: any;
   userId: any;
+  reviewAnswer?: any;
+  isAnswered: boolean;
 }

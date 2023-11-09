@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+
 export const LayoutContainer = styled.div`
   width: 90%;
   height: 100vh;
