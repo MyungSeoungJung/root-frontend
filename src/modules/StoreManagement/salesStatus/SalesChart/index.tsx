@@ -130,7 +130,7 @@ class SalesChart extends Component<any, any> {
             borderRadius: "10px",
           }}
         >
-          <h1>판매 현황</h1>
+          <h2>판매 현황</h2>
         </div>
         <div
           style={{
@@ -186,7 +186,11 @@ class SalesChart extends Component<any, any> {
           >
             <p>
               {this.state.selectedYear}년 가장 많은 판매량은 &nbsp;
-              {this.state.highestSalesProduct} &nbsp;입니다.
+              <span style={{ fontWeight: "700" }}>
+                {" "}
+                {this.state.highestSalesProduct}
+              </span>
+              &nbsp;입니다.
             </p>
           </div>
         </div>

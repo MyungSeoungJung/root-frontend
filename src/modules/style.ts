@@ -29,14 +29,13 @@ export const LayoutContainer = styled.div`
     margin-top: 10px;
     margin-bottom: 10px;
     padding: 5px;
-    font-size: 0.7rem;
+    font-size: 1.2rem;
     background-color: rgba(67, 67, 67, 0.4);
     padding-left: 15px;
     padding-top: 7px;
-    padding-bottom: 10px;
+    padding-bottom: 6px;
     border-radius: 10px;
     margin-left: 10px;
-
     transform: scale(1);
   }
   #LayoutWrapper ul li :hover {
@@ -60,7 +59,7 @@ export const LayoutContainer = styled.div`
     padding-top: 10px;
     padding-bottom: 10px;
     transform: scale(1);
-    font-size: 0.9rem;
+    font-size: 1.2rem;
   }
   #LayoutWrapper h2:hover {
     background-color: #83bcff;
@@ -96,6 +95,8 @@ export const LayoutContainer = styled.div`
     background-color: rgba(78, 115, 223, 1);
     color: white;
     transform: scale(1);
+    font-family: "CuteFont-Regular";
+    font-size: 1.4rem;
   }
   button:hover {
     background-color: #83bcff;

@@ -115,7 +115,7 @@ const OrderManagement = () => {
     <TableContainer>
       <section>
         <div>
-          <h1>주문 내역/관리</h1>
+          <h2>주문 내역/관리</h2>
         </div>
         <div>
           <nav>

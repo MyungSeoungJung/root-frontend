@@ -91,12 +91,11 @@ class SettlementMoney extends React.Component<{}, State> {
           </strong>
           입니다.
         </p>
-        <p
-          style={{ fontSize: "0.85rem", marginTop: "20px", marginLeft: "3px" }}
-        >
+        <p style={{ fontSize: "1.2rem", marginTop: "20px", marginLeft: "3px" }}>
           저번 달과 비교하여{" "}
           <strong
             style={{
+              fontSize: "1.4rem",
               fontWeight: "600",
               color: "black",
             }}

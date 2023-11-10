@@ -44,7 +44,7 @@ export const TableContainer = styled.div`
     padding: 20px;
     background-color: #4ce0b3;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 24px;
     text-align: center;
   }
   table thead tr td:nth-of-type(1) {

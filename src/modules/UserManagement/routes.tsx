@@ -3,7 +3,6 @@ import ProfileManagement from "./ProfileManagement/ProfileRegister";
 import ReviewManagement from "./ReviewManagement/reviewTable";
 import ScheduleManagement from "./ScheduleManagement";
 import ChartManagement from "./ChartManagement";
-import SalesGraph from "../StoreManagement/salesStatus/SalesGraph";
 
 export const UserManagementRoutes = [
   <Route
@@ -26,5 +25,4 @@ export const UserManagementRoutes = [
     path="ChartManagement"
     element={<ChartManagement />}
   />,
-  <Route key="SalesGraph" path="SalesGraph" element={<SalesGraph />} />,
 ];

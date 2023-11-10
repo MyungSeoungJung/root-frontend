@@ -8,9 +8,9 @@ export const Wrapper = styled.div`
 
   #notificationBell {
     font-size: 18px;
-    position: fixed;
+    position: absolute;
     margin-left: 3px;
-    margin-top: 3px;
+    margin-top: -3px;
     color: rgba(78, 115, 223, 1);
   }
 `;
@@ -18,11 +18,13 @@ export const Wrapper = styled.div`
 export const Container = styled.ul`
   list-style: none;
   padding: 10px;
-  /* background-color: white; */
-  background-color: #202123;
-  max-height: 200px;
+  /* background-color: black; */
+  /* background-color: #202123; */
+  background-color: rgba(0, 0, 0, 0.3);
+  max-height: 147px;
   overflow-y: auto;
-  height: 200px;
+  width: 100%;
+  height: 147px;
   scrollbar-width: thin; /* Firefox스크롤 바 너비 조절 */
   -ms-overflow-style: none; /* IE 및 Edge에서 스크롤 바 숨김 */
   &::-webkit-scrollbar {

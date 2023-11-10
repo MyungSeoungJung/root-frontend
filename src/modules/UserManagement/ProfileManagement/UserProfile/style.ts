@@ -1,11 +1,13 @@
 import styled from "@emotion/styled";
 
 export const ProfileContainer = styled.div`
-  width: 70px;
-  height: 70px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
+  /* margin-left: 20px; */
   overflow: hidden;
   position: relative;
+  margin-right: 30px;
 `;
 
 export const ProfileImage = styled.img`

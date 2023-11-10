@@ -147,7 +147,7 @@ const ProductRegistration = () => {
   };
   return (
     <ProductRegistrationContainer>
-      <h1>상품 등록</h1>
+      <h2>상품 등록</h2>
       <form onSubmit={handleProductRegister} ref={formRef}>
         <div>
           <div>
@@ -290,7 +290,12 @@ const ProductRegistration = () => {
               }}
             >
               {imgPreview.length === 0 && (
-                <p style={{ width: "200px", textAlign: "center" }}>
+                <p
+                  style={{
+                    width: "200px",
+                    textAlign: "center",
+                  }}
+                >
                   이미지 미리보기
                 </p>
               )}

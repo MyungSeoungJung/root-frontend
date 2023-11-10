@@ -250,7 +250,7 @@ const InventoryManagement = () => {
       <section>
         <div>
           <div>
-            <h1>재고 관리</h1>
+            <h2>재고 관리</h2>
           </div>
           <div style={{ marginRight: "20px" }}>
             <FontAwesomeIcon
@@ -266,7 +266,7 @@ const InventoryManagement = () => {
             <div>
               <div>
                 <div style={{ display: "flex", flex: "1" }}></div>
-                <div style={{ display: "flex", flex: "1", fontSize: "0.9rem" }}>
+                <div style={{ display: "flex", flex: "1", fontSize: "1.2rem" }}>
                   <p>재고 부족</p>
                 </div>
                 <div

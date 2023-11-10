@@ -21,14 +21,19 @@ function LoginComponent() {
     <LoginStyle>
       <div
         style={{
-          backgroundColor: "rgba(0, 0, 0, 0.7)",
+          backgroundColor: "rgba(0, 0, 0, 0.98)",
           zIndex: "10",
           padding: "100px",
+          width: "70%",
           paddingBottom: "30px",
           borderRadius: "10px",
+          marginBottom: "50px",
+
           display: "flex",
           flexDirection: "column",
           position: "relative",
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
         <div
@@ -84,6 +89,25 @@ function LoginComponent() {
           </div>
           <p>{message}</p>
         </form>
+      </div>
+      <div
+        style={{
+          zIndex: "40",
+          fontSize: "2rem",
+          fontWeight: "700",
+          color: "white",
+          position: "absolute",
+          top: "30%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          textAlign: "center",
+        }}
+      >
+        <p style={{ marginBottom: "20px" }}>Camp And Tent</p>
+
+        <p>
+          <strong>BACKOFFICE</strong>
+        </p>
       </div>
       <ReactPlayer
         url={myVideo}

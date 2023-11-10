@@ -4,7 +4,7 @@ export const ProductRegistrationContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  h1 {
+  h2 {
     background-color: white;
     width: 83%;
     padding: 20px;
@@ -65,8 +65,7 @@ export const ProductRegistrationContainer = styled.div`
   form > div:nth-child(1) > div:nth-child(1) > div:nth-child(8) {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
+    align-items: left;
   }
   form p {
     width: 100px;
@@ -75,8 +74,8 @@ export const ProductRegistrationContainer = styled.div`
     width: 50%;
   }
   textarea {
-    width: 300px;
-    height: 180px;
+    width: 100%;
+    height: 172px;
     margin-top: 10px;
   }
   button {

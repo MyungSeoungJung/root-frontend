@@ -1,0 +1,26 @@
+/* @font-face {
+  font-family: 'GowunBatang-Bold';
+  src: url('/path/to/GowunBatang-Bold.ttf') format('truetype'); 
+  font-weight: 400; 
+} */
+@font-face {
+  font-family: 'CuteFont-Regular';
+  src: url('./CuteFont-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'Playball-Regular';
+  src: url('./Playball-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+
+#root {
+  font-family: 'CuteFont-Regular';
+  font-weight: 400;
+  font-size: 1.5rem;
+}
+#root h1 {
+  font-family: 'Playball-Regular';
+  font-weight: 400;
+  font-size: 2.4rem;
+}

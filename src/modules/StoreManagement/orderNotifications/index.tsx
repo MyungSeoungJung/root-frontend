@@ -40,13 +40,13 @@ const OrderNotification = () => {
   return (
     <Wrapper>
       <FontAwesomeIcon icon={faBell} id="notificationBell" />{" "}
-      <p style={{ marginLeft: "25px", color: "white", fontSize: "12px" }}>
+      <p style={{ marginLeft: "25px", color: "white", fontSize: "1.1rem" }}>
         주문 알리미
       </p>
       <Container>
         {messages.map((message, index) => (
           <ItemContainer key={index} style={{ backgroundColor: "white" }}>
-            제품 ID{message}번이 재고 부족으로 주문 거절 되었습니다.
+            제품 ID{message}번의 주문알림!
           </ItemContainer>
         ))}
       </Container>

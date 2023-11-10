@@ -23,11 +23,7 @@ const Layout = () => {
     <LayoutContainer>
       <nav id="LayoutWrapper">
         {/* 프로필 정보 */}
-        <h1
-          style={{ marginTop: "20px", marginLeft: "10px", fontSize: "1.4rem" }}
-        >
-          CampAndTent
-        </h1>
+        <h1 style={{ marginTop: "20px", marginLeft: "10px" }}>CampAndTent</h1>
 
         <UserProfile />
         {/*  가게 관리 ul */}

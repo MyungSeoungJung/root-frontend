@@ -146,7 +146,7 @@ class SalesGraph extends Component<any, any> {
             marginBottom: "20px",
           }}
         >
-          <h1>매출관리</h1>
+          <h2>매출관리</h2>
         </div>
         <SettlementMoney />
         <div style={{ display: "flex", width: "85%" }}>
