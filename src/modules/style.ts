@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-
 export const LayoutContainer = styled.div`
   width: 90%;
   height: 100vh;
@@ -7,6 +6,7 @@ export const LayoutContainer = styled.div`
   flex-direction: row;
   #LayoutWrapper {
     flex: 0.15;
+    /* position: relative; */
     background-color: #202123;
     padding-left: 20px;
     padding-right: 20px;
@@ -18,17 +18,18 @@ export const LayoutContainer = styled.div`
     background-color: #f0f0f0;
     border-top-right-radius: 30px;
     border-bottom-right-radius: 30px;
+    border: 7px solid #202123;
   }
   #LayoutWrapper ul li {
     // 클릭했을때 나오는 nav
     margin-top: 10px;
     margin-bottom: 10px;
     padding: 5px;
-    font-size: 0.8rem;
+    font-size: 1.2rem;
     background-color: rgba(67, 67, 67, 0.4);
     padding-left: 15px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 7px;
+    padding-bottom: 6px;
     border-radius: 10px;
     margin-left: 10px;
     transform: scale(1);
@@ -36,13 +37,13 @@ export const LayoutContainer = styled.div`
   #LayoutWrapper ul li :hover {
     transition: background-color 0.2s, transform 0.1s;
     transform-origin: left;
-    transform: scale(1.09);
+    transform: scale(1.2);
   }
   #LayoutWrapper ul li p {
     color: white;
   }
   #LayoutWrapper div {
-    margin-top: 25px;
+    margin-top: 15px;
   }
   #LayoutWrapper h2 {
     // 가게 관리 / 고객 관리 틀
@@ -54,7 +55,7 @@ export const LayoutContainer = styled.div`
     padding-top: 10px;
     padding-bottom: 10px;
     transform: scale(1);
-    font-size: 0.9rem;
+    font-size: 1.2rem;
   }
   #LayoutWrapper h2:hover {
     background-color: #83bcff;
@@ -90,6 +91,8 @@ export const LayoutContainer = styled.div`
     background-color: rgba(78, 115, 223, 1);
     color: white;
     transform: scale(1);
+    font-family: "CuteFont-Regular";
+    font-size: 1.4rem;
   }
   button:hover {
     background-color: #83bcff;
