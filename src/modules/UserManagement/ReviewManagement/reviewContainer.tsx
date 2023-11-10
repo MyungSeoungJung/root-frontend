@@ -15,12 +15,32 @@ const ReviewsContainer = () => {
   const [fetchedReviews, setFetchedReviews] = useState<Review[]>([]); // fetchedReviews 상태 추가
   const [loading, setLoading] = useState(true); // 로딩 상태 추가
   const [error, setError] = useState(null); // 오류 상태 추가
+  const [currentPage, setCurrentPage] = useState<number>(1); // 현재 페이지
+  const [totalPages, setTotalPages] = useState<number>(0); // 전체 페이지 수
+  const [pageSize, setPageSize] = useState<number>(10); // 페이지당 리뷰 수
+
+  const renderPageButtons = () => {
+    return Array.from({ length: totalPages }, (_, index) => index + 1).map(
+      (pageNumber) => (
+        <button
+          key={pageNumber}
+          disabled={currentPage === pageNumber}
+          onClick={() => setCurrentPage(pageNumber)}
+        >
+          {pageNumber}
+        </button>
+      )
+    );
+  };
+  console.log("total pages: ", totalPages);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://192.168.100.152:5500/reviews/unanswered`,
+          `http://192.168.100.152:5500/reviews/unanswered?page=${
+            currentPage - 1
+          }&size=${pageSize}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -31,7 +51,8 @@ const ReviewsContainer = () => {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
-        setFetchedReviews(data);
+        setFetchedReviews(data.content);
+        setTotalPages(data.totalPages);
         setLoading(false); // 데이터 로딩 완료 시 로딩 상태 변경
       } catch (error) {
         setError(error); // 오류 발생 시 오류 상태 변경
@@ -40,7 +61,7 @@ const ReviewsContainer = () => {
     };
 
     fetchData();
-  }, [token]);
+  }, [currentPage, pageSize, token]);
 
   const handleAnswerSubmit = async (reviewId: any, answer: string) => {
     try {
@@ -79,14 +100,11 @@ const ReviewsContainer = () => {
 
   return (
     <div>
-      {/* 미답변 리뷰 목록 */}
       <UnansweredReviews
         reviews={fetchedReviews}
         onAnswerSubmit={handleAnswerSubmit}
       />
-
-      {/* 답변 완료된 리뷰 목록 */}
-      <AnsweredReviews answeredReviews={answeredReviews} />
+      <div>{renderPageButtons()}</div>
     </div>
   );
 };
