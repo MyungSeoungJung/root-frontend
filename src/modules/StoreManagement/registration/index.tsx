@@ -30,9 +30,11 @@ const ProductRegistration = () => {
   const discountRateRef = useRef<HTMLInputElement>();
   const prodcutDescriptionRef = useRef<HTMLTextAreaElement>();
   const fileRef = useRef<HTMLInputElement>();
+  const mainImgRef = useRef<HTMLInputElement>();
   const formRef = useRef<HTMLFormElement>();
   const [imgPreview, setImgPrewview] = useState([]);
   const [userBrand, setUserBrand] = useState();
+  const [mainImgPreview, setMainImgPrewview] = useState([]);
 
   //로그인한 유저의 브랜드정보 get요청
   useEffect(() => {
@@ -73,6 +75,7 @@ const ProductRegistration = () => {
       formData.append("files", file);
     });
 
+    formData.append("mainFile", mainImgRef.current.files[0]);
     formData.append("productBrand", productBrandRef.current.innerText);
     formData.append("productName", productNameRef.current.value);
     formData.append("productPrice", productPriceRef.current.value);
@@ -94,6 +97,7 @@ const ProductRegistration = () => {
       if (response.status === 201) {
         formRef.current.reset();
         setImgPrewview([]);
+        setMainImgPrewview([]);
         alert("상품 등록을 완료했습니다");
       }
     })();
@@ -118,13 +122,35 @@ const ProductRegistration = () => {
       reader.readAsDataURL(file);
     }
   };
+  const handleMainImgPreview = (event) => {
+    if (event.target.files.length > 1) {
+      alert("대표 이미지는 1개만 선택할 수 있습니다.");
+      event.target.value = ""; // 선택한 이미지를 지움
+      return;
+    }
+    const files = event.target.files;
+    const previews = [];
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        previews.push(e.target.result);
+        if (previews.length === files.length) {
+          setMainImgPrewview(previews); // 수정된 부분
+        }
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
   return (
     <ProductRegistrationContainer>
-      <section>
-        <div>{/* 왼쪽 */}</div>
+      <h2>상품 등록</h2>
+      <form onSubmit={handleProductRegister} ref={formRef}>
         <div>
-          <h1>상품 등록</h1>
-          <form onSubmit={handleProductRegister} ref={formRef}>
+          <div>
             <div>
               <p>브랜드 </p> <p ref={productBrandRef}> {userBrand}</p>
             </div>
@@ -188,8 +214,60 @@ const ProductRegistration = () => {
                 ref={prodcutDescriptionRef}
               ></textarea>
             </div>
+          </div>
+          <div>
             <div>
-              <p>상품 이미지 </p>{" "}
+              <p>대표 이미지 </p>
+              <input
+                type="file"
+                multiple
+                accept="image/*, video/*"
+                ref={mainImgRef}
+                onChange={handleMainImgPreview}
+              />
+            </div>
+            <div
+              style={{
+                height: "180px",
+                backgroundColor: "rgba(188, 239, 255, 0.5)",
+                display: "flex",
+                flexDirection: "row",
+                paddingBottom: "3px",
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: "10px",
+              }}
+            >
+              {mainImgPreview.length === 0 && (
+                <p style={{ width: "200px", textAlign: "center" }}>
+                  대표 이미지 미리보기
+                </p>
+              )}
+              {mainImgPreview.length > 0 && (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  {mainImgPreview.map((preview, index) => (
+                    <img
+                      key={index}
+                      src={preview}
+                      style={{
+                        width: "100px",
+                        height: "120px",
+                        marginRight: "5px",
+                        marginLeft: "5px",
+                      }}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+            <div>
+              <p>상품 이미지 </p>
               <input
                 type="file"
                 multiple
@@ -212,7 +290,12 @@ const ProductRegistration = () => {
               }}
             >
               {imgPreview.length === 0 && (
-                <p style={{ width: "200px", textAlign: "center" }}>
+                <p
+                  style={{
+                    width: "200px",
+                    textAlign: "center",
+                  }}
+                >
                   이미지 미리보기
                 </p>
               )}
@@ -237,10 +320,9 @@ const ProductRegistration = () => {
             <div>
               <button> 상품 등록 </button>
             </div>
-          </form>
+          </div>
         </div>
-        <div>{/* 오른쪽 */}</div>
-      </section>
+      </form>
     </ProductRegistrationContainer>
   );
 };

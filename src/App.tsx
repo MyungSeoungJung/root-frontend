@@ -5,6 +5,7 @@ import ResetStyle from "./styles/reset";
 import { UserManagementRoutes } from "./modules/UserManagement/routes";
 import LoginComponent from "./modules/UserManagement/LoginManagement/LoginComponent";
 import { ProfileProvider } from "./modules/UserManagement/ProfileManagement/ProfileContext";
+import "../src/assest/fonts/Fonts.css";
 
 const App = () => {
   return (

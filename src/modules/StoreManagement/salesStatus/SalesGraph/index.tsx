@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ReactApexChart from "react-apexcharts";
 import http from "../../utils/http";
+import SettlementMoney from "../SettlementMoney";
 
 class SalesGraph extends Component<any, any> {
   constructor(props) {
@@ -30,6 +31,17 @@ class SalesGraph extends Component<any, any> {
         stroke: {
           curve: "smooth",
         },
+        yaxis: {
+          labels: {
+            formatter: function (value) {
+              const formattedValue = new Intl.NumberFormat("ko-KR", {
+                style: "currency",
+                currency: "KRW",
+              }).format(value);
+              return formattedValue.replace("₩", "") + " 원";
+            },
+          },
+        },
         xaxis: {
           type: "category",
           categories: [
@@ -50,6 +62,15 @@ class SalesGraph extends Component<any, any> {
         tooltip: {
           x: {
             format: "MM월",
+          },
+          y: {
+            formatter: function (value) {
+              const formattedValue = new Intl.NumberFormat("ko-KR", {
+                style: "currency",
+                currency: "KRW",
+              }).format(value);
+              return formattedValue.replace("₩", "") + " 원";
+            },
           },
         },
       },
@@ -121,12 +142,13 @@ class SalesGraph extends Component<any, any> {
             width: "81%",
             padding: "20px",
             borderRadius: "10px",
-            marginTop: "20px",
+            marginTop: "50px",
             marginBottom: "20px",
           }}
         >
-          <h1>매출관리</h1>
+          <h2>매출관리</h2>
         </div>
+        <SettlementMoney />
         <div style={{ display: "flex", width: "85%" }}>
           <div style={{ display: "flex", flex: "1" }}></div>
           <div style={{ display: "flex", flex: "1" }}></div>
@@ -142,7 +164,12 @@ class SalesGraph extends Component<any, any> {
               borderRadius: "10px",
             }}
           >
-            <div style={{ display: "flex", marginRight: "40px" }}>
+            <div
+              style={{
+                display: "flex",
+                marginRight: "40px",
+              }}
+            >
               <span
                 style={{
                   width: "10px",

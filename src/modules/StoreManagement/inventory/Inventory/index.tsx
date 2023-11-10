@@ -28,6 +28,10 @@ interface productInfo {
   quantity: string;
   lastUpdated: string;
 }
+interface lessQuantityProduct {
+  first: string;
+  second: string;
+}
 //file 따로 get 요청
 function MediaElement({
   contentType,
@@ -57,6 +61,7 @@ const InventoryManagement = () => {
   const [modifyItem, setModifyItem] = useState({
     index: 0,
     isActive: false,
+    category: "",
     productName: "",
     quantity: "",
     productPrice: "",
@@ -64,10 +69,13 @@ const InventoryManagement = () => {
     discountRate: "",
   });
   const [showModifyModal, SetShowModifyModal] = useState(false);
-  const [productToOrder, setproductToOrder] = useState<product[]>([]);
+  const [productToOrder, setproductToOrder] = useState<lessQuantityProduct[]>(
+    []
+  );
+
   const [showProductToOrder, setShowProductToOrder] = useState(false);
 
-  const size = 5; //사이즈 조절
+  const size = 7; //사이즈 조절
 
   //  첫화면 get
   useEffect(() => {
@@ -79,12 +87,12 @@ const InventoryManagement = () => {
         setProduct(response.data.content);
         setTotalPages(response.data.totalPages);
         // 서버에서 받을때 제품 수량이 5개 이하인 제품 alert뜨게
-        const productsLowQuantity = response.data.content.filter(
-          (product) => parseInt(product.productInfo[0].quantity) <= 10
-        );
-        productsLowQuantity.forEach((product) => {
-          setproductToOrder(productsLowQuantity);
-        }); // productsLowQuantity
+        // const productsLowQuantity = response.data.content.filter(
+        //   (product) => parseInt(product.productInfo[0].quantity) <= 10
+        // );
+        // productsLowQuantity.forEach((product) => {
+        //   setproductToOrder(productsLowQuantity);
+        // });
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -153,6 +161,7 @@ const InventoryManagement = () => {
     setModifyItem({
       index,
       productName: product[index].productName,
+      category: product[index].category,
       quantity: product[index].productInfo[0].quantity,
       isActive: product[index].isActive,
       productPrice: product[index].productPrice,
@@ -164,6 +173,7 @@ const InventoryManagement = () => {
   const handleModifyConfirm = ({
     index,
     isActive,
+    category,
     productName,
     quantity,
     productPrice,
@@ -172,6 +182,7 @@ const InventoryManagement = () => {
   }: {
     index: number;
     isActive: boolean;
+    category: string;
     productName: string;
     quantity: string;
     productPrice: string;
@@ -183,6 +194,7 @@ const InventoryManagement = () => {
         `/product/modifyProduct?id=${product[index].id}`,
         {
           isActive,
+          category,
           productName,
           quantity,
           productPrice,
@@ -197,6 +209,7 @@ const InventoryManagement = () => {
             return {
               ...item,
               isActive,
+              category,
               productName,
               productInfo: [
                 {
@@ -224,7 +237,12 @@ const InventoryManagement = () => {
     setShowProductToOrder(false);
   };
   // 발주 목록 알림창
-  const handleProductAlertConfirm = () => {
+  const handleProductAlertConfirm = async () => {
+    try {
+      const response = await http.get(`/product/lessQuantity`);
+      setproductToOrder(response.data);
+    } catch (error) {}
+
     setShowProductToOrder(true);
   };
   return (
@@ -232,7 +250,7 @@ const InventoryManagement = () => {
       <section>
         <div>
           <div>
-            <h1>재고 관리</h1>
+            <h2>재고 관리</h2>
           </div>
           <div style={{ marginRight: "20px" }}>
             <FontAwesomeIcon
@@ -248,8 +266,8 @@ const InventoryManagement = () => {
             <div>
               <div>
                 <div style={{ display: "flex", flex: "1" }}></div>
-                <div style={{ display: "flex", flex: "1", fontSize: "0.9rem" }}>
-                  <p>발주 목록</p>
+                <div style={{ display: "flex", flex: "1", fontSize: "1.2rem" }}>
+                  <p>재고 부족</p>
                 </div>
                 <div
                   style={{
@@ -268,15 +286,13 @@ const InventoryManagement = () => {
               </div>
 
               <div>
-                {productToOrder.length > 0 && (
+                {productToOrder && (
                   <table>
                     <tbody>
-                      {productToOrder.map((orderedProduct, index) => (
+                      {productToOrder.map((productToOrder, index) => (
                         <tr key={index}>
-                          <td>이름: {orderedProduct.productName}</td>
-                          <td>
-                            재고: {orderedProduct.productInfo[0].quantity}
-                          </td>
+                          <td>{productToOrder.first}</td>
+                          <td>{productToOrder.second}개</td>
                         </tr>
                       ))}
                     </tbody>
@@ -298,7 +314,7 @@ const InventoryManagement = () => {
             <div id="inputContainer">
               <div>
                 <input
-                  placeholder="재품 이름으로 검색해주세요"
+                  placeholder="제품 이름 또는 id로 검색해주세요"
                   ref={inputRef}
                 />
               </div>
@@ -347,7 +363,9 @@ const InventoryManagement = () => {
                       )}
                     </td>
                     <td>{product.productName}</td>
-                    <td>{product.productPrice}원</td>
+                    <td>{`${(parseInt(product.productPrice) / 1000)
+                      .toFixed(3)
+                      .replace(".", ",")}원`}</td>
                     <td>
                       {product.isActive ? (
                         <span>판매중</span>
@@ -358,7 +376,7 @@ const InventoryManagement = () => {
                     <td>{product.category}</td>
                     <td>{product.productInfo[0].quantity}</td>
                     <td>{product.maximumPurchaseQuantity}</td>
-                    <td>{product.discountRate}</td>
+                    <td>{product.discountRate}%</td>
                     <td>
                       {new Date(
                         product.productInfo[0].lastUpdated
@@ -383,6 +401,7 @@ const InventoryManagement = () => {
           <InventoryModifyModal
             index={modifyItem.index}
             isActive={modifyItem.isActive}
+            category={modifyItem.category}
             productName={modifyItem.productName}
             quantity={modifyItem.quantity}
             productPrice={modifyItem.productPrice}

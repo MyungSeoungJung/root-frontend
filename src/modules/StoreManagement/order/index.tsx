@@ -42,7 +42,7 @@ const OrderManagement = () => {
   const [orderState, setOrderState] = useState("");
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPage] = useState(1);
-  const size = 5;
+  const size = 7;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -115,7 +115,7 @@ const OrderManagement = () => {
     <TableContainer>
       <section>
         <div>
-          <h1>주문 내역/관리</h1>
+          <h2>주문 내역/관리</h2>
         </div>
         <div>
           <nav>

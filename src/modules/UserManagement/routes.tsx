@@ -3,8 +3,6 @@ import ProfileManagement from "./ProfileManagement/ProfileRegister";
 import ScheduleManagement from "./ScheduleManagement";
 import ChartManagement from "./ChartManagement";
 import SalesGraph from "../StoreManagement/salesStatus/SalesGraph";
-import { UnansweredReviews } from "./ReviewManagement/unansweredReviews";
-import { AnsweredReviews } from "./ReviewManagement/answeredReviews";
 import ReviewsContainer from "./ReviewManagement/reviewContainer";
 
 export const UserManagementRoutes = [
@@ -29,5 +27,4 @@ export const UserManagementRoutes = [
     path="ChartManagement"
     element={<ChartManagement />}
   />,
-  <Route key="SalesGraph" path="SalesGraph" element={<SalesGraph />} />,
 ];

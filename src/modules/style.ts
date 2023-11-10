@@ -1,9 +1,11 @@
 import styled from "@emotion/styled";
+
 export const LayoutContainer = styled.div`
   width: 90%;
   height: 100vh;
   display: flex;
   flex-direction: row;
+
   #LayoutWrapper {
     flex: 0.15;
     /* position: relative; */
@@ -13,6 +15,16 @@ export const LayoutContainer = styled.div`
     border-top-left-radius: 30px;
     border-bottom-left-radius: 30px;
   }
+  #LayoutWrapper > h1 {
+    transform: scale(1);
+  }
+  #LayoutWrapper > h1:hover {
+    transform: scale(1.1);
+    color: #ff7f11;
+    transform-origin: left;
+
+    transition: color 0.2s, transform 0.2s;
+  }
   main {
     flex: 0.85;
     background-color: #f0f0f0;
@@ -20,6 +32,7 @@ export const LayoutContainer = styled.div`
     border-bottom-right-radius: 30px;
     border: 7px solid #202123;
   }
+
   #LayoutWrapper ul li {
     // 클릭했을때 나오는 nav
     margin-top: 10px;

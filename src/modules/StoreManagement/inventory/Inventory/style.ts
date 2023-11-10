@@ -42,10 +42,9 @@ export const TableContainer = styled.div`
   }
   table thead tr td {
     padding: 20px;
-    background-color: rgba(54, 185, 204, 0.3);
-    color: #048a81;
+    background-color: #4ce0b3;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 24px;
     text-align: center;
   }
   table thead tr td:nth-of-type(1) {
@@ -79,12 +78,14 @@ export const TableContainer = styled.div`
     background-color: white;
     border-radius: 10px;
     padding: 10px;
-    background-color: #36b9cc;
-    color: white;
+    background-color: #4ce0b3;
+    color: black;
+    font-weight: 600;
     transform: scale(1);
   }
   nav div:hover {
-    background-color: #36b9cc;
+    background-color: rgba(76, 224, 179, 0.5);
+    color: black;
     transition: background-color 0.2s, transform 0.15s;
     transform: scale(1.1);
   }
@@ -136,7 +137,7 @@ export const TableContainer = styled.div`
     left: 80%;
     /* top: 500px; */
     position: fixed;
-    width: 200px;
+    width: 250px;
     border-radius: 10px;
     z-index: 10;
   }
@@ -144,15 +145,27 @@ export const TableContainer = styled.div`
     background-color: rgba(78, 115, 223, 1);
     border-top-right-radius: 8px;
     border-top-left-radius: 8px;
-    height: 30px;
+    height: 40px;
     display: flex;
     flex-direction: row;
+
     justify-content: center;
     align-items: center;
+    color: white;
+  }
+  aside > div > div:nth-of-type(1) p {
+    margin-left: 10px;
   }
   aside > div > div:nth-of-type(2) {
     padding: 10px;
     height: 100%;
+  }
+  aside > div > div:nth-of-type(2) table tr:nth-of-type(1) {
+    margin-bottom: 10px;
+  }
+  aside > div > div:nth-of-type(2) table td {
+    text-align: left;
+    padding-left: 20px;
   }
   #x-box-icon {
     font-size: 12px;

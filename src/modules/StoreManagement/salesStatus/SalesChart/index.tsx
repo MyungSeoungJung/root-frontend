@@ -123,14 +123,14 @@ class SalesChart extends Component<any, any> {
         <div
           style={{
             backgroundColor: "white",
-            marginTop: "20px",
+            marginTop: "50px",
             marginBottom: "20px",
             width: "81%",
             padding: "20px",
             borderRadius: "10px",
           }}
         >
-          <h1>판매 현황</h1>
+          <h2>판매 현황</h2>
         </div>
         <div
           style={{
@@ -159,6 +159,7 @@ class SalesChart extends Component<any, any> {
                 <option value="2023">2023</option>
                 <option value="2022">2022</option>
                 <option value="2021">2021</option>
+                <option value="2020">2020</option>
               </select>
               <div>
                 <div style={{ marginLeft: "15px" }}>
@@ -185,7 +186,11 @@ class SalesChart extends Component<any, any> {
           >
             <p>
               {this.state.selectedYear}년 가장 많은 판매량은 &nbsp;
-              {this.state.highestSalesProduct} &nbsp;입니다.
+              <span style={{ fontWeight: "700" }}>
+                {" "}
+                {this.state.highestSalesProduct}
+              </span>
+              &nbsp;입니다.
             </p>
           </div>
         </div>

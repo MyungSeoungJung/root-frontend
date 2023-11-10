@@ -1,14 +1,19 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { LayoutContainer } from "./style";
 import UserProfile from "../modules/UserManagement/ProfileManagement/UserProfile";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStore } from "@fortawesome/free-solid-svg-icons";
 import { faPeopleRoof } from "@fortawesome/free-solid-svg-icons";
-import { logout } from "../modules/UserManagement/utils/logout";
-import { useNavigate } from "react-router-dom";
+import { logout } from "./UserManagement/utils/logout";
+import OrderNotification from "./StoreManagement/orderNotifications";
 
 const Layout = () => {
+  const navigate = useNavigate();
+
+  const handleLogoClick = () => {
+    navigate("/home");
+  };
   const [showStoreManagementNav, setShowStoreManagementNav] = useState(false);
   const handleshowStoreManagementNav = () => {
     // 가게관리 토글
@@ -20,20 +25,19 @@ const Layout = () => {
     // 가게관리 토글
     setshowUserManagementNav(!showUserManagementNav);
   };
-  const navigate = useNavigate();
 
-  // 로그아웃 버튼의 클릭 이벤트 핸들러
-  const handleLogoutClick = () => {
-    logout(navigate); // navigate 함수를 logout에 전달
-  };
   return (
     <LayoutContainer>
       <nav id="LayoutWrapper">
         {/* 프로필 정보 */}
-        <div>
-          <h1>CampAndTent</h1>
-          <UserProfile />
-        </div>
+        <h1
+          onClick={handleLogoClick}
+          style={{ marginTop: "20px", marginLeft: "10px" }}
+        >
+          CampAndTent
+        </h1>
+
+        <UserProfile />
         {/*  가게 관리 ul */}
         <div>
           <div>
@@ -84,14 +88,14 @@ const Layout = () => {
                   <p> 매출관리</p>
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link
                   to="PopularProduct"
                   style={{ textDecoration: "none", color: "white" }}
                 >
                   <p> 인기 상품</p>
                 </Link>
-              </li>
+              </li> */}
             </ul>
           )}
         </div>
@@ -152,7 +156,7 @@ const Layout = () => {
             </ul>
           )}
         </div>
-        <button onClick={handleLogoutClick}>로그아웃</button>
+        <OrderNotification />
       </nav>
       <main style={{ width: "100%" }}>
         <Outlet />

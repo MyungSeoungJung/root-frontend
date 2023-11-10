@@ -57,4 +57,9 @@ export const ModifyModal = styled.div`
   #x-box-icon_modify_modal_box:hover {
     color: red;
   }
+  div > div:nth-of-type(1) > div:nth-last-of-type(1) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;

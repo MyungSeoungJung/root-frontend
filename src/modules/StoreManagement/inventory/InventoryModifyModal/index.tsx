@@ -6,6 +6,7 @@ import { faX } from "@fortawesome/free-solid-svg-icons";
 interface ModifyModalProps {
   index: number;
   isActive: boolean;
+  category: string;
   productName: string;
   quantity: string;
   productPrice: string;
@@ -14,6 +15,7 @@ interface ModifyModalProps {
   onConfirm: (payload: {
     index: number;
     isActive: boolean;
+    category: string;
     productName: string;
     quantity: string;
     productPrice: string;
@@ -26,6 +28,7 @@ interface ModifyModalProps {
 const InventoryModifyModal = ({
   index,
   isActive,
+  category,
   productName,
   quantity,
   productPrice,
@@ -39,12 +42,14 @@ const InventoryModifyModal = ({
   const quantityRef = useRef<HTMLInputElement>();
   const productPriceRef = useRef<HTMLInputElement>();
   const maximumPurchaseQuantityRef = useRef<HTMLInputElement>();
+  const categoryRef = useRef<HTMLSelectElement>();
   const discountRateRef = useRef<HTMLInputElement>();
   const handleConfirm = () => {
     onConfirm({
       index,
       isActive: activeRef.current.value === "true",
       productName: productNameRef.current.value,
+      category: categoryRef.current.value,
       quantity: quantityRef.current.value,
       productPrice: productPriceRef.current.value,
       maximumPurchaseQuantity: maximumPurchaseQuantityRef.current.value,
@@ -103,17 +108,32 @@ const InventoryModifyModal = ({
             </div>
 
             <div>
-              <select ref={activeRef}>
+              <select
+                ref={activeRef}
+                defaultValue={isActive ? "true" : "false"}
+              >
                 <option>수정 할 상품의 상태를 선택해주세요</option>
                 <option value="true">판매</option>
                 <option value="false">숨김</option>
+              </select>
+            </div>
+            <div>
+              <select ref={categoryRef} defaultValue={category}>
+                <option value="null" selected disabled hidden>
+                  상품의 카테고리를 선택해주세요
+                </option>
+                <option value="tent">텐트</option>
+                <option value="table">테이블</option>
+                <option value="accessory">악세서리</option>
+                <option value="tableware">식기류</option>
+                <option value="other">기타</option>
               </select>
             </div>
             <table>
               <tr>
                 <td>제품 이름</td>
                 <td>
-                  <input defaultValue={productName} ref={productNameRef} />{" "}
+                  <input defaultValue={productName} ref={productNameRef} />
                 </td>
               </tr>
               <tr>
@@ -145,7 +165,7 @@ const InventoryModifyModal = ({
               </tr>
             </table>
             <div>
-              <button onClick={handleConfirm}>수정</button>{" "}
+              <button onClick={handleConfirm}>수정</button>
             </div>
           </div>
         </div>

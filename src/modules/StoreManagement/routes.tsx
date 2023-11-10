@@ -3,7 +3,8 @@ import ProductRegistration from "./registration";
 import InventoryManagement from "./inventory/Inventory";
 import OrderManagement from "./order";
 import SalesChart from "./salesStatus/SalesChart";
-import PopularProduct from "./popularProduct";
+import SalesGraph from "./salesStatus/SalesGraph";
+import Main from "./main";
 
 export const StoreManagementRoutes = [
   <Route
@@ -22,10 +23,6 @@ export const StoreManagementRoutes = [
     element={<OrderManagement />}
   />,
   <Route key="SalesChart" path="SalesChart" element={<SalesChart />} />,
-
-  <Route
-    key="PopularProduct"
-    path="PopularProduct"
-    element={<PopularProduct />}
-  />,
+  <Route key="SalesGraph" path="SalesGraph" element={<SalesGraph />} />,
+  <Route index element={<Main />} />,
 ];
