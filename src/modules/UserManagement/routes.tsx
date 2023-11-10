@@ -3,8 +3,9 @@ import ProfileManagement from "./ProfileManagement/ProfileRegister";
 import ScheduleManagement from "./ScheduleManagement";
 import ChartManagement from "./ChartManagement";
 import SalesGraph from "../StoreManagement/salesStatus/SalesGraph";
-import UnansweredReviewTable from "./ReviewManagement/UnansweredReviewTable";
-import AnsweredReviews from "./ReviewManagement/AnsweredReviewsTable";
+import { UnansweredReviews } from "./ReviewManagement/unansweredReviews";
+import { AnsweredReviews } from "./ReviewManagement/answeredReviews";
+import ReviewsContainer from "./ReviewManagement/reviewContainer";
 
 export const UserManagementRoutes = [
   <Route
@@ -12,18 +13,12 @@ export const UserManagementRoutes = [
     path="ProfileManagement"
     element={<ProfileManagement />}
   />,
-  <>
-    <Route
-      key="AnsweredReviews"
-      path="answered"
-      element={<AnsweredReviews />}
-    />
-    <Route
-      key="UnansweredReviews"
-      path="unanswered-reviews"
-      element={<UnansweredReviewTable />}
-    />
-  </>,
+  // <Route key="AnsweredReviews" path="answered" element={<AnsweredReviews />} />,
+  <Route
+    key="UnansweredReviews"
+    path="unanswered-reviews"
+    element={<ReviewsContainer />}
+  />,
   <Route
     key="ScheduleManagement"
     path="ScheduleManagement"

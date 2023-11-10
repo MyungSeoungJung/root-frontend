@@ -1,4 +1,7 @@
+import { ReactNode } from "react";
+
 export interface Review {
+  [x: string]: ReactNode;
   id: any;
   brandName: any;
   productId: any;
