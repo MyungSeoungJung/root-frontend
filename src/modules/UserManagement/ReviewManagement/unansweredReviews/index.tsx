@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Review } from "../types"; // Review 타입 정의 가져오기
 import ReviewItem from "../reviewItem";
-import { getCookie } from "../../utils/cookie";
 
 interface UnansweredReviewsProps {
   reviews: Review[];
@@ -12,7 +11,7 @@ export const UnansweredReviews: React.FC<UnansweredReviewsProps> = ({
   reviews,
   onAnswerSubmit,
 }) => {
-  console.log(reviews);
+  console.log("UnansweredReviews props:", reviews);
   return (
     <div>
       <h2>답변 등록대기중인 리뷰들</h2>
@@ -73,7 +72,11 @@ export const UnansweredReviews: React.FC<UnansweredReviewsProps> = ({
                   {review.scope}
                 </td>
                 <td style={{ border: "1px solid black", padding: "8px" }}>
-                  <ReviewItem review={review} onAnswerSubmit={onAnswerSubmit} />
+                  <ReviewItem
+                    review={review}
+                    onAnswerSubmit={onAnswerSubmit}
+                    reviewAnswered={!!review.reviewAnswer}
+                  />
                 </td>
               </tr>
             ))}

@@ -105,11 +105,6 @@ const Layout = () => {
           {showUserManagementNav && (
             <ul>
               <li>
-                <Link to="" style={{ textDecoration: "none", color: "white" }}>
-                  <p> 고객 관리</p>
-                </Link>
-              </li>
-              <li>
                 <Link
                   to="ChartManagement"
                   style={{ textDecoration: "none", color: "white" }}
@@ -127,18 +122,18 @@ const Layout = () => {
               </li>
               <li>
                 <Link
-                  to="answered"
+                  to="unanswered-reviews"
                   style={{ textDecoration: "none", color: "white" }}
                 >
-                  <p> 리뷰(답변완료)</p>
+                  <p> 리뷰 관리</p>
                 </Link>
               </li>
               <li>
                 <Link
-                  to="unanswered-reviews"
+                  to="InqueryManagement"
                   style={{ textDecoration: "none", color: "white" }}
                 >
-                  <p> 등록된 리뷰</p>
+                  <p> 문의 관리</p>
                 </Link>
               </li>
               <li>
