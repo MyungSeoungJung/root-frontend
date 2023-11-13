@@ -22,6 +22,7 @@ class ApexChart extends Component {
     barOptions: {
       chart: {
         type: "bar" as const,
+        width: "100%",
         height: 350,
         toolbar: {
           show: false,
@@ -32,6 +33,7 @@ class ApexChart extends Component {
       },
       title: {
         text: "연령대별 구매 통계",
+        width: "100%",
         height: 350,
         align: "left" as const,
       },
@@ -39,7 +41,7 @@ class ApexChart extends Component {
     pieSeries: [] as PieSeriesType[],
     pieOptions: {
       chart: {
-        width: 380,
+        width: "30%",
         type: "pie" as const,
       },
       labels: [],
@@ -125,7 +127,7 @@ class ApexChart extends Component {
             height={350}
           />
         </div>
-        <div id="pieChart">
+        <div id="pieChart" style={{ maxWidth: "650px", margin: "auto" }}>
           <ReactApexChart
             options={this.state.pieOptions}
             series={this.state.pieSeries}

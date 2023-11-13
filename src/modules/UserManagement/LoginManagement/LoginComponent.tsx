@@ -1,10 +1,8 @@
 import { useState } from "react";
-import axios from "axios";
-import http from "../../StoreManagement/utils/http";
 import { LoginStyle } from "./style";
 import ReactPlayer from "react-player";
-import myVideo from "/Users/tjoeun/root-frontend/src/assest/pexels_videos_2330708 (720p).mp4";
-import { flushSync } from "react-dom";
+// import myVideo from "/Users/tjoeun/root-frontend/src/assest/pexels_videos_2330708 (720p).mp4";
+import myVideo from "/Users/tjoeun/Documents/GitHub/root-frontend/src/assest/pexels_videos_2330708 (720p).mp4";
 
 interface User {
   id: number;
