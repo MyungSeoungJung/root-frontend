@@ -1,19 +1,51 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Review } from "../types";
+import {
+  clickableCellStyle,
+  hoverCellStyle,
+  tableCellStyle,
+} from "../reviewStyle";
+
+interface HoveredCell {
+  rowIndex: number;
+  cellType: "content" | "answer";
+}
 
 interface AnsweredReviewProps {
   reviews: Review[];
+  hovered: HoveredCell;
 }
 
 export const AnsweredReviews: React.FC<AnsweredReviewProps> = ({ reviews }) => {
-  console.log("답변된 리뷰:", reviews);
   useEffect(() => {});
 
-  // 리뷰가 비어있지 않은지 다시 확인
-  if (reviews.length === 0) {
-    console.log("리뷰가 없습니다.");
-    return <p>No answered reviews yet.</p>;
-  }
+  const [hovered, setHovered] = useState<any | null>(null);
+  const [showModal, setShowModal] = useState(false);
+  const [currentReview, setCurrentReview] = useState<Review | null>(null);
+
+  const handleReviewClick = (ReviewContent: Review) => {
+    setCurrentReview(ReviewContent);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setCurrentReview(null);
+  };
+
+  const renderReviewContentPreview = (ReviewContent: string) => {
+    const previewLength = 5;
+    return ReviewContent.length > previewLength
+      ? ReviewContent.substring(0, previewLength) + "..."
+      : ReviewContent;
+  };
+
+  const renderReviewAnswerPreview = (ReviewAnswer: string) => {
+    const previewLength = 5;
+    return ReviewAnswer.length > previewLength
+      ? ReviewAnswer.substring(0, previewLength) + "..."
+      : ReviewAnswer;
+  };
   return (
     <div>
       <h2>Answered Reviews</h2>
@@ -21,55 +53,59 @@ export const AnsweredReviews: React.FC<AnsweredReviewProps> = ({ reviews }) => {
         <table>
           <thead>
             <tr>
-              <th style={{ border: "1px solid black", padding: "8px" }}>ID</th>
-              <th style={{ border: "1px solid black", padding: "8px" }}>
-                Brand Name
-              </th>
-              <th style={{ border: "1px solid black", padding: "8px" }}>
-                Gender
-              </th>
-              <th style={{ border: "1px solid black", padding: "8px" }}>Age</th>
-              <th style={{ border: "1px solid black", padding: "8px" }}>
-                Product ID
-              </th>
-              <th style={{ border: "1px solid black", padding: "8px" }}>
-                Review Answer
-              </th>
-              <th style={{ border: "1px solid black", padding: "8px" }}>
-                Review Content
-              </th>
-              <th style={{ border: "1px solid black", padding: "8px" }}>
-                Scope
-              </th>
+              <th style={tableCellStyle}>ID</th>
+              <th style={tableCellStyle}>Brand Name</th>
+              <th style={tableCellStyle}>Gender</th>
+              <th style={tableCellStyle}>Age</th>
+              <th style={tableCellStyle}>Product ID</th>
+              <th style={tableCellStyle}>Review Content</th>
+              <th style={tableCellStyle}>Review Answer</th>
+              <th style={tableCellStyle}>Scope</th>
             </tr>
           </thead>
           <tbody>
-            {reviews.map((review) => (
+            {reviews.map((review, index) => (
               <tr key={review.id}>
-                <td style={{ border: "1px solid black", padding: "8px" }}>
-                  {review.id}
+                <td style={tableCellStyle}>{review.id}</td>
+                <td style={tableCellStyle}>{review.brandName}</td>
+                <td style={tableCellStyle}>{review.gender}</td>
+                <td style={tableCellStyle}>{review.age}</td>
+                <td style={tableCellStyle}>{review.productId}</td>
+                <td
+                  style={
+                    hovered?.rowIndex === index &&
+                    hovered?.cellType === "content"
+                      ? hoverCellStyle
+                      : clickableCellStyle
+                  }
+                  onMouseEnter={() =>
+                    setHovered({ rowIndex: index, cellType: "content" })
+                  }
+                  onMouseLeave={() => setHovered(null)}
+                  onClick={() => handleReviewClick(review)}
+                >
+                  <span onClick={() => handleReviewClick(review)}>
+                    {renderReviewContentPreview(review.reviewContent)}
+                  </span>
                 </td>
-                <td style={{ border: "1px solid black", padding: "8px" }}>
-                  {review.brandName}
+                <td
+                  style={
+                    hovered?.rowIndex === index &&
+                    hovered?.cellType === "answer"
+                      ? hoverCellStyle
+                      : clickableCellStyle
+                  }
+                  onMouseEnter={() =>
+                    setHovered({ rowIndex: index, cellType: "answer" })
+                  }
+                  onMouseLeave={() => setHovered(null)}
+                  onClick={() => handleReviewClick(review)}
+                >
+                  <span onClick={() => handleReviewClick(review)}>
+                    {renderReviewAnswerPreview(review.reviewAnswer)}
+                  </span>
                 </td>
-                <td style={{ border: "1px solid black", padding: "8px" }}>
-                  {review.gender}
-                </td>
-                <td style={{ border: "1px solid black", padding: "8px" }}>
-                  {review.age}
-                </td>
-                <td style={{ border: "1px solid black", padding: "8px" }}>
-                  {review.productId}
-                </td>
-                <td style={{ border: "1px solid black", padding: "8px" }}>
-                  {review.reviewAnswer}
-                </td>
-                <td style={{ border: "1px solid black", padding: "8px" }}>
-                  {review.reviewContent}
-                </td>
-                <td style={{ border: "1px solid black", padding: "8px" }}>
-                  {review.scope}
-                </td>
+                <td style={tableCellStyle}>{review.scope}</td>
               </tr>
             ))}
           </tbody>

@@ -8,14 +8,20 @@ import {
   tableCellStyle,
 } from "../styles";
 
+interface HoveredCell {
+  rowIndex: number;
+  cellType: "content" | "answer";
+}
+
 interface AnsweredInqueriesProps {
   inqueries: ProductInquery[];
+  hovered: HoveredCell;
 }
 
 export const AnsweredInqueries: React.FC<AnsweredInqueriesProps> = ({
   inqueries,
 }) => {
-  const [hovered, setHovered] = useState<number | null>(null);
+  const [hovered, setHovered] = useState<HoveredCell | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [currentInquery, setCurrentInquery] = useState<ProductInquery | null>(
     null
@@ -38,6 +44,13 @@ export const AnsweredInqueries: React.FC<AnsweredInqueriesProps> = ({
       : inqueryContent;
   };
 
+  const renderInqueryAnswerPreview = (inqueryAnswer: string) => {
+    const previewLength = 5;
+    return inqueryAnswer.length > previewLength
+      ? inqueryAnswer.substring(0, previewLength) + "..."
+      : inqueryAnswer;
+  };
+
   if (inqueries.length === 0) {
     return <p>No answered inqueries yet.</p>;
   }
@@ -54,8 +67,8 @@ export const AnsweredInqueries: React.FC<AnsweredInqueriesProps> = ({
             <th style={tableCellStyle}>Product name</th>
             <th style={tableCellStyle}>Inquiry Category</th>
             <th style={tableCellStyle}>Inquiry Content</th>
-            <th style={tableCellStyle}>Inquiry Date</th>
             <th style={tableCellStyle}>inqueryAnswer</th>
+            <th style={tableCellStyle}>Inquiry Date</th>
           </tr>
         </thead>
         <tbody>
@@ -67,15 +80,36 @@ export const AnsweredInqueries: React.FC<AnsweredInqueriesProps> = ({
               <td style={tableCellStyle}>{inquery.productName}</td>
               <td style={tableCellStyle}>{inquery.inqueryCategory}</td>
               <td
-                style={hovered === index ? hoverCellStyle : clickableCellStyle}
-                onMouseEnter={() => setHovered(index)}
+                style={
+                  hovered?.rowIndex === index && hovered?.cellType === "content"
+                    ? hoverCellStyle
+                    : clickableCellStyle
+                }
+                onMouseEnter={() =>
+                  setHovered({ rowIndex: index, cellType: "content" })
+                }
                 onMouseLeave={() => setHovered(null)}
                 onClick={() => handleInqueryClick(inquery)}
               >
                 {renderInqueryContentPreview(inquery.inqueryContent)}
               </td>
+              <td
+                style={
+                  hovered?.rowIndex === index && hovered?.cellType === "answer"
+                    ? hoverCellStyle
+                    : clickableCellStyle
+                }
+                onMouseEnter={() =>
+                  setHovered({ rowIndex: index, cellType: "answer" })
+                }
+                onMouseLeave={() => setHovered(null)}
+                onClick={() => handleInqueryClick(inquery)}
+              >
+                <span onClick={() => handleInqueryClick(inquery)}>
+                  {renderInqueryAnswerPreview(inquery.inqueryAnswer)}
+                </span>
+              </td>
               <td style={tableCellStyle}>{inquery.inqueryDate}</td>
-              <td style={tableCellStyle}>{inquery.inqueryAnswer}</td>
             </tr>
           ))}
         </tbody>

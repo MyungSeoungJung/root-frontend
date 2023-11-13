@@ -97,10 +97,7 @@ export const UnansweredInqueries: React.FC<UnansweredInqueriesProps> = ({
               <td style={tableCellStyle}>{inquery.inqueryDate}</td>
               <td style={tableCellStyle}>
                 <span onClick={() => handleInqueryClick(inquery)}></span>
-                <button
-                  onClick={() => setSelectedInqueryId(inquery.id)}
-                  style={{ marginLeft: "10px" }}
-                >
+                <button onClick={() => setSelectedInqueryId(inquery.id)}>
                   Answer
                 </button>
               </td>
