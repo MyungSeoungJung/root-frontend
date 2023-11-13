@@ -1,6 +1,7 @@
 import { getCookie } from "@/modules/StoreManagement/utils/cookie";
 import axios from "axios";
 import { useState } from "react";
+import styles from "../ProfileRegister.module.css";
 
 function ProfileRegister() {
   const [brandName, setBrandName] = useState("");
@@ -67,57 +68,68 @@ function ProfileRegister() {
   };
 
   return (
-    <div>
-      <h1>프로필 등록</h1>
+    <div className={styles.container}>
+      <h2 className={styles.formTitle}>프로필 등록</h2>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>상호명: </label>
+        <div className={styles.formGroup}>
+          <label className={styles.label}>상호명:</label>
           <input
             type="text"
             name="brandName"
             value={brandName}
             onChange={(e) => setBrandName(e.target.value)}
+            className={styles.inputText}
           />
         </div>
-        <div>
-          <label>사업자 번호: </label>
+        <div className={styles.formGroup}>
+          <label className={styles.label}>사업자 번호:</label>
           <input
             type="text"
             name="businessNumber"
             value={businessNumber}
             onChange={(e) => setBusinessNumber(e.target.value)}
+            className={styles.inputText}
           />
         </div>
-        <div>
-          <label>대표자명: </label>
+        <div className={styles.formGroup}>
+          <label className={styles.label}>대표자명:</label>
           <input
             type="text"
             name="representativeName"
             value={representativeName}
             onChange={(e) => setRepresentativeName(e.target.value)}
+            className={styles.inputText}
           />
         </div>
-        <div>
-          <label>브랜드 한줄소개: </label>
+        <div className={styles.formGroup}>
+          <label className={styles.label}>브랜드 한줄소개:</label>
           <input
             type="text"
             name="brandIntro"
             value={brandIntro}
             onChange={(e) => setBrandIntro(e.target.value)}
+            className={styles.inputText}
           />
         </div>
-        <div>
-          <label>프로필 사진첨부: </label>
-          <input type="file" onChange={handleImageChange} name="profileImage" />
+        <div className={styles.formGroup}>
+          <label className={styles.label}>프로필 사진첨부:</label>
+          <input
+            type="file"
+            onChange={handleImageChange}
+            name="profileImage"
+            className={styles.inputFile}
+          />
           {imagePreview && (
             <img
               src={imagePreview}
               alt="프로필 미리보기"
-              style={{ width: "100px", height: "100px" }}
+              className={styles.imagePreview}
             />
           )}
         </div>
-        <button type="submit">등록</button>
+        <button type="submit" className={styles.submitButton}>
+          등록
+        </button>
       </form>
     </div>
   );

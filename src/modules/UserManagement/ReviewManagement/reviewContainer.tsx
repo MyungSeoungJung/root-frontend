@@ -91,7 +91,6 @@ const ReviewsContainer = () => {
         throw new Error("Failed to submit the answer");
       }
 
-      // 답변된 리뷰를 'answeredReviews'에 추가하고, 'fetchedReviews'에서 제거합니다.
       const updatedReview = fetchedReviews.find(
         (review) => review.id === reviewId
       );

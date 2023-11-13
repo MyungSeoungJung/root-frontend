@@ -1,5 +1,13 @@
 import React, { useState } from "react";
 import { ProductInquery } from "../types";
+import {
+  tableCellStyle,
+  modalBoxStyle,
+  modalContentStyle,
+  modalStyle,
+  hoverCellStyle,
+  clickableCellStyle,
+} from "../styles";
 
 interface UnansweredInqueriesProps {
   inqueries: ProductInquery[];
@@ -10,10 +18,15 @@ export const UnansweredInqueries: React.FC<UnansweredInqueriesProps> = ({
   inqueries,
   onInqueryAnswerSubmit,
 }) => {
+  const [hovered, setHovered] = useState<number | null>(null);
   const [answer, setAnswer] = useState<string>("");
   const [selectedInqueryId, setSelectedInqueryId] = useState<number | null>(
     null
   );
+  const [showModal, setShowModal] = useState(false); // 모달 상태 추가
+  const [currentInquery, setCurrentInquery] = useState<ProductInquery | null>(
+    null
+  ); // 현재 선택된 문의 상태 추가
 
   const handleAnswerChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
@@ -26,7 +39,25 @@ export const UnansweredInqueries: React.FC<UnansweredInqueriesProps> = ({
       onInqueryAnswerSubmit(selectedInqueryId, answer);
       setAnswer("");
       setSelectedInqueryId(null);
+      setShowModal(false);
     }
+  };
+
+  const handleInqueryClick = (inqueryContent: ProductInquery) => {
+    setCurrentInquery(inqueryContent);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setCurrentInquery(null);
+  };
+
+  const renderInqueryContentPreview = (inqueryContent: string) => {
+    const previewLength = 4;
+    return inqueryContent.length > previewLength
+      ? inqueryContent.substring(0, previewLength) + "..."
+      : inqueryContent;
   };
 
   return (
@@ -35,28 +66,41 @@ export const UnansweredInqueries: React.FC<UnansweredInqueriesProps> = ({
       <table>
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Username</th>
-            <th>Product ID</th>
-            <th>Product name</th>
-            <th>Inquiry Category</th>
-            <th>Inquiry Content</th>
-            <th>Inquiry Date</th>
-            <th>Actions</th>
+            <th style={tableCellStyle}>ID</th>
+            <th style={tableCellStyle}>Username</th>
+            <th style={tableCellStyle}>Product ID</th>
+            <th style={tableCellStyle}>Product name</th>
+            <th style={tableCellStyle}>Inquiry Category</th>
+            <th style={tableCellStyle}>Inquiry Content</th>
+            <th style={tableCellStyle}>Inquiry Date</th>
+            <th style={tableCellStyle}>Answer</th>
           </tr>
         </thead>
         <tbody>
-          {inqueries.map((inquery) => (
+          {inqueries.map((inquery, index) => (
             <tr key={inquery.id}>
-              <td>{inquery.id}</td>
-              <td>{inquery.username}</td>
-              <td>{inquery.productId}</td>
-              <td>{inquery.productName}</td>
-              <td>{inquery.inqueryCategory}</td>
-              <td>{inquery.inqueryContent}</td>
-              <td>{inquery.inqueryDate}</td>
-              <td>
-                <button onClick={() => setSelectedInqueryId(inquery.id)}>
+              <td style={tableCellStyle}>{inquery.id}</td>
+              <td style={tableCellStyle}>{inquery.username}</td>
+              <td style={tableCellStyle}>{inquery.productId}</td>
+              <td style={tableCellStyle}>{inquery.productName}</td>
+              <td style={tableCellStyle}>{inquery.inqueryCategory}</td>
+              <td
+                style={hovered === index ? hoverCellStyle : clickableCellStyle}
+                onMouseEnter={() => setHovered(index)}
+                onMouseLeave={() => setHovered(null)}
+                onClick={() => handleInqueryClick(inquery)}
+              >
+                <span onClick={() => handleInqueryClick(inquery)}>
+                  {renderInqueryContentPreview(inquery.inqueryContent)}
+                </span>
+              </td>
+              <td style={tableCellStyle}>{inquery.inqueryDate}</td>
+              <td style={tableCellStyle}>
+                <span onClick={() => handleInqueryClick(inquery)}></span>
+                <button
+                  onClick={() => setSelectedInqueryId(inquery.id)}
+                  style={{ marginLeft: "10px" }}
+                >
                   Answer
                 </button>
               </td>
@@ -65,10 +109,20 @@ export const UnansweredInqueries: React.FC<UnansweredInqueriesProps> = ({
         </tbody>
       </table>
       {selectedInqueryId && (
-        <div>
+        <div style={modalBoxStyle}>
           <h3>Answer Inquiry</h3>
           <textarea value={answer} onChange={handleAnswerChange}></textarea>
           <button onClick={handleAnswerSubmit}>Submit Answer</button>
+          <button onClick={() => setSelectedInqueryId(null)}>Close</button>
+        </div>
+      )}
+      {showModal && currentInquery && (
+        <div style={modalStyle}>
+          <div style={modalContentStyle}>
+            <h3> ▼ 전체 문의내용</h3>
+            <p>{currentInquery.inqueryContent}</p>
+            <button onClick={handleCloseModal}>Close</button>
+          </div>
         </div>
       )}
     </div>

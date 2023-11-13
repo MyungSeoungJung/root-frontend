@@ -31,9 +31,6 @@ export const UnansweredReviews: React.FC<UnansweredReviewsProps> = ({
                 Product ID
               </th>
               <th style={{ border: "1px solid black", padding: "8px" }}>
-                Review Answer
-              </th>
-              <th style={{ border: "1px solid black", padding: "8px" }}>
                 Review Content
               </th>
               <th style={{ border: "1px solid black", padding: "8px" }}>
@@ -61,9 +58,6 @@ export const UnansweredReviews: React.FC<UnansweredReviewsProps> = ({
                 </td>
                 <td style={{ border: "1px solid black", padding: "8px" }}>
                   {review.productId}
-                </td>
-                <td style={{ border: "1px solid black", padding: "8px" }}>
-                  {review.reviewAnswer}
                 </td>
                 <td style={{ border: "1px solid black", padding: "8px" }}>
                   {review.reviewContent}
