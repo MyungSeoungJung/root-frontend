@@ -4,6 +4,7 @@ import ScheduleManagement from "./ScheduleManagement";
 import ChartManagement from "./ChartManagement";
 import SalesGraph from "../StoreManagement/salesStatus/SalesGraph";
 import ReviewsContainer from "./ReviewManagement/reviewContainer";
+import InqueriesContainer from "./InqueryManagement/InqueriesContainer";
 
 export const UserManagementRoutes = [
   <Route
@@ -11,7 +12,6 @@ export const UserManagementRoutes = [
     path="ProfileManagement"
     element={<ProfileManagement />}
   />,
-  // <Route key="AnsweredReviews" path="answered" element={<AnsweredReviews />} />,
   <Route
     key="UnansweredReviews"
     path="unanswered-reviews"
@@ -27,4 +27,10 @@ export const UserManagementRoutes = [
     path="ChartManagement"
     element={<ChartManagement />}
   />,
+  <Route
+    key="InqueryManagement"
+    path="InqueryManagement"
+    element={<InqueriesContainer />}
+  />,
+  <Route key="SalesGraph" path="SalesGraph" element={<SalesGraph />} />,
 ];

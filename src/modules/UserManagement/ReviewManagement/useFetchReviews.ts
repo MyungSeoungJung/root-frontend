@@ -39,6 +39,7 @@ export const useFetchReviews = (
         // console.log("Reviews data:", data);
 
         setReviews(data.reviews);
+        // console.log(setReviews);
         setTotalPages(data.totalPages);
       } catch (e) {
         setError(e);
