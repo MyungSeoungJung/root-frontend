@@ -112,10 +112,10 @@ const InqueriesContainer: React.FC = () => {
   return (
     <div>
       <button onClick={toggleShowAnswered}>
-        {showAnswered ? "Show Unanswered Inqueries" : "Show Answered Inqueries"}
+        {showAnswered ? "답변예정 문의들 보기" : "답변완료 문의들 보기"}
       </button>
       {showAnswered ? (
-        <AnsweredInqueries inqueries={answeredInqueries} />
+        <AnsweredInqueries inqueries={answeredInqueries} hovered={undefined} />
       ) : (
         <UnansweredInqueries
           inqueries={unansweredInqueries}

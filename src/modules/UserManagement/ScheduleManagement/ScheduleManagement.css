@@ -5,3 +5,43 @@
 .fc-day-sat a {
   color: blue;
 }
+/* 캘린더 컨테이너 스타일 */
+.calendar-container {
+  width: 100%;
+  overflow: hidden;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+/* 현재 시간과 버튼을 담는 컨테이너 스타일 */
+.control-panel {
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* FullCalendar의 스타일을 오버라이드합니다. */
+.fc .fc-toolbar.fc-header-toolbar {
+  margin-bottom: 10px;
+}
+.fc .fc-view-harness {
+  min-height: 570px;
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  z-index: 11;
+}

@@ -127,7 +127,7 @@ class ApexChart extends Component {
             height={350}
           />
         </div>
-        <div id="pieChart" style={{ maxWidth: "650px", margin: "auto" }}>
+        <div id="pieChart" style={{ maxWidth: "630px", margin: "auto" }}>
           <ReactApexChart
             options={this.state.pieOptions}
             series={this.state.pieSeries}

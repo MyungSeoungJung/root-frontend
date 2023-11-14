@@ -3,9 +3,11 @@ import { ProductInquery } from "../types";
 import {
   clickableCellStyle,
   hoverCellStyle,
-  modalContentStyle,
-  modalStyle,
+  modalContainerStyle,
+  modalOverlayStyle,
   tableCellStyle,
+  tableHeaderStyle,
+  tableStyle,
 } from "../styles";
 
 interface HoveredCell {
@@ -22,18 +24,27 @@ export const AnsweredInqueries: React.FC<AnsweredInqueriesProps> = ({
   inqueries,
 }) => {
   const [hovered, setHovered] = useState<HoveredCell | null>(null);
-  const [showModal, setShowModal] = useState(false);
+  const [showContentModal, setShowContentModal] = useState(false);
+  const [showAnswerModal, setShowAnswerModal] = useState(false);
   const [currentInquery, setCurrentInquery] = useState<ProductInquery | null>(
     null
   );
 
-  const handleInqueryClick = (inqueryContent: ProductInquery) => {
+  const handleContentClick = (inqueryContent: ProductInquery) => {
     setCurrentInquery(inqueryContent);
-    setShowModal(true);
+    setShowContentModal(true);
+    setShowAnswerModal(false);
+  };
+
+  const handleAnswerClick = (inquery: ProductInquery) => {
+    setCurrentInquery(inquery);
+    setShowAnswerModal(true);
+    setShowContentModal(false);
   };
 
   const handleCloseModal = () => {
-    setShowModal(false);
+    setShowContentModal(false);
+    setShowAnswerModal(false);
     setCurrentInquery(null);
   };
 
@@ -51,24 +62,20 @@ export const AnsweredInqueries: React.FC<AnsweredInqueriesProps> = ({
       : inqueryAnswer;
   };
 
-  if (inqueries.length === 0) {
-    return <p>No answered inqueries yet.</p>;
-  }
-
   return (
     <div>
-      <h2>Answered Inqueries</h2>
-      <table>
+      <h2>답변완료 문의들</h2>
+      <table style={tableStyle}>
         <thead>
-          <tr>
+          <tr style={tableHeaderStyle}>
             <th style={tableCellStyle}>ID</th>
-            <th style={tableCellStyle}>Username</th>
-            <th style={tableCellStyle}>Product ID</th>
-            <th style={tableCellStyle}>Product name</th>
-            <th style={tableCellStyle}>Inquiry Category</th>
-            <th style={tableCellStyle}>Inquiry Content</th>
-            <th style={tableCellStyle}>inqueryAnswer</th>
-            <th style={tableCellStyle}>Inquiry Date</th>
+            <th style={tableCellStyle}>고객이름</th>
+            <th style={tableCellStyle}>제품ID</th>
+            <th style={tableCellStyle}>제품명</th>
+            <th style={tableCellStyle}>문의 카테고리</th>
+            <th style={tableCellStyle}>문의 내용</th>
+            <th style={tableCellStyle}>문의 답변내용</th>
+            <th style={tableCellStyle}>문의 접수일자</th>
           </tr>
         </thead>
         <tbody>
@@ -89,7 +96,7 @@ export const AnsweredInqueries: React.FC<AnsweredInqueriesProps> = ({
                   setHovered({ rowIndex: index, cellType: "content" })
                 }
                 onMouseLeave={() => setHovered(null)}
-                onClick={() => handleInqueryClick(inquery)}
+                onClick={() => handleContentClick(inquery)}
               >
                 {renderInqueryContentPreview(inquery.inqueryContent)}
               </td>
@@ -103,9 +110,9 @@ export const AnsweredInqueries: React.FC<AnsweredInqueriesProps> = ({
                   setHovered({ rowIndex: index, cellType: "answer" })
                 }
                 onMouseLeave={() => setHovered(null)}
-                onClick={() => handleInqueryClick(inquery)}
+                onClick={() => handleAnswerClick(inquery)}
               >
-                <span onClick={() => handleInqueryClick(inquery)}>
+                <span onClick={() => handleAnswerClick(inquery)}>
                   {renderInqueryAnswerPreview(inquery.inqueryAnswer)}
                 </span>
               </td>
@@ -114,11 +121,20 @@ export const AnsweredInqueries: React.FC<AnsweredInqueriesProps> = ({
           ))}
         </tbody>
       </table>
-      {showModal && currentInquery && (
-        <div style={modalStyle}>
-          <div style={modalContentStyle}>
-            <h3>문의 전체 내용</h3>
+      {showContentModal && currentInquery && (
+        <div style={modalOverlayStyle}>
+          <div style={modalContainerStyle}>
+            <h3>문의 전체 내용▼</h3>
             <p>{currentInquery.inqueryContent}</p>
+            <button onClick={handleCloseModal}>닫기</button>
+          </div>
+        </div>
+      )}
+      {showAnswerModal && currentInquery && (
+        <div style={modalOverlayStyle}>
+          <div style={modalContainerStyle}>
+            <h3>문의 답변 내용▼</h3>
+            <p>{currentInquery.inqueryAnswer}</p>
             <button onClick={handleCloseModal}>닫기</button>
           </div>
         </div>

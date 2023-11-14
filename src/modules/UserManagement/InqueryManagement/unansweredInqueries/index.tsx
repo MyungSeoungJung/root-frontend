@@ -2,11 +2,15 @@ import React, { useState } from "react";
 import { ProductInquery } from "../types";
 import {
   tableCellStyle,
-  modalBoxStyle,
   modalContentStyle,
-  modalStyle,
   hoverCellStyle,
   clickableCellStyle,
+  answerButtonStyle,
+  modalOverlayStyle,
+  answerModalStyle,
+  inqueryContentModalStyle,
+  answerInputStyle,
+  answerButtonGroupStyle,
 } from "../styles";
 
 interface UnansweredInqueriesProps {
@@ -23,10 +27,11 @@ export const UnansweredInqueries: React.FC<UnansweredInqueriesProps> = ({
   const [selectedInqueryId, setSelectedInqueryId] = useState<number | null>(
     null
   );
-  const [showModal, setShowModal] = useState(false); // 모달 상태 추가
+  const [showInqueryContentModal, setShowInqueryContentModal] = useState(false);
+  const [showAnswerModal, setShowAnswerModal] = useState(false);
   const [currentInquery, setCurrentInquery] = useState<ProductInquery | null>(
     null
-  ); // 현재 선택된 문의 상태 추가
+  );
 
   const handleAnswerChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
@@ -39,18 +44,26 @@ export const UnansweredInqueries: React.FC<UnansweredInqueriesProps> = ({
       onInqueryAnswerSubmit(selectedInqueryId, answer);
       setAnswer("");
       setSelectedInqueryId(null);
-      setShowModal(false);
+      setShowInqueryContentModal(false);
+      setShowAnswerModal(false);
     }
   };
 
   const handleInqueryClick = (inqueryContent: ProductInquery) => {
     setCurrentInquery(inqueryContent);
-    setShowModal(true);
+    setShowInqueryContentModal(true);
   };
 
   const handleCloseModal = () => {
-    setShowModal(false);
+    setShowAnswerModal(false);
+    setShowInqueryContentModal(false);
     setCurrentInquery(null);
+  };
+
+  const handleAnswerButtonClick = (inquery: ProductInquery) => {
+    setSelectedInqueryId(inquery.id);
+    setCurrentInquery(inquery);
+    setShowAnswerModal(true);
   };
 
   const renderInqueryContentPreview = (inqueryContent: string) => {
@@ -62,18 +75,47 @@ export const UnansweredInqueries: React.FC<UnansweredInqueriesProps> = ({
 
   return (
     <div>
-      <h2>Unanswered Inqueries</h2>
+      <h2>답변예정 문의들</h2>
+      {showAnswerModal && (
+        <div style={modalOverlayStyle} onClick={handleCloseModal}></div>
+      )}
+      {showAnswerModal && (
+        <div style={answerModalStyle}>
+          <h2>답변을 입력하세요</h2>
+          <textarea
+            style={answerInputStyle}
+            value={answer}
+            onChange={handleAnswerChange}
+          ></textarea>
+          <div style={answerButtonGroupStyle}>
+            <button onClick={handleAnswerSubmit}>답변 등록</button>
+            <button onClick={handleCloseModal}>닫기</button>
+          </div>
+        </div>
+      )}
+      {showInqueryContentModal && (
+        <div style={modalOverlayStyle} onClick={handleCloseModal}></div>
+      )}
+      {showInqueryContentModal ? (
+        <div style={inqueryContentModalStyle}>
+          <div style={modalContentStyle}>
+            <h3> ▼ 문의내용 전체보기</h3>
+            <p>{currentInquery?.inqueryContent}</p>
+            <button onClick={handleCloseModal}>닫기</button>
+          </div>
+        </div>
+      ) : null}
       <table>
         <thead>
           <tr>
             <th style={tableCellStyle}>ID</th>
-            <th style={tableCellStyle}>Username</th>
-            <th style={tableCellStyle}>Product ID</th>
-            <th style={tableCellStyle}>Product name</th>
-            <th style={tableCellStyle}>Inquiry Category</th>
-            <th style={tableCellStyle}>Inquiry Content</th>
-            <th style={tableCellStyle}>Inquiry Date</th>
-            <th style={tableCellStyle}>Answer</th>
+            <th style={tableCellStyle}>고객이름</th>
+            <th style={tableCellStyle}>제품ID</th>
+            <th style={tableCellStyle}>제품명</th>
+            <th style={tableCellStyle}>문의 카테고리</th>
+            <th style={tableCellStyle}>문의 내용</th>
+            <th style={tableCellStyle}>문의 접수일자</th>
+            <th style={tableCellStyle}>답변</th>
           </tr>
         </thead>
         <tbody>
@@ -97,31 +139,17 @@ export const UnansweredInqueries: React.FC<UnansweredInqueriesProps> = ({
               <td style={tableCellStyle}>{inquery.inqueryDate}</td>
               <td style={tableCellStyle}>
                 <span onClick={() => handleInqueryClick(inquery)}></span>
-                <button onClick={() => setSelectedInqueryId(inquery.id)}>
-                  Answer
+                <button
+                  onClick={() => handleAnswerButtonClick(inquery)}
+                  style={answerButtonStyle}
+                >
+                  답변
                 </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      {selectedInqueryId && (
-        <div style={modalBoxStyle}>
-          <h3>Answer Inquiry</h3>
-          <textarea value={answer} onChange={handleAnswerChange}></textarea>
-          <button onClick={handleAnswerSubmit}>Submit Answer</button>
-          <button onClick={() => setSelectedInqueryId(null)}>Close</button>
-        </div>
-      )}
-      {showModal && currentInquery && (
-        <div style={modalStyle}>
-          <div style={modalContentStyle}>
-            <h3> ▼ 전체 문의내용</h3>
-            <p>{currentInquery.inqueryContent}</p>
-            <button onClick={handleCloseModal}>Close</button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

@@ -63,13 +63,13 @@ export const UnansweredReviews: React.FC<UnansweredReviewsProps> = ({
         <thead>
           <tr>
             <th style={tableCellStyle}>ID</th>
-            <th style={tableCellStyle}>Brand Name</th>
-            <th style={tableCellStyle}>Gender</th>
-            <th style={tableCellStyle}>Age</th>
-            <th style={tableCellStyle}>Product ID</th>
-            <th style={tableCellStyle}>Review Content</th>
-            <th style={tableCellStyle}>Scope</th>
-            <th style={tableCellStyle}>Actions</th>
+            <th style={tableCellStyle}>브랜드명</th>
+            <th style={tableCellStyle}>성별</th>
+            <th style={tableCellStyle}>나이</th>
+            <th style={tableCellStyle}>제품ID</th>
+            <th style={tableCellStyle}>리뷰내용</th>
+            <th style={tableCellStyle}>별점</th>
+            <th style={tableCellStyle}>답변</th>
           </tr>
         </thead>
         <tbody>

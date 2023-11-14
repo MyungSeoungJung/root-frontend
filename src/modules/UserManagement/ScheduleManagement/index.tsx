@@ -254,81 +254,87 @@ class ScheduleManagement extends Component<{}, ScheduleManagementState> {
 
     return (
       <div className="App">
-        <div className="current-time">{this.state.currentTime}</div>
-        <button onClick={this.handleAddEventClick}>일정추가</button>
-        <FullCalendar {...calendarOptions} />
+        <div className="calendar-container">
+          <FullCalendar {...calendarOptions} />
+        </div>
+        <div className="control-panel">
+          <div className="current-time">{this.state.currentTime}</div>
+          <button onClick={this.handleAddEventClick}>일정추가</button>
+        </div>
         {this.state.showModal && (
-          <div className="modal">
-            <div>
-              <label>Title: </label>
-              <input
-                type="text"
-                name="titleInput"
-                value={this.state.titleInput}
-                onChange={this.handleInputChange}
-              />
+          <div className="modal-overlay">
+            <div className="modal-content">
+              <div>
+                <label>Title: </label>
+                <input
+                  type="text"
+                  name="titleInput"
+                  value={this.state.titleInput}
+                  onChange={this.handleInputChange}
+                />
+              </div>
+              <div>
+                <label>Color: </label>
+                <input
+                  type="color"
+                  name="colorInput"
+                  value={this.state.colorInput}
+                  onChange={this.handleInputChange}
+                />
+              </div>
+              {this.state.modalType === "ADD" && (
+                <>
+                  <h3>Add Event</h3>
+                  <div>
+                    <label>Start Date: </label>
+                    <input
+                      type="date"
+                      name="startDate"
+                      value={this.state.startDate}
+                      onChange={this.handleInputChange}
+                    />
+                  </div>
+                  <div>
+                    <label>End Date: </label>
+                    <input
+                      type="date"
+                      name="endDate"
+                      value={this.state.endDate}
+                      onChange={this.handleInputChange}
+                    />
+                  </div>
+                  <button onClick={this.addEvent}>Add</button>
+                </>
+              )}
+              {this.state.modalType === "EDIT" && this.state.selectedEvent && (
+                <>
+                  <h3>Edit/Delete Event</h3>
+                  <div>
+                    <label>Start Date: </label>
+                    <input
+                      type="date"
+                      name="startDate"
+                      value={this.state.startDate}
+                      onChange={this.handleInputChange}
+                    />
+                  </div>
+                  <div>
+                    <label>End Date: </label>
+                    <input
+                      type="date"
+                      name="endDate"
+                      value={this.state.endDate}
+                      onChange={this.handleInputChange}
+                    />
+                  </div>
+                  <p>Event: {this.state.selectedEvent.title}</p>
+                  <p>Date: {this.state.selectedEvent.start}</p>
+                  <button onClick={this.editEvent}>Edit</button>
+                  <button onClick={this.deleteEvent}>Delete</button>
+                </>
+              )}
+              <button onClick={this.closeModal}>Close</button>
             </div>
-            <div>
-              <label>Color: </label>
-              <input
-                type="color"
-                name="colorInput"
-                value={this.state.colorInput}
-                onChange={this.handleInputChange}
-              />
-            </div>
-            {this.state.modalType === "ADD" && (
-              <>
-                <h3>Add Event</h3>
-                <div>
-                  <label>Start Date: </label>
-                  <input
-                    type="date"
-                    name="startDate"
-                    value={this.state.startDate}
-                    onChange={this.handleInputChange}
-                  />
-                </div>
-                <div>
-                  <label>End Date: </label>
-                  <input
-                    type="date"
-                    name="endDate"
-                    value={this.state.endDate}
-                    onChange={this.handleInputChange}
-                  />
-                </div>
-                <button onClick={this.addEvent}>Add</button>
-              </>
-            )}
-            {this.state.modalType === "EDIT" && this.state.selectedEvent && (
-              <>
-                <h3>Edit/Delete Event</h3>
-                <div>
-                  <label>Start Date: </label>
-                  <input
-                    type="date"
-                    name="startDate"
-                    value={this.state.startDate}
-                    onChange={this.handleInputChange}
-                  />
-                </div>
-                <div>
-                  <label>End Date: </label>
-                  <input
-                    type="date"
-                    name="endDate"
-                    value={this.state.endDate}
-                    onChange={this.handleInputChange}
-                  />
-                </div>
-                <p>Event: {this.state.selectedEvent.title}</p>
-                <p>Date: {this.state.selectedEvent.start}</p>
-                <button onClick={this.editEvent}>Edit</button>
-                <button onClick={this.deleteEvent}>Delete</button>
-              </>
-            )}
-            <button onClick={this.closeModal}>Close</button>
           </div>
         )}
       </div>
