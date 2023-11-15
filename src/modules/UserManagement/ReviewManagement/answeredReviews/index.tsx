@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Review } from "../types";
 import {
+  StyledTable,
   clickableCellStyle,
   hoverCellStyle,
   modalContentStyle,
   modalStyle,
-  tableCellStyle,
 } from "../reviewStyle";
+import StarRating from "../starRating";
 
 interface HoveredCell {
   rowIndex: number;
@@ -60,27 +61,27 @@ export const AnsweredReviews: React.FC<AnsweredReviewProps> = ({ reviews }) => {
   return (
     <div>
       <h2>답변완료된 리뷰들</h2>
-      <table>
+      <StyledTable>
         <thead>
           <tr>
-            <th style={tableCellStyle}>ID</th>
-            <th style={tableCellStyle}>브랜드명</th>
-            <th style={tableCellStyle}>성별</th>
-            <th style={tableCellStyle}>나이</th>
-            <th style={tableCellStyle}>제품ID</th>
-            <th style={tableCellStyle}>리뷰내용</th>
-            <th style={tableCellStyle}>답변내용</th>
-            <th style={tableCellStyle}>별점</th>
+            <th>ID</th>
+            <th>브랜드명</th>
+            <th>성별</th>
+            <th>나이</th>
+            <th>제품ID</th>
+            <th>리뷰내용</th>
+            <th>답변내용</th>
+            <th>별점</th>
           </tr>
         </thead>
         <tbody>
           {reviews.map((review, index) => (
             <tr key={review.id}>
-              <td style={tableCellStyle}>{review.id}</td>
-              <td style={tableCellStyle}>{review.brandName}</td>
-              <td style={tableCellStyle}>{review.gender}</td>
-              <td style={tableCellStyle}>{review.age}</td>
-              <td style={tableCellStyle}>{review.productId}</td>
+              <td>{review.id}</td>
+              <td>{review.brandName}</td>
+              <td>{review.gender}</td>
+              <td>{review.age}</td>
+              <td>{review.productId}</td>
               <td
                 style={
                   hovered?.rowIndex === index && hovered?.cellType === "content"
@@ -113,11 +114,13 @@ export const AnsweredReviews: React.FC<AnsweredReviewProps> = ({ reviews }) => {
                   {renderReviewAnswerPreview(review.reviewAnswer)}
                 </span>
               </td>
-              <td style={tableCellStyle}>{review.scope}</td>
+              <td>
+                <StarRating scope={review.scope} />
+              </td>
             </tr>
           ))}
         </tbody>
-      </table>
+      </StyledTable>
       {showContentModal && currentReview && (
         <div style={modalStyle}>
           <div style={modalContentStyle}>

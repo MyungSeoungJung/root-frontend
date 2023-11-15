@@ -119,7 +119,7 @@ const ReviewsContainer = () => {
       ) : error ? (
         <p>Error loading reviews!</p>
       ) : showAnswered ? (
-        <AnsweredReviews reviews={answeredReviews} />
+        <AnsweredReviews reviews={answeredReviews} hovered={undefined} />
       ) : (
         <UnansweredReviews
           reviews={fetchedReviews}

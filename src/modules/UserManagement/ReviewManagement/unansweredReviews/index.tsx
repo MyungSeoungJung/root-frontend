@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, CSSProperties } from "react";
 import { Review } from "../types";
 import {
+  Backdrop,
+  StyledTable,
   clickableCellStyle,
   hoverCellStyle,
   modalBoxStyle,
   modalContentStyle,
   modalStyle,
-  tableCellStyle,
 } from "../reviewStyle";
+import StarRating from "../starRating";
 
 interface UnansweredReviewsProps {
   reviews: Review[];
@@ -55,31 +57,39 @@ export const UnansweredReviews: React.FC<UnansweredReviewsProps> = ({
       ? reviewContent.substring(0, previewLength) + "..."
       : reviewContent;
   };
+
+  const buttonContainerStyle: CSSProperties = {
+    marginTop: "auto",
+    display: "flex",
+    justifyContent: "flex-end",
+    paddingTop: "20px",
+  };
+
   console.log("UnansweredReviews props:", reviews);
   return (
     <div>
       <h2>답변 등록대기중인 리뷰들</h2>
-      <table>
+      <StyledTable>
         <thead>
           <tr>
-            <th style={tableCellStyle}>ID</th>
-            <th style={tableCellStyle}>브랜드명</th>
-            <th style={tableCellStyle}>성별</th>
-            <th style={tableCellStyle}>나이</th>
-            <th style={tableCellStyle}>제품ID</th>
-            <th style={tableCellStyle}>리뷰내용</th>
-            <th style={tableCellStyle}>별점</th>
-            <th style={tableCellStyle}>답변</th>
+            <th>ID</th>
+            <th>브랜드명</th>
+            <th>성별</th>
+            <th>나이</th>
+            <th>제품ID</th>
+            <th>리뷰내용</th>
+            <th>별점</th>
+            <th>답변</th>
           </tr>
         </thead>
         <tbody>
           {reviews.map((review, index) => (
             <tr key={review.id}>
-              <td style={tableCellStyle}>{review.id}</td>
-              <td style={tableCellStyle}>{review.brandName}</td>
-              <td style={tableCellStyle}>{review.gender}</td>
-              <td style={tableCellStyle}>{review.age}</td>
-              <td style={tableCellStyle}>{review.productId}</td>
+              <td>{review.id}</td>
+              <td>{review.brandName}</td>
+              <td>{review.gender}</td>
+              <td>{review.age}</td>
+              <td>{review.productId}</td>
               <td
                 style={hovered === index ? hoverCellStyle : clickableCellStyle}
                 onMouseEnter={() => setHovered(index)}
@@ -90,31 +100,45 @@ export const UnansweredReviews: React.FC<UnansweredReviewsProps> = ({
                   {renderReviewContentPreview(review.reviewContent)}
                 </span>
               </td>
-              <td style={tableCellStyle}>{review.scope}</td>
-              <td style={tableCellStyle}>
+              <td>
+                <StarRating scope={review.scope} />
+              </td>
+              <td>
                 <span onClick={() => handleReviewClick(review)}></span>
                 <button onClick={() => setSelectedReviewId(review.id)}>
-                  Answer
+                  답변
                 </button>
               </td>
             </tr>
           ))}
         </tbody>
-      </table>
+      </StyledTable>
       {selectedReviewId && (
-        <div style={modalBoxStyle}>
-          <h3>Answer Review</h3>
-          <textarea value={answer} onChange={handleAnswerChange}></textarea>
-          <button onClick={handleAnswerSubmit}>Submit Answer</button>
-          <button onClick={() => setSelectedReviewId(null)}>Close</button>
+        <div style={Backdrop}>
+          <div style={modalBoxStyle}>
+            <h3>리뷰 답변하기</h3>
+            <textarea
+              style={{ width: "100%", minHeight: "100px" }}
+              value={answer}
+              onChange={handleAnswerChange}
+            ></textarea>
+            <div style={buttonContainerStyle}>
+              <button onClick={handleAnswerSubmit}>답변 등록</button>
+              <button onClick={() => setSelectedReviewId(null)}>닫기</button>
+            </div>
+          </div>
         </div>
       )}
       {showModal && currentReview && (
-        <div style={modalStyle}>
-          <div style={modalContentStyle}>
-            <h3> ▼ 전체 리뷰내용</h3>
-            <p>{currentReview.reviewContent}</p>
-            <button onClick={handleCloseModal}>Close</button>
+        <div style={Backdrop}>
+          <div style={modalStyle}>
+            <div style={modalContentStyle}>
+              <h3> ▼ 전체 리뷰내용</h3>
+              <p>{currentReview.reviewContent}</p>
+              <div style={buttonContainerStyle}>
+                <button onClick={handleCloseModal}>닫기</button>
+              </div>
+            </div>
           </div>
         </div>
       )}

@@ -6,29 +6,39 @@ export const StyledTable = styled.table`
   border-collapse: collapse;
   th,
   td {
-    border: 1px solid #ddd;
+    border: 1px solid #dee2e6;
     padding: 8px;
     text-align: left;
+  }
+  tr:nth-of-type(odd) {
+    background-color: #83bcff; // 홀수 줄에 대한 배경색
   }
   th {
     background-color: #f4f4f4;
   }
 `;
 
-const activeBackgroundColor = "rgba(78, 115, 223, 1)";
-
-export const tableCellStyle: CSSProperties = {
-  border: "1px solid black",
-  padding: "8px",
-};
-
 export const modalStyle: CSSProperties = {
   position: "fixed",
   top: "50%",
   left: "50%",
+  width: "50%", // 모달 너비를 화면의 90%로 설정
+  maxWidth: "600px",
   transform: "translate(-50%, -50%)",
-  backgroundColor: "rgba(0, 0, 0, 0.5)",
+  backgroundColor: "#83bcff",
+  display: "flex",
+  flexDirection: "column",
   zIndex: 1000,
+};
+
+export const Backdrop: CSSProperties = {
+  position: "fixed", //absolute
+  top: 0,
+  left: 0,
+  width: "100%",
+  height: "100%",
+  backgroundColor: "rgba(0, 0, 0, 0.5)",
+  zIndex: 500,
 };
 
 export const modalContentStyle: CSSProperties = {
@@ -44,7 +54,6 @@ export const modalBoxStyle: CSSProperties = {
 };
 
 export const clickableCellStyle: CSSProperties = {
-  ...tableCellStyle,
   cursor: "pointer",
 };
 
