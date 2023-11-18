@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { ProductInquery } from "../types";
 import {
+  StyledTable,
   clickableCellStyle,
   hoverCellStyle,
   modalContainerStyle,
   modalOverlayStyle,
-  tableCellStyle,
-  tableHeaderStyle,
-  tableStyle,
 } from "../styles";
 
 interface HoveredCell {
@@ -65,27 +63,27 @@ export const AnsweredInqueries: React.FC<AnsweredInqueriesProps> = ({
   return (
     <div>
       <h2>답변완료 문의들</h2>
-      <table style={tableStyle}>
+      <StyledTable>
         <thead>
-          <tr style={tableHeaderStyle}>
-            <th style={tableCellStyle}>ID</th>
-            <th style={tableCellStyle}>고객이름</th>
-            <th style={tableCellStyle}>제품ID</th>
-            <th style={tableCellStyle}>제품명</th>
-            <th style={tableCellStyle}>문의 카테고리</th>
-            <th style={tableCellStyle}>문의 내용</th>
-            <th style={tableCellStyle}>문의 답변내용</th>
-            <th style={tableCellStyle}>문의 접수일자</th>
+          <tr>
+            <th>ID</th>
+            <th>고객이름</th>
+            <th>제품ID</th>
+            <th>제품명</th>
+            <th>문의 카테고리</th>
+            <th>문의 내용</th>
+            <th>문의 답변내용</th>
+            <th>문의 접수일자</th>
           </tr>
         </thead>
         <tbody>
           {inqueries.map((inquery, index) => (
             <tr key={inquery.id}>
-              <td style={tableCellStyle}>{inquery.id}</td>
-              <td style={tableCellStyle}>{inquery.username}</td>
-              <td style={tableCellStyle}>{inquery.productId}</td>
-              <td style={tableCellStyle}>{inquery.productName}</td>
-              <td style={tableCellStyle}>{inquery.inqueryCategory}</td>
+              <td>{inquery.id}</td>
+              <td>{inquery.username}</td>
+              <td>{inquery.productId}</td>
+              <td>{inquery.productName}</td>
+              <td>{inquery.inqueryCategory}</td>
               <td
                 style={
                   hovered?.rowIndex === index && hovered?.cellType === "content"
@@ -116,11 +114,11 @@ export const AnsweredInqueries: React.FC<AnsweredInqueriesProps> = ({
                   {renderInqueryAnswerPreview(inquery.inqueryAnswer)}
                 </span>
               </td>
-              <td style={tableCellStyle}>{inquery.inqueryDate}</td>
+              <td>{inquery.inqueryDate}</td>
             </tr>
           ))}
         </tbody>
-      </table>
+      </StyledTable>
       {showContentModal && currentInquery && (
         <div style={modalOverlayStyle}>
           <div style={modalContainerStyle}>

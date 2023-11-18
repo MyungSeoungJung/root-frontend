@@ -72,6 +72,7 @@ export const AnsweredReviews: React.FC<AnsweredReviewProps> = ({ reviews }) => {
             <th>리뷰내용</th>
             <th>답변내용</th>
             <th>별점</th>
+            <th>리뷰 등록일자</th>
           </tr>
         </thead>
         <tbody>
@@ -117,6 +118,7 @@ export const AnsweredReviews: React.FC<AnsweredReviewProps> = ({ reviews }) => {
               <td>
                 <StarRating scope={review.scope} />
               </td>
+              <td>{review.currentTime}</td>
             </tr>
           ))}
         </tbody>

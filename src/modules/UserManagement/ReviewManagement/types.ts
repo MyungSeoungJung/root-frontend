@@ -11,4 +11,5 @@ export interface Review {
   userId: any;
   reviewAnswer?: any;
   isAnswered: boolean;
+  currentTime: any;
 }

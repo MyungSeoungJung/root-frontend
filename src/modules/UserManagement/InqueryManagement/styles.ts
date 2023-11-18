@@ -1,4 +1,5 @@
 import { CSSProperties } from "react";
+import styled from "@emotion/styled";
 
 export const tableCellStyle: CSSProperties = {
   border: "1px solid #ddd",
@@ -6,7 +7,6 @@ export const tableCellStyle: CSSProperties = {
   textAlign: "left",
   verticalAlign: "middle",
   textOverflow: "ellipsis",
-  backgroundColor: "#fff",
   whiteSpace: "nowrap",
 };
 
@@ -55,37 +55,34 @@ export const clickableCellStyle: CSSProperties = {
 };
 
 export const hoverCellStyle: CSSProperties = {
-  ...clickableCellStyle,
-  backgroundColor: "#83bcff",
+  backgroundColor: "#e1f3ff",
 };
 
 export const answerButtonStyle: CSSProperties = {
-  color: "white", // 버튼의 텍스트 색상을 흰색으로 변경
-  padding: "6px 12px", // 버튼의 패딩 조정
-  borderRadius: "4px", // 버튼의 모서리를 둥글게
-  zIndex: 1050, // Ensure it is above the table but below the modals
+  color: "white",
+  padding: "6px 12px",
+  borderRadius: "4px",
+  zIndex: 1050,
 };
 
-// 문의내용 전체보기 모달 스타일
 export const inqueryContentModalStyle: CSSProperties = {
   ...modalContainerStyle,
-  width: "50%", // 모달의 가로 폭을 좁게 설정
-  height: "auto", // 내용에 따라 크기 조정
-  maxHeight: "80%", // 최대 높이 설정
-  overflowY: "auto", // 내용이 넘칠 경우 스크롤
-  zIndex: 1060, // 다른 요소들보다 상단에 위치하도록 가장 높은 설정
+  width: "50%",
+  height: "auto",
+  maxHeight: "80%",
+  overflowY: "auto",
+  zIndex: 1060,
 };
 
-// 답변 모달 스타일
 export const answerModalStyle: CSSProperties = {
   position: "fixed",
-  top: "10%", // 위쪽 여백을 넓혀줌
+  top: "10%",
   left: "50%",
   transform: "translateX(-50%)",
-  width: "50%", // 가로 크기를 줄임
-  minHeight: "30%", // 최소 세로 크기를 설정
-  maxHeight: "90vh", // 최대 세로 크기를 설정
-  overflowY: "auto", // 내용이 많을 경우 스크롤 가능
+  width: "50%",
+  minHeight: "30%",
+  maxHeight: "90vh",
+  overflowY: "auto",
   overflow: "hidden",
   backgroundColor: "white",
   padding: "30px",
@@ -98,27 +95,50 @@ export const answerModalStyle: CSSProperties = {
 };
 
 export const answerInputStyle: CSSProperties = {
-  resize: "none", // 사용자가 크기 조절 못하게 설정
-  minHeight: "150px", // 입력 박스의 최소 세로 크기
-  width: "100%", // 입력 박스를 모달 너비에 맞춰서 100%로 설정
-  marginBottom: "20px", // 입력 박스와 버튼 사이의 마진 설정
+  resize: "none",
+  minHeight: "150px",
+  width: "100%",
+  marginBottom: "20px",
 };
 
 export const answerButtonGroupStyle: CSSProperties = {
   display: "flex",
-  justifyContent: "center", // 버튼들을 중앙에 위치시킴
-  gap: "10px", // 버튼 사이의 간격 설정
+  justifyContent: "center",
+  gap: "10px",
 };
 
-export const tableStyle: CSSProperties = {
-  width: "100%",
-  borderCollapse: "collapse", // 테이블 테두리 겹치기
-  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", // 테이블에 그림자 효과 추가
+export const inquiryHoverCellStyle: CSSProperties = {
+  ...hoverCellStyle,
+  backgroundColor: "#b0daff",
 };
 
-export const tableHeaderStyle: CSSProperties = {
-  backgroundColor: "#004085", // 헤더 배경색을 짙은 색으로 설정
-  color: "black",
-  padding: "10px", // 헤더의 패딩
-  textAlign: "left", // 헤더의 텍스트 정렬
-};
+export const StyledTable = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+
+  th,
+  td {
+    border: 1px solid #dee2e6;
+    padding: 8px;
+    text-align: left;
+  }
+
+  th {
+    background-color: #f4f4f4;
+  }
+
+  tr:nth-of-type(odd) td {
+    background-color: #83bcff; // 홀수 행의 모든 셀에 배경색 적용
+  }
+
+  tr:nth-of-type(even) td {
+    background-color: #fff; // 짝수 행의 모든 셀에 배경색 적용
+  }
+
+  td.clickable {
+    cursor: pointer;
+    &:hover {
+      background-color: #b0daff; // 호버 상태일 때 적용될 배경색
+    }
+  }
+`;

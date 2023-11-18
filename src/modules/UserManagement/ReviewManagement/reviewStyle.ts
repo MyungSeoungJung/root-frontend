@@ -61,3 +61,19 @@ export const hoverCellStyle: CSSProperties = {
   ...clickableCellStyle,
   backgroundColor: "#83bcff",
 };
+
+export const dropdownStyle: CSSProperties = {
+  padding: "10px",
+  margin: "0 5px",
+  backgroundColor: "#f0f0f0",
+  border: "1px solid #ddd",
+  borderRadius: "5px",
+  color: "#333",
+  cursor: "pointer",
+  fontFamily: "CuteFont-Regular",
+  fontSize: "25px",
+  lineHeight: "1.5",
+  display: "inline-block",
+  width: "auto",
+  boxSizing: "border-box",
+};

@@ -107,11 +107,19 @@ class ScheduleManagement extends Component<{}, ScheduleManagementState> {
   handleEventClick = (info: any) => {
     console.log("Event clicked:", info);
     const startDate = info.event.start
-      ? info.event.start.toISOString().split("T")[0]
+      ? new Date(
+          info.event.start.getTime() -
+            info.event.start.getTimezoneOffset() * 60000
+        )
       : null;
     const endDate = info.event.end
-      ? info.event.end.toISOString().split("T")[0]
+      ? new Date(
+          info.event.end.getTime() - info.event.end.getTimezoneOffset() * 60000
+        )
       : null;
+
+    const formattedStartDate = startDate ? this.formatDate(startDate) : "";
+    const formattedEndDate = endDate ? this.formatDate(endDate) : "";
     this.setState({
       showModal: true,
       modalType: "EDIT",
@@ -124,6 +132,8 @@ class ScheduleManagement extends Component<{}, ScheduleManagementState> {
       },
       titleInput: info.event.title,
       colorInput: info.event.backgroundColor,
+      startDate: formattedStartDate,
+      endDate: formattedEndDate,
     });
     console.log("selectedEvent : ", JSON.stringify(info.event));
   };
@@ -137,6 +147,9 @@ class ScheduleManagement extends Component<{}, ScheduleManagementState> {
         selectedDate: new Date(),
         startDate: this.formatDate(currentDate),
         endDate: this.formatDate(currentDate),
+        titleInput: "",
+        colorInput: "#FFFFFF",
+        selectedEvent: null,
       },
       () => {
         console.log("~~~ :", this.state);
@@ -195,6 +208,13 @@ class ScheduleManagement extends Component<{}, ScheduleManagementState> {
       .catch((error) => {
         console.error("이벤트를 추가하는 중 에러 발생:", error);
       });
+
+    this.setState({
+      titleInput: "",
+      colorInput: "#FFFFFF",
+      startDate: this.formatDate(new Date()),
+      endDate: this.formatDate(new Date()),
+    });
 
     this.closeModal();
   };
@@ -328,7 +348,7 @@ class ScheduleManagement extends Component<{}, ScheduleManagementState> {
                     />
                   </div>
                   <p>Event: {this.state.selectedEvent.title}</p>
-                  <p>Date: {this.state.selectedEvent.start}</p>
+                  <p>Date: {this.state.startDate}</p>
                   <button onClick={this.editEvent}>Edit</button>
                   <button onClick={this.deleteEvent}>Delete</button>
                 </>

@@ -11,6 +11,7 @@ import {
   inqueryContentModalStyle,
   answerInputStyle,
   answerButtonGroupStyle,
+  StyledTable,
 } from "../styles";
 
 interface UnansweredInqueriesProps {
@@ -105,27 +106,27 @@ export const UnansweredInqueries: React.FC<UnansweredInqueriesProps> = ({
           </div>
         </div>
       ) : null}
-      <table>
+      <StyledTable>
         <thead>
           <tr>
-            <th style={tableCellStyle}>ID</th>
-            <th style={tableCellStyle}>고객이름</th>
-            <th style={tableCellStyle}>제품ID</th>
-            <th style={tableCellStyle}>제품명</th>
-            <th style={tableCellStyle}>문의 카테고리</th>
-            <th style={tableCellStyle}>문의 내용</th>
-            <th style={tableCellStyle}>문의 접수일자</th>
-            <th style={tableCellStyle}>답변</th>
+            <th>ID</th>
+            <th>고객이름</th>
+            <th>제품ID</th>
+            <th>제품명</th>
+            <th>문의 카테고리</th>
+            <th>문의 내용</th>
+            <th>문의 접수일자</th>
+            <th>답변</th>
           </tr>
         </thead>
         <tbody>
           {inqueries.map((inquery, index) => (
             <tr key={inquery.id}>
-              <td style={tableCellStyle}>{inquery.id}</td>
-              <td style={tableCellStyle}>{inquery.username}</td>
-              <td style={tableCellStyle}>{inquery.productId}</td>
-              <td style={tableCellStyle}>{inquery.productName}</td>
-              <td style={tableCellStyle}>{inquery.inqueryCategory}</td>
+              <td>{inquery.id}</td>
+              <td>{inquery.username}</td>
+              <td>{inquery.productId}</td>
+              <td>{inquery.productName}</td>
+              <td>{inquery.inqueryCategory}</td>
               <td
                 style={hovered === index ? hoverCellStyle : clickableCellStyle}
                 onMouseEnter={() => setHovered(index)}
@@ -136,8 +137,8 @@ export const UnansweredInqueries: React.FC<UnansweredInqueriesProps> = ({
                   {renderInqueryContentPreview(inquery.inqueryContent)}
                 </span>
               </td>
-              <td style={tableCellStyle}>{inquery.inqueryDate}</td>
-              <td style={tableCellStyle}>
+              <td>{inquery.inqueryDate}</td>
+              <td>
                 <span onClick={() => handleInqueryClick(inquery)}></span>
                 <button
                   onClick={() => handleAnswerButtonClick(inquery)}
@@ -149,7 +150,7 @@ export const UnansweredInqueries: React.FC<UnansweredInqueriesProps> = ({
             </tr>
           ))}
         </tbody>
-      </table>
+      </StyledTable>
     </div>
   );
 };

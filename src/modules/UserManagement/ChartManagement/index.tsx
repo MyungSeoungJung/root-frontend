@@ -201,6 +201,7 @@ class ApexChart extends Component {
         },
       })
       .then((response: AxiosResponse) => {
+        console.log(response.data);
         const genderData: Record<string, number> = response.data;
         const total = Object.values(genderData).reduce((a, b) => a + b, 0);
         const genderSeries = Object.values(genderData).map(
@@ -295,7 +296,7 @@ class ApexChart extends Component {
             options={pieOptions}
             series={pieSeries}
             type="pie"
-            height={350}
+            height={650}
           />
         );
       case "line":

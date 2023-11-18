@@ -4,6 +4,7 @@ import {
   Backdrop,
   StyledTable,
   clickableCellStyle,
+  dropdownStyle,
   hoverCellStyle,
   modalBoxStyle,
   modalContentStyle,
@@ -25,6 +26,16 @@ export const UnansweredReviews: React.FC<UnansweredReviewsProps> = ({
   const [showModal, setShowModal] = useState(false);
   const [currentReview, setCurrentReview] = useState<Review | null>(null);
   const [selectedReviewId, setSelectedReviewId] = useState<number | null>(null);
+  const [currentTime, setCurrentTime] = useState<string>("");
+  const [date, setDate] = useState({
+    year: new Date().getFullYear().toString(),
+    month: (new Date().getMonth() + 1).toString().padStart(2, "0"), // 0을 추가하여 2자리 수를 만듭니다.
+    day: new Date().getDate().toString().padStart(2, "0"), // 0을 추가하여 2자리 수를 만듭니다.
+  });
+
+  useEffect(() => {
+    setCurrentTime(`${date.year}-${date.month}-${date.day}`);
+  }, [date]);
 
   const handleAnswerChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
@@ -65,6 +76,36 @@ export const UnansweredReviews: React.FC<UnansweredReviewsProps> = ({
     paddingTop: "20px",
   };
 
+  const renderYearOptions = () => {
+    const currentYear = new Date().getFullYear();
+    const years = Array.from({ length: 10 }, (_, i) => currentYear - i);
+    return years.map((year) => (
+      <option key={year} value={year}>
+        {year}
+      </option>
+    ));
+  };
+
+  const renderMonthOptions = () => {
+    return Array.from({ length: 12 }, (_, i) =>
+      (i + 1).toString().padStart(2, "0")
+    ).map((month) => (
+      <option key={month} value={month}>
+        {month}
+      </option>
+    ));
+  };
+
+  const renderDayOptions = () => {
+    return Array.from({ length: 31 }, (_, i) =>
+      (i + 1).toString().padStart(2, "0")
+    ).map((day) => (
+      <option key={day} value={day}>
+        {day}
+      </option>
+    ));
+  };
+
   console.log("UnansweredReviews props:", reviews);
   return (
     <div>
@@ -80,6 +121,7 @@ export const UnansweredReviews: React.FC<UnansweredReviewsProps> = ({
             <th>리뷰내용</th>
             <th>별점</th>
             <th>답변</th>
+            <th>리뷰 등록일자</th>
           </tr>
         </thead>
         <tbody>
@@ -103,12 +145,14 @@ export const UnansweredReviews: React.FC<UnansweredReviewsProps> = ({
               <td>
                 <StarRating scope={review.scope} />
               </td>
+
               <td>
                 <span onClick={() => handleReviewClick(review)}></span>
                 <button onClick={() => setSelectedReviewId(review.id)}>
                   답변
                 </button>
               </td>
+              <td>{review.currentTime}</td>
             </tr>
           ))}
         </tbody>
@@ -118,10 +162,38 @@ export const UnansweredReviews: React.FC<UnansweredReviewsProps> = ({
           <div style={modalBoxStyle}>
             <h3>리뷰 답변하기</h3>
             <textarea
-              style={{ width: "100%", minHeight: "100px" }}
+              style={{
+                width: "100%",
+                minHeight: "100px",
+                marginBottom: "10px",
+              }}
               value={answer}
+              placeholder="답변을 입력하세요."
               onChange={handleAnswerChange}
-            ></textarea>
+            />
+            <div>
+              <select
+                style={dropdownStyle}
+                value={date.year}
+                onChange={(e) => setDate({ ...date, year: e.target.value })}
+              >
+                {renderYearOptions()}
+              </select>
+              <select
+                style={dropdownStyle}
+                value={date.month}
+                onChange={(e) => setDate({ ...date, month: e.target.value })}
+              >
+                {renderMonthOptions()}
+              </select>
+              <select
+                style={dropdownStyle}
+                value={date.day}
+                onChange={(e) => setDate({ ...date, day: e.target.value })}
+              >
+                {renderDayOptions()}
+              </select>
+            </div>
             <div style={buttonContainerStyle}>
               <button onClick={handleAnswerSubmit}>답변 등록</button>
               <button onClick={() => setSelectedReviewId(null)}>닫기</button>
