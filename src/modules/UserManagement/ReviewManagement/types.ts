@@ -1,5 +1,3 @@
-import { ReactNode } from "react";
-
 export interface Review {
   id: any;
   brandName: any;
