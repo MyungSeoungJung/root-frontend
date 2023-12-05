@@ -13,7 +13,7 @@ class SettlementMoney extends React.Component<{}, State> {
 
     this.state = {
       thisMonth: null,
-      lastMonth: 1450008859,
+      lastMonth: null,
       brandName: null,
     };
   }
@@ -27,7 +27,8 @@ class SettlementMoney extends React.Component<{}, State> {
       const settlementMoneyResponse = await http.get(`/chart/settlementMoney`);
       this.setState({
         thisMonth: settlementMoneyResponse.data.thisMonth,
-        // lastMonth: settlementMoneyResponse.data.lastMonth,
+        // 가라데이터
+        lastMonth: settlementMoneyResponse.data.lastMonth,
       });
 
       const brandResponse = await http.get(
@@ -58,14 +59,15 @@ class SettlementMoney extends React.Component<{}, State> {
         .format(thisMonth)
         .replace("₩", "") + " 원";
 
-    // const formattedLastMonth =
-    //   new Intl.NumberFormat("ko-KR", {
-    //     style: "currency",
-    //     currency: "KRW",
-    //   })
-    //     .format(lastMonth)
-    //     .replace("₩", "") + " 원";
-
+    // 활성화
+    const formattedLastMonth =
+      new Intl.NumberFormat("ko-KR", {
+        style: "currency",
+        currency: "KRW",
+      })
+        .format(lastMonth)
+        .replace("₩", "") + " 원";
+    // 활성화
     const changePercentage = this.calculateChangePercentage(
       thisMonth,
       lastMonth

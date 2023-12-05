@@ -5,6 +5,7 @@ import InventoryModifyModal from "../InventoryModifyModal";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX, faBell } from "@fortawesome/free-solid-svg-icons";
+import { isLocalhost } from "@/modules/UserManagement/LoginManagement/DomainUrl";
 
 interface product {
   id: number;
@@ -47,7 +48,7 @@ function MediaElement({
       <img
         width={60}
         height={60}
-        src={`http://192.168.100.151:8080/product/files/${uuidFileName}`}
+        src={`${isLocalhost()}/product/files/${uuidFileName}`}
       />
     );
   }
@@ -72,6 +73,7 @@ const InventoryManagement = () => {
   const [productToOrder, setproductToOrder] = useState<lessQuantityProduct[]>(
     []
   );
+  const serverAddress = isLocalhost();
 
   const [showProductToOrder, setShowProductToOrder] = useState(false);
 

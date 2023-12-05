@@ -6,6 +6,7 @@ import SalesChart from "../salesStatus/SalesChart";
 import ApexChart from "@/modules/UserManagement/ChartManagement";
 import SalesChartComponet from "../salesStatus/ComponentChart";
 import SalesGraphComponent from "../salesStatus/ComponentGraph";
+
 interface order {
   successOrderCount: string;
   failureOrderCount: string;

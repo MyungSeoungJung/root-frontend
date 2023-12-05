@@ -103,7 +103,6 @@ const ProductRegistration = () => {
     })();
   };
   // 이미지 미리보기
-
   const handleImgPreview = (event) => {
     const files = event.target.files;
     const previews = [];

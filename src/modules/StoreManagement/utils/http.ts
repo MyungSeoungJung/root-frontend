@@ -1,8 +1,11 @@
 import axios from "axios";
 import { getCookie } from "./cookie";
+import { isLocalhost } from "@/modules/UserManagement/LoginManagement/DomainUrl";
+
+const serverAddress = isLocalhost();
 
 const http = axios.create({
-  baseURL: "http://192.168.100.151:8080",
+  baseURL: `${serverAddress}`,
   withCredentials: true,
 });
 
