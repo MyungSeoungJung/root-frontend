@@ -133,6 +133,25 @@ function LoginComponent() {
             <strong>SERVICE</strong>
           </p>
         </div>
+        <div
+          style={{
+            position: "absolute",
+            top: "0",
+            marginTop: "20px",
+            backgroundColor: "black",
+            width: "150px",
+            height: "150px",
+            color: "white",
+            borderRadius: "20px",
+            padding: "10px",
+          }}
+        >
+          <p style={{ marginBottom: "15px" }}>배포 링크 접속 ID</p>
+          <p>브랜드1 ID: user1</p>
+          <p style={{ marginBottom: "10px" }}>브랜드1 pass: pass1</p>
+          <p>브랜드2 ID: user2</p>
+          <p>브랜드2 pass: pass2</p>
+        </div>
       </div>
     </LoginStyle>
   );

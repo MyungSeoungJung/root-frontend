@@ -2,14 +2,13 @@ import { useEffect, useState } from "react";
 import { Container, ItemContainer, Wrapper } from "./style";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
+import { isLocalhost } from "@/modules/UserManagement/LoginManagement/DomainUrl";
 
 const OrderNotification = () => {
   const [messages, setMessages] = useState<string[]>([]);
 
   useEffect(() => {
-    const eventSource = new EventSource(
-      "http://192.168.100.151:8080/order/notifications"
-    );
+    const eventSource = new EventSource(`${isLocalhost()}/order/notifications`);
 
     eventSource.onmessage = (event) => {
       const eventData = event.data;

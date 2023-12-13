@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import http from "@/modules/StoreManagement/utils/http";
 import { TableContainer } from "../inventory/Inventory/style"; //전체 틀 css
+import { isLocalhost } from "@/modules/UserManagement/LoginManagement/DomainUrl";
 //file 따로 get 요청
 function MediaElement({
   contentType,
@@ -16,7 +17,7 @@ function MediaElement({
       <img
         width={60}
         height={60}
-        src={`http://localhost:8080/product/files/${uuidFileName}`}
+        src={`${isLocalhost()}/product/files/${uuidFileName}`}
       />
     );
   }

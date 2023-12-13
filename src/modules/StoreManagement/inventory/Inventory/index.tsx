@@ -339,7 +339,7 @@ const InventoryManagement = () => {
             <table>
               <thead>
                 <tr>
-                  <td>No</td>
+                  <td>ProductNo</td>
                   <td>이미지</td>
                   <td>이름</td>
                   <td>판매가</td>
